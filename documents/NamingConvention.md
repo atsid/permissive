@@ -1,13 +1,13 @@
 # Permissive App Naming Conventions
 
-The following documents that naming conventions that will be used by the Permissive app.
+The following documents the naming conventions used by the Permissive app.
 
 
 ## Github Teams
 Permissive is responsible for creating and managing teams on Github. Permissive presents the user with a streamlined UI, but behind the scenes Permissive is parasing and organizing quite a bit of Github data.
 
 
-The format for a team named managed by permissive is as follows:
+The format for the name of a team managed by permissive is as follows:
 > [prefix]-[type]-[name]-[permission]
 
 

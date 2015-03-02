@@ -11,3 +11,13 @@ Common use cases we will address initially:
 4. Remove repo: a repo has been deleted. (This may work itself out automatically with no side effects.)
 
 Permissive will provide a user interface for simple management of these use cases, and also provides a RESTful service API so that the functionality is available for other tooling with an organization.
+
+## Getting Started
+
+For the moment, it's:
+
+1. export your GITHUB_USERNAME and GITHUB_PASSWORD as environment variables
+2. npm install
+3. node dev-server.js
+
+That should start it up and use your credentials to interact with the GitHub API using basic auth.

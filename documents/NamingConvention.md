@@ -1,14 +1,12 @@
 # Permissive App Naming Conventions
 
-The following documents the naming conventions used by the Permissive app.
+Permissive is a streamlined UI for managing projects, teams, and permissions on Github.  The following documents the naming conventions used by the Permissive app.
 
 
 ## Github Teams
-Permissive is responsible for creating and managing teams on Github. Permissive presents the user with a streamlined UI, but behind the scenes Permissive is parasing and organizing quite a bit of Github data.
-
 
 The format for the name of a team managed by permissive is as follows:
-> [prefix]-[type]-[name]-[permission]
+> [prefix]-[type]-[repository name]-[permission]
 
 
 ### [prefix]
@@ -19,15 +17,15 @@ The prefix is used to designate the teams that are managed by the Permissive app
 
 ### [type]
 
-The type is used to determine if the team is associated to a single repository ("repo") or if the team is associated with a set of repositories ("project").
+The type is used to determine if the team is responsible for a single repository ("repo") or if the team is reponsible for a set of repositories ("project").
 > "project", "repo"
 
 *The initial deployment of the app will only provide support for "repo".*
 
 
-### [name]
+### [repository name]
 
-The name is the unique identifier for the team. This is the user facing part of the naming convention, and should be something along the lines of the name of associated app or project (e.g. "crewatlas" or "pe2e-ui").
+The repository name value is taken directly from the associated repository.
 > "*"
 
 

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = function (grunt) {
 
@@ -7,6 +7,12 @@ module.exports = function (grunt) {
             src: ['**/*.js', '!node_modules/**/*.*'],
             options: {
                 jshintrc: '.jshintrc'
+            }
+        },
+        jscs: {
+            src: ['**/*.js', '!node_modules/**/*.*'],
+            options: {
+                config: '.jscsrc'
             }
         },
         watch: {
@@ -35,9 +41,9 @@ module.exports = function (grunt) {
     });
 
     require('load-grunt-tasks')(grunt);
-    
-    grunt.registerTask('default', ['mochaTest']);
-    grunt.registerTask('lint', ['jshint']);
+
+    grunt.registerTask('default', ['mochaTest', 'lint']);
+    grunt.registerTask('lint', ['jshint', 'jscs']);
     grunt.registerTask('start', ['watch']);
 
 };

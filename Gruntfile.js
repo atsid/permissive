@@ -34,10 +34,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-karma');
+    require('load-grunt-tasks')(grunt);
     
     grunt.registerTask('default', ['mochaTest']);
     grunt.registerTask('lint', ['jshint']);

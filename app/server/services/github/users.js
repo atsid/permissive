@@ -5,7 +5,6 @@ var username = process.env.GITHUB_USER,
     org = "atsid";
 
 var github = new GitHubApi({
-    debug: true,
     version: "3.0.0",
     protocol: "https",
     host: "api.github.com",
@@ -29,7 +28,7 @@ module.exports = {
             per_page: 100
         }, function(err, res) {
             callback(null, res);
-            console.log(res);
+            console.log("github getMembers returned", res.length, "users");
         });
     }
 };

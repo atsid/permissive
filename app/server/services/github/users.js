@@ -6,8 +6,6 @@ var GitHubApi = require('github'),
     org = 'atsid',
     github;
 
-var temp;
-
 github = new GitHubApi({
     version: '3.0.0',
     protocol: 'https',
@@ -29,7 +27,7 @@ module.exports = {
         github.orgs.getMembers({
             user: username,
             org: org,
-            perPage: 100
+            per_page: 100
         }, function (err, res) {
             callback(null, res);
             console.log('github getMembers returned', res.length, 'users');

@@ -20,8 +20,8 @@ The prefix is used to designate the teams that are managed by the Permissive app
 ### [type]
 
 The type is used to determine if the team is associated to a single repository ("repo") or if the team is associated with a set of repositories ("project").
-> "project"
-> "repo"
+> "project", "repo"
+
 *The initial deployment of the app will only provide support for "repo".*
 
 
@@ -34,12 +34,10 @@ The name is the unique identifier for the team. This is the user facing part of 
 ### [permission]
 
 The Github permission granted to all members of the team for the associated repo.
-> "admin"
-> "write"
-> "read"
+> "admin", "write", "read"
 
 
-### Examples
+### Github Team Name Examples
 
 
 #### Single Repository (retrace)

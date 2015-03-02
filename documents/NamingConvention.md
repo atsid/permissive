@@ -1,6 +1,6 @@
 # Permissive App Naming Conventions
 
-Permissive is a streamlined UI for managing projects, teams, and permissions on Github.  The following documents the naming conventions used by the Permissive app.
+Permissive is a streamlined UI for managing projects, teams and permissions on Github.  The following documents the naming conventions used by the Permissive app.
 
 
 ## Github Teams
@@ -45,7 +45,7 @@ The Github permission granted to all members of the team for the associated repo
 3. zzz-permissive-repo-retrace-read
 
 
-#### Project with Multiple Repositories (pe2e)
+#### Project with Multiple Repositories (pe2e-ui, pe2e-server)
 
 1. zzz-permissive-project-pe2e-ui-admin
 2. zzz-permissive-project-pe2e-ui-write

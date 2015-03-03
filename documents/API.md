@@ -6,7 +6,7 @@ This is a draft of the operations available to meet the initial views of the app
 
 1. Get list of users. If permission_repo is specified, the "permission" flag on each user will be present, reporting their access to that repo.
 
-        GET /users?permission_repo=:id
+        GET /users[?permission_repo=:id]
         returns User[]
 2. Get details for a user
 
@@ -23,7 +23,7 @@ This is a draft of the operations available to meet the initial views of the app
         returns null, 204
 5. Get list of repos. If permission_user is specified, the "permission" flag on each repo will be present, reporting the access available for that user.
 
-        GET /repos
+        GET /repos[?permission_user=:username]
         returns Repo[]
 6. Get details for a repo
 
@@ -73,7 +73,7 @@ The first iteration of the draft will support two views (by-user and by-repo). T
 * raw list of organization users visible to logged in user (1)
 * expanding a user retrieves the list of repos visible to them (5 with permission_user={selected user})
 * toggle button will be present on each repo with None|Read|Write|Admin (5)
-    * note that only repos that the logged in user has **admin** access to will have these buttons 
+    * note that only repos that the logged in user has **admin** access to will have these buttons
 * clicking toggle button for a set of repos and then "save" will send changes one-at-a-time (3 or 4 for each repo)
 
 ###By-repo

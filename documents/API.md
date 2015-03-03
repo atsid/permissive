@@ -16,7 +16,7 @@ This is a draft of the operations available to meet the initial views of the app
 
         GET /users/:username/repos
         returns UserRepo[]
-4. Add repo permissions for a user
+4. Add/update repo permissions for a user
 
         PUT /users/:username/repos/:id/permissions/:permission
 5. Remove all repo access for a user
@@ -34,7 +34,7 @@ This is a draft of the operations available to meet the initial views of the app
 
         GET /repos/:id/users
         returns RepoUser[]
-9. Add user permissions for a repo
+9. Add/update user permissions for a repo
 
         PUT /repos/:id/users/:username/permissions/:permission
 10. Remove all user access to a repo

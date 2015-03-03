@@ -2,7 +2,6 @@
 
 var userService = require('../services/github/users');
 
-//TODO: it would be nice to map middleware names more closely to the hypermedia links they represent
 module.exports = {
 
     list: function (req, res, next) {
@@ -10,13 +9,37 @@ module.exports = {
         console.log('listing users [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
+        var repo = req.query.permission_repo;
+
         userService.get().then(function (users) {
+
             var logins = users.map(function (user) {
-                return {
-                    username: user.login
+
+                var outUser = {
+                    username: user.login,
+                    links: []
                 };
+
+                //TODO: of course, these links should only appear if logged in user has admin on the repo
+                if (repo) {
+                    outUser.links.push({
+                        rel: 'edit-repo-permission',
+                        href: 'users/' + outUser.username + '/repos/' + repo + '/permissions/{permission}',
+                        method: 'PUT'
+                    });
+                    outUser.links.push({
+                        rel: 'remove-repo-permission',
+                        href: 'users/' + outUser.username + '/repos/' + repo,
+                        method: 'DELETE'
+                    });
+                }
+
+                return outUser;
+
             });
+
             res.json(logins);
+
         }).catch(function (err) {
             next(err);
         });
@@ -34,7 +57,7 @@ module.exports = {
 
     },
 
-    updateRepoPermission: function (req, res, next) {
+    edit_repo_permission: function (req, res, next) {
 
         console.log('editing user repo permissions [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
@@ -43,7 +66,7 @@ module.exports = {
 
     },
 
-    deleteRepoPermission: function (req, res, next) {
+    remove_repo_permission: function (req, res, next) {
 
         console.log('removing user repo permissions [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));

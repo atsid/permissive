@@ -1,20 +1,24 @@
 'use strict';
 
 var GitHubApi = require('github'),
+    Promise = require('bluebird'),
     username = process.env.GITHUB_USER,
     password = process.env.GITHUB_PASSWORD,
     org = 'atsid',
-    github;
+    github = new GitHubApi({
+        version: '3.0.0',
+        protocol: 'https',
+        host: 'api.github.com',
+        timeout: 5000,
+        headers: {
+            'user-agent': username
+        }
+    }),
 
-github = new GitHubApi({
-    version: '3.0.0',
-    protocol: 'https',
-    host: 'api.github.com',
-    timeout: 5000,
-    headers: {
-        'user-agent': username
-    }
-});
+    /**
+     * Promisified Github APIs
+     */
+    getMembers = Promise.promisify(github.orgs.getMembers);
 
 github.authenticate({
     type: 'basic',
@@ -23,14 +27,11 @@ github.authenticate({
 });
 
 module.exports = {
-    get: function (callback) {
-        github.orgs.getMembers({
+    get: function () {
+        return getMembers({
             user: username,
             org: org,
             per_page: 100
-        }, function (err, res) {
-            callback(null, res);
-            console.log('github getMembers returned', res.length, 'users');
         });
     }
 };

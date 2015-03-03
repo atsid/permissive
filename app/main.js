@@ -10,14 +10,15 @@ exports.start = function () {
     app.set('port', 3000);
 
     app.use('/users/', function (req, res, next) {
-        var callback = function (resp, data) {
-                var text = '';
-                data.forEach(function (user) {
-                    text += user.login + '<br/>';
-                });
-                res.send(text);
-            },
-            users = userService.get(callback);
+        userService.get().then(function (users) {
+            var text = '';
+            users.forEach(function (user) {
+                text += user.login + '<br/>';
+            });
+            res.send(text);;
+        }).catch(function (err) {
+            next(err);
+        });
     });
 
     app.use(express.static(__dirname + '/client/native'));

@@ -26,56 +26,57 @@ node-github routes.json
 The following details the node-github methods that will be called to fulfill the permissive APi call. With data caching, it is possible that not all node-github calls will be made.
 
 
-## (1) Get a list of users
+## 1 Get a list of users
 * orgs.getMembers
 
 
-## (1a) Get a list of users (and permission for a specific repo)
+## 1a Get a list of users with permission for a specific repo
 * orgs.getMembers
 * repos.getFromOrg
 * repos.getTeams
+* orgs.getTeamMembers
 
 
-## (2) Get details for a user
+## 2 Get details for a user
 * user.getFrom
 
 
-## (3) Add repo permission for a user
+## 3 Add repo permission for a user
 * repos.getTeams
 * orgs.addTeamMember
 
 
-## (3a) Update repo permission for a user
+## 3a Update repo permission for a user
 * repos.getTeams
 * orgs.deleteTeamMember
 * orgs.addTeamMember
 
 
-## (4) Remove all repo access for a user
+## 4 Remove all repo access for a user
 * repos.getFromUser
 * orgs.deleteTeamMember
 
 
-## (5) Get list of repos
+## 5 Get list of repos
 * repos.getFromOrg
 
 
-## (6) Get details for a repo
+## 6 Get details for a repo
 * repos.get
 
 
-## (7) Add user permission for a repo
+## 7 Add user permission for a repo
 * repos.getTeams
 * orgs.addTeamMember
 
 
-## (7a) Update user permission for a repo
+## 7a Update user permission for a repo
 * repos.getTeams
 * orgs.deleteTeamMember
 * orgs.addTeamMember
 
 
-## (8) Remove all user access to a repo
+## 8 Remove all user access to a repo
 * repos.getTeams
 * orgs.deleteTeam
 

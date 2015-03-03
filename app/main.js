@@ -23,6 +23,7 @@ exports.start = function () {
     app.use(express.static(__dirname + '/client/native'));
 
     http.createServer(app).listen(app.get('port'), function () {
+        console.log('-----------------------------------------------------------------------');
         console.log('Express server listening on port ' + app.get('port'));
     });
 

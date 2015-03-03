@@ -1,70 +1,89 @@
 'use strict';
 
+var send = require('./send'),
+    permissions = require('./permissions');
+
+function list_repos(req, res, next) {
+
+    console.log('listing repos [' + req.path + ']');
+    console.log('query:' + JSON.stringify(req.query, null, 2));
+
+    req.entity = [{
+        id: 1,
+        name: 'stub-repo-1'
+    }, {
+        id: 2,
+        name: 'stub-repo-2'
+    }];
+
+    next();
+
+}
+
+function list_repos_permission(req, res, next) {
+
+    console.log('looking up user permission for repos');
+
+    var user = req.query.permission_user,
+        repos = req.entity;
+
+    if (user) {
+        repos.forEach(function (repo) {
+            repo.permission = 'read';
+        });
+    }
+
+    next();
+
+}
+
+function list_repos_links(req, res, next) {
+
+    console.log('checking for links on repo list');
+
+    var user = req.query.permission_user,
+        repos = req.entity;
+
+    if (user) {
+        repos.forEach(function (repo) {
+            repo.links = [{
+                rel: 'edit-user-permission',
+                href: 'repos/' + repo.id + '/users/' + user + '/permissions/{permission}',
+                method: 'PUT'
+            }, {
+                rel: 'remove-user-permission',
+                href: 'repos/' + repo.id + '/users/' + user,
+                method: 'DELETE'
+            }];
+        });
+    }
+
+    next();
+
+}
+
+function read_repo(req, res, next) {
+
+    console.log('getting repo [' + req.path + ']');
+    console.log('params:' + JSON.stringify(req.params, null, 2));
+
+    req.entity = {
+        id: req.params.id,
+        name: 'stub-repo-' + req.params.id
+    };
+
+    next();
+
+}
+
 module.exports = {
 
-    list: function (req, res, next) {
+    list: [list_repos, list_repos_permission, list_repos_links, send.json],
 
-        console.log('listing repos [' + req.path + ']');
-        console.log('query:' + JSON.stringify(req.query, null, 2));
+    read: [read_repo, send.json],
 
-        var user = req.query.permission_user,
-            stubs = [{
-                id: 1,
-                name: 'stub-repo-1',
-                links: []
-            }, {
-                id: 2,
-                name: 'stub-repo-2',
-                links: []
-            }];
+    edit_user_permission: [permissions.edit_repo_permission_for_user, send.no_content],
 
-        if (user) {
-            stubs.forEach(function (stub) {
-                stub.links.push({
-                    rel: 'edit-user-permission',
-                    href: 'repos/' + stub.id + '/users/' + user + '/permissions/{permission}',
-                    method: 'PUT'
-                });
-                stub.links.push({
-                    rel: 'remove-user-permission',
-                    href: 'repos/' + stub.id + '/users/' + user,
-                    method: 'DELETE'
-                });
-            });
-        }
-
-        res.json(stubs);
-
-    },
-
-    read: function (req, res, next) {
-
-        console.log('getting repo [' + req.path + ']');
-        console.log('params:' + JSON.stringify(req.params, null, 2));
-
-        res.json({
-            id: req.params.id,
-            name: 'stub-repo-' + req.params.id
-        });
-
-    },
-
-    edit_user_permission: function (req, res, next) {
-
-        console.log('editing repo user permissions [' + req.path + ']');
-        console.log('params:' + JSON.stringify(req.params, null, 2));
-
-        res.status(204).end();
-
-    },
-
-    remove_user_permission: function (req, res, next) {
-
-        console.log('removing repo user permissions [' + req.path + ']');
-        console.log('params:' + JSON.stringify(req.params, null, 2));
-
-        res.status(204).end();
-
-    }
+    remove_user_permission: [permissions.remove_repo_permission_for_user, send.no_content]
 
 };

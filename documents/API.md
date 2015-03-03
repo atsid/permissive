@@ -5,30 +5,40 @@ This is a draft of the operations available to meet the initial views of the app
 ##Operations
 
 1. Get list of users
+        
         GET /users
         returns User[]
 2. Get details for a user
+
         GET /users/:username
         returns User
 3. Get list of repos visible to a user
+
         GET /users/:username/repos
         returns UserRepo[]
 4. Add repo permissions for a user
+
         PUT /users/:username/repos/:id/permissions/:permission
 5. Remove all repo access for a user
+
         DELETE /users/:username/repos/:id
 6. Get list of repos
+
         GET /repos
         returns Repo[]
 7. Get details for a repo
+
         GET /repos/:id
         returns Repo
 8. Get list of users that have access to repo
+
         GET /repos/:id/users
         returns RepoUser[]
 9. Add user permissions for a repo
+
         PUT /repos/:id/users/:username/permissions/:permission
 10. Remove all user access to a repo
+
         DELETE /repos/:id/users/:username
 
 Note that 4/9 and 5/10 are effectively aliases to each other, suitable for different views.

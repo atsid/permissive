@@ -90,7 +90,7 @@ Repo details when viewed by a user, to include overlay of permission (extends Re
      }
 
 ##Views
-The first iteration of the draft will support two views (by-user and by-repo). Therefore, the list of operations below is limited to what will initially be required. These views will be defined in greater detail in a separate document, but the following descriptions are presented in order to understand services workflow required.
+The first iteration of the draft will support two views (by-user and by-repo). Therefore, the list of operations above is limited to what will initially be required. These views will be defined in greater detail in a separate document, but the following descriptions are presented in order to understand services workflow required.
 
 ###By-user
 * raw list of organization users visible to logged in user (1)

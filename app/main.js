@@ -5,8 +5,8 @@ exports.start = function () {
     var express = require('express'),
         http = require('http'),
         app = express(),
-        users = require('./server/middleware/users'),
-        repos = require('./server/middleware/repos');
+        users = require('./server/routes/users'),
+        repos = require('./server/routes/repos');
 
     app.set('port', 3000);
 

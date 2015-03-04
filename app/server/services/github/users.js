@@ -1,6 +1,6 @@
 'use strict';
 
-var github = require('./github');
+var github = require('../../lib/github');
 
 module.exports = {
     get: function () {

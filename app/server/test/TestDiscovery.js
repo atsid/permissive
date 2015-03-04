@@ -10,7 +10,7 @@ describe('discovery.js', function () {
     it('discovery finds one app in test apps folder', function (done) {
 
         discovery.find(path.join(__dirname, '../test/data/test-apps')).then(function (apps) {
-            chai.assert.equal(1, apps.length);
+            chai.assert.equal(apps.length, 1);
             done();
         });
 
@@ -25,7 +25,7 @@ describe('discovery.js', function () {
                 subapp = apps[0];
 
             subapp.on('mount', function (parent) {
-                chai.assert.equal('/test-root', subapp.mountpath);
+                chai.assert.equal(subapp.mountpath, '/test-root');
                 done();
             });
             app.use('/test-root', subapp);
@@ -40,7 +40,7 @@ describe('discovery.js', function () {
             chai.assert.fail();
             done();
         }).catch(function (err) {
-            chai.assert.equal('ENOENT', err.code);
+            chai.assert.equal(err.code, 'ENOENT');
             done();
         });
 

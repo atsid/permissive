@@ -33,8 +33,8 @@ describe('wire.js', function () {
             subapp = wire([config]),
             route = findRoute(subapp);
 
-        chai.assert.equal('/test-path', route.path);
-        chai.assert.equal('get', route.stack[0].method);
+        chai.assert.equal(route.path, '/test-path');
+        chai.assert.equal(route.stack[0].method, 'get');
 
     });
 

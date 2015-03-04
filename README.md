@@ -14,10 +14,9 @@ Permissive will provide a user interface for simple management of these use case
 
 ## Getting Started
 
-For the moment, it's:
+To run the application:
 
-1. export your GITHUB_USERNAME and GITHUB_PASSWORD as environment variables
-2. npm install
-3. node app.js
+1. npm install
+3. GITHUB_USERNAME=<your username> GITHUB_PASSWORD=<your password> npm start
 
-That should start it up and use your credentials to interact with the GitHub API using basic auth.
+That should start the application using your credentials to interact with the GitHub API using basic auth.

@@ -11,5 +11,4 @@ module.exports = {
     noContent: function (req, res, next) {
         res.status(204).end();
     }
-
 };

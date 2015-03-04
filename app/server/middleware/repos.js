@@ -3,7 +3,6 @@
 module.exports = {
 
     listRepos: function (req, res, next) {
-
         console.log('listing repos [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
@@ -14,13 +13,10 @@ module.exports = {
             id: 2,
             name: 'stub-repo-2'
         }];
-
         next();
-
     },
 
     listReposPermission: function (req, res, next) {
-
         console.log('looking up user permission for repos');
 
         var user = req.query.permission_user,
@@ -31,13 +27,10 @@ module.exports = {
                 repo.permission = 'read';
             });
         }
-
         next();
-
     },
 
     listReposLinks: function (req, res, next) {
-
         console.log('checking for links on repo list');
 
         var user = req.query.permission_user,
@@ -56,13 +49,10 @@ module.exports = {
                 }];
             });
         }
-
         next();
-
     },
 
     readRepo: function (req, res, next) {
-
         console.log('getting repo [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
 
@@ -70,9 +60,6 @@ module.exports = {
             id: req.params.id,
             name: 'stub-repo-' + req.params.id
         };
-
         next();
-
     }
-
 };

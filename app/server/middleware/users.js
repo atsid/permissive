@@ -1,16 +1,14 @@
 'use strict';
 
-var userService = require('../services/github/users');
+var userService = require('../components/repositories/users');
 
 module.exports = {
 
     listUsers: function (req, res, next) {
-
         console.log('listing users [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
         userService.get().then(function (users) {
-
             req.entity = users.map(function (user) {
                 return {
                     username: user.login,
@@ -18,17 +16,14 @@ module.exports = {
                     avatar_url: user.avatar_url
                 };
             });
-
             next();
 
         }).catch(function (err) {
             next(err);
         });
-
     },
 
     listUsersPermission: function (req, res, next) {
-
         console.log('looking up repo permissions for users');
 
         var repo = req.query.permission_repo,
@@ -39,13 +34,10 @@ module.exports = {
                 user.permission = 'read';
             });
         }
-
         next();
-
     },
 
     listUsersLinks: function (req, res, next) {
-
         console.log('checking for links on user list');
 
         var repo = req.query.permission_repo,
@@ -65,22 +57,16 @@ module.exports = {
                 }];
             });
         }
-
         next();
-
     },
 
     readUser: function (req, res, next) {
-
         console.log('getting user [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
 
         req.entity = {
             username: req.params.username
         };
-
         next();
-
     }
-
 };

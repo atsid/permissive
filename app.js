@@ -14,11 +14,10 @@ if (clusteringEnabled && cluster.isMaster) {
 
     console.log("Spawning " + workerCount + " workers");
     for (var i = 0; i < workerCount; i += 1) {
-        console.log("spawning worker");
         cluster.fork();
     }
-    cluster.on('disconnect', function (worker) {
-        console.error('**worker disconnected**', worker);
+    cluster.on('exit', function (worker, code, signal) {
+        console.log('worker %d died (%s). restarting...', worker.process.pid, signal || code);
         cluster.fork();
     });
 } else {

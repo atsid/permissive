@@ -10,12 +10,8 @@ exports.start = function () {
 
     app.set('port', 3000);
 
-    app.get('/users', users.list);
-    app.get('/users/:username', users.read);
-    app.put('/users/:username/repos/:id/permissions/:permission', users.editRepoPermission);
-    app.delete('/users/:username/repos/:id', users.removeRepoPermission);
-
-    app.use(repos.create());
+    app.use(users);
+    app.use(repos);
 
     app.use(express.static(__dirname + '/client/native'));
 

@@ -5,6 +5,7 @@
 var repos = require('../middleware/repos'),
     permissions = require('../middleware/permissions'),
     send = require('../middleware/send'),
+    wire = require('../wire'),
     routes = {
         list: {
             method: 'GET',
@@ -42,9 +43,4 @@ var repos = require('../middleware/repos'),
         }
     };
 
-module.exports = {
-    create: function () {
-        var wire = require('../wire');
-        return wire(routes);
-    }
-};
+module.exports = wire(routes);

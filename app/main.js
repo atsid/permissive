@@ -15,7 +15,7 @@ exports.start = function () {
             users.forEach(function (user) {
                 text += user.login + '<br/>';
             });
-            res.send(text);;
+            res.send(text);
         }).catch(function (err) {
             next(err);
         });

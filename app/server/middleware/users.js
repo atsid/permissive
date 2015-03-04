@@ -1,6 +1,7 @@
 'use strict';
 
-var userService = require('../components/repositories/users');
+var userService = require('../services/github/users'),
+    Promise = require('bluebird');
 
 module.exports = {
 
@@ -8,15 +9,28 @@ module.exports = {
         console.log('listing users [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
-        userService.get().then(function (users) {
-            req.entity = users.map(function (user) {
-                return {
-                    username: user.login,
-                    name: user.name, //this actually requires a secondary lookup to user api, not members
-                    avatar_url: user.avatar_url
-                };
+        userService.getUsers().then(function (users) {
+            var profiles = [];
+            users.forEach(function (user) {
+                profiles.push(userService.getUser(user.login).then(function (profile) {
+                    user.name = profile.name;
+                }));
             });
-            next();
+
+            Promise.all(profiles).then(function () {
+
+                console.log('all user profiles retrieved');
+
+                req.entity = users.map(function (user) {
+                    return {
+                        username: user.login,
+                        name: user.name,
+                        avatar_url: user.avatar_url
+                    };
+                });
+
+                next();
+            });
 
         }).catch(function (err) {
             next(err);
@@ -64,9 +78,15 @@ module.exports = {
         console.log('getting user [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
 
-        req.entity = {
-            username: req.params.username
-        };
-        next();
+        userService.getUser(req.params.username).then(function (profile) {
+            req.entity = {
+                username: profile.login,
+                name: profile.name,
+                avatar_url: profile.avatar_url
+            };
+            next();
+        }).catch(function (err) {
+            next(err);
+        });
     }
 };

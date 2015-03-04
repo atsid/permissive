@@ -38,4 +38,43 @@ describe('wire.js', function () {
 
     });
 
+    it('wire fails to create express app if route config method is missing', function () {
+
+        var config = {
+            path: '/test-path',
+            middleware: [function (req, res, next) {}]
+        };
+
+        chai.assert.throws(function () {
+            wire([config]);
+        });
+
+    });
+
+    it('wire fails to create express app if route config path is missing', function () {
+
+        var config = {
+            method: 'GET',
+            middleware: [function (req, res, next) {}]
+        };
+
+        chai.assert.throws(function () {
+            wire([config]);
+        });
+
+    });
+
+    it('wire fails to create express app if route config middleware is missing', function () {
+
+        var config = {
+            method: 'GET',
+            path: '/test-path'
+        };
+
+        chai.assert.throws(function () {
+            wire([config]);
+        });
+
+    });
+
 });

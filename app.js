@@ -24,5 +24,3 @@ if (clusteringEnabled && cluster.isMaster) {
 } else {
     startApplication();
 }
-
-

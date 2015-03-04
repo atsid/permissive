@@ -18,6 +18,6 @@ For the moment, it's:
 
 1. export your GITHUB_USERNAME and GITHUB_PASSWORD as environment variables
 2. npm install
-3. node dev-server.js
+3. node app.js
 
 That should start it up and use your credentials to interact with the GitHub API using basic auth.

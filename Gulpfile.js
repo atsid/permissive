@@ -36,7 +36,7 @@ gulp.task('jscs', function () {
  */
 gulp.task('server-mocha', function () {
     return gulp.src(SERVER_TEST_SRC)
-        .pipe(mocha({reporter: 'nyan'}));
+        .pipe(mocha({reporter: 'spec'}));
 });
 
 gulp.task('default', [

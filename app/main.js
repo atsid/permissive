@@ -15,10 +15,7 @@ exports.start = function () {
     app.put('/users/:username/repos/:id/permissions/:permission', users.editRepoPermission);
     app.delete('/users/:username/repos/:id', users.removeRepoPermission);
 
-    app.get('/repos', repos.list);
-    app.get('/repos/:id', repos.read);
-    app.put('/repos/:id/users/:username/permissions/:permission', repos.editUserPermission);
-    app.delete('/repos/:id/users/:username', repos.removeUserPermission);
+    app.use(repos.create());
 
     app.use(express.static(__dirname + '/client/native'));
 

@@ -27,14 +27,21 @@ The following details the node-github methods that will be called by permissive.
 
 
 ### 1 Get a list of users
-* orgs.getMembers
+1. Get a list of members in the organization (orgs.getMembers)
+1. For each member
+ 1. Get the user data (user.getFrom)
 
 
 ### 1a Get a list of users with permission for a specific repo
-* orgs.getMembers
-* repos.getFromOrg
-* repos.getTeams
-* orgs.getTeamMembers
+1. Get a list of members in the organization (orgs.getMembers)
+1. For each member
+ 1. Get the user data (user.getFrom)
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Get a list of teams in the organization (orgs.getTeams)
+1. For each team (which defines permission)
+ 1. Get each team member (orgs.getTeamMembers)
+1. Create a mapping of Repo -> User -> Permission
+1. Return the mapping for the requested repo
 
 
 ### 2 Get details for a user
@@ -42,18 +49,22 @@ The following details the node-github methods that will be called by permissive.
 
 
 ### 3 Add repo permission for a user
-* repos.getTeams
+* repos.getFromOrg
+* orgs.getTeams
 * orgs.addTeamMember
 
 
 ### 3a Update repo permission for a user
-* repos.getTeams
+* repos.getFromOrg
+* orgs.getTeams
 * orgs.deleteTeamMember
 * orgs.addTeamMember
 
 
 ### 4 Remove all repo access for a user
-* repos.getFromUser
+* repos.getFromOrg
+* orgs.getTeams
+* orgs.getTeamMembers
 * orgs.deleteTeamMember
 
 
@@ -66,18 +77,18 @@ The following details the node-github methods that will be called by permissive.
 
 
 ### 7 Add user permission for a repo
-* repos.getTeams
+* orgs.getTeams
 * orgs.addTeamMember
 
 
 ### 7a Update user permission for a repo
-* repos.getTeams
+* orgs.getTeams
 * orgs.deleteTeamMember
 * orgs.addTeamMember
 
 
 ### 8 Remove all user access to a repo
-* repos.getTeams
+* orgs.getTeams
 * orgs.deleteTeam
 
 
@@ -89,8 +100,13 @@ The following details the mapping between the node-github and github APIs.
 
 ##Users
 
+There are two views in the permissive app. One of the views is centered on the Github members of an organization. 
+
 
 ### List of Users
+
+This method will be used to retrieve a list of all members of an organization. The login property (sometimes referenced in the github api as :username) returned for each user is used to identify them in the system.
+
 * Github API - https://developer.github.com/v3/orgs/members/#members-list
 * Github URL - GET /orgs/:org/members
 * node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.getMembers
@@ -98,6 +114,9 @@ The following details the mapping between the node-github and github APIs.
 
 
 ### Single User
+
+This method returns the full set of data on a github user.
+
 * Github API - https://developer.github.com/v3/users/#get-a-single-user
 * Github URL - GET /users/:username
 * node-github API - http://mikedeboer.github.io/node-github/#user.prototype.getFrom
@@ -107,22 +126,23 @@ The following details the mapping between the node-github and github APIs.
 
 ## Repos
 
+There are two views in the permissive app. One of the views is centered on the Github repos that belong to an organization. 
+
 
 ### List of Repos
+
+This method will be used to retrieve a list of all repos that belong to an organization.
+
 * Github API - https://developer.github.com/v3/repos/#list-organization-repositories
 * Github URL - GET /orgs/:org/repos
 * node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.getFromOrg
 * node-github method - repos.getFromOrg
 
 
-### List of Repos by User
-* Github API - https://developer.github.com/v3/repos/#list-user-repositories
-* Github URL - GET /users/:username/repos
-* node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.getFromUser
-* node-github method - repos.getFromUser
-
-
 ### Single Repo by User
+
+This method returns the full set of data on a github repo.
+
 * Github API - https://developer.github.com/v3/repos/#get
 * Github URL - GET /repos/:owner/:repo
 * node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.get
@@ -132,15 +152,23 @@ The following details the mapping between the node-github and github APIs.
 
 ## Teams/Members
 
+Permissive will manage repo read/write/admin access via the construction of teams.
 
-### List Teams by Repo
-* Github API - https://developer.github.com/v3/repos/#list-teams
-* Github URL - GET /repos/:owner/:repo/teams
-* node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.getTeams
-* node-github method - repos.getTeams
+
+### List Teams
+
+This method will retrieve a list of all teams that belong to an organization. Permissive will follow a format when naming teams so that it can filter out any team that it does not manage.
+
+* Github API - https://developer.github.com/v3/orgs/teams/#list-teams
+* Github URL - GET /orgs/:org/teams
+* node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.getTeams
+* node-github method - orgs.getTeams
 
 
 ### List Members by Team
+
+This method will retrieve a list of all the team members. To get the list, the Github API requires the authenticated user to be a member of the team.
+
 * Github API - https://developer.github.com/v3/orgs/teams/#list-team-members
 * Github URL - GET /teams/:id/members
 * node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.getTeamMembers
@@ -148,6 +176,9 @@ The following details the mapping between the node-github and github APIs.
 
 
 ### Create Team
+
+This method will create a new team. Github requires the authenticated user to be an owner of the org. The current permissive API does not require this functionality, but it will be a needed in the future.
+
 * Github API - https://developer.github.com/v3/orgs/teams/#create-team
 * Github URL - POST /orgs/:org/teams
 * node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.createTeam
@@ -155,6 +186,9 @@ The following details the mapping between the node-github and github APIs.
 
 
 ### Delete Team
+
+This method will delete an existing team. Github requires the authenticated user to be an owner of the org.
+
 * Github API - https://developer.github.com/v3/orgs/teams/#delete-team
 * Github URL - DELETE /teams/:id
 * node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.deleteTeam
@@ -162,6 +196,9 @@ The following details the mapping between the node-github and github APIs.
 
 
 ### Add Member to Team **(deprecated)**
+
+This method will add a member to the team. The authenticated user must have admin permissions for the team. This method is deprecated, and will not be in the next major release of the Github API.
+
 * Github API - https://developer.github.com/v3/orgs/teams/#add-team-member
 * Github URL - PUT /teams/:id/members/:username
 * node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.addTeamMember
@@ -169,12 +206,20 @@ The following details the mapping between the node-github and github APIs.
 
 
 ### Add Membership to Team
+
+This method will add a new member to the team. If the user is already a part of the team’s organization (meaning they’re on at least one other team in the organization), this endpoint will add the user to the team.
+
+If the user is completely unaffiliated with the team’s organization (meaning they’re on none of the organization’s teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the “pending” state until the user accepts the invitation, at which point the membership will transition to the “active” state and the user will be added as a member of the team.
+
 * Github API - https://developer.github.com/v3/orgs/teams/#add-team-membership
 * Github URL - PUT /teams/:id/memberships/:username
 * node-github - https://github.com/mikedeboer/node-github/issues/221
 
 
 ### Remove Member from Team **(deprecated)**
+
+This method will remove a member from the team. The authenticated user must have admin permissions for the team. This method is deprecated, and will not be in the next major release of the Github API.
+
 * Github API - https://developer.github.com/v3/orgs/teams/#remove-team-member
 * Github URL - DELETE /teams/:id/members/:username
 * node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.deleteTeamMember
@@ -182,6 +227,9 @@ The following details the mapping between the node-github and github APIs.
 
 
 ### Remove Membership from Team
+
+This method will remove a member from the team. The authenticated user must have admin permissions for the team. 
+
 * Github API - https://developer.github.com/v3/orgs/teams/#remove-team-membership
 * Github URL - DELETE /teams/:id/memberships/:username
 * node-github - https://github.com/mikedeboer/node-github/issues/221

@@ -2,7 +2,7 @@
 
 module.exports = {
 
-    list_repos: function (req, res, next) {
+    listRepos: function (req, res, next) {
 
         console.log('listing repos [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
@@ -19,7 +19,7 @@ module.exports = {
 
     },
 
-    list_repos_permission: function (req, res, next) {
+    listReposPermission: function (req, res, next) {
 
         console.log('looking up user permission for repos');
 
@@ -36,7 +36,7 @@ module.exports = {
 
     },
 
-    list_repos_links: function (req, res, next) {
+    listReposLinks: function (req, res, next) {
 
         console.log('checking for links on repo list');
 
@@ -61,7 +61,7 @@ module.exports = {
 
     },
 
-    read_repo: function (req, res, next) {
+    readRepo: function (req, res, next) {
 
         console.log('getting repo [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));

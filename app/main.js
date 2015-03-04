@@ -12,13 +12,13 @@ exports.start = function () {
 
     app.get('/users', users.list);
     app.get('/users/:username', users.read);
-    app.put('/users/:username/repos/:id/permissions/:permission', users.edit_repo_permission);
-    app.delete('/users/:username/repos/:id', users.remove_repo_permission);
+    app.put('/users/:username/repos/:id/permissions/:permission', users.editRepoPermission);
+    app.delete('/users/:username/repos/:id', users.removeRepoPermission);
 
     app.get('/repos', repos.list);
     app.get('/repos/:id', repos.read);
-    app.put('/repos/:id/users/:username/permissions/:permission', repos.edit_user_permission);
-    app.delete('/repos/:id/users/:username', repos.remove_user_permission);
+    app.put('/repos/:id/users/:username/permissions/:permission', repos.editUserPermission);
+    app.delete('/repos/:id/users/:username', repos.removeUserPermission);
 
     app.use(express.static(__dirname + '/client/native'));
 

@@ -8,12 +8,12 @@ var users = require('../middleware/users'),
 
 module.exports = {
 
-    list: [users.list_users, users.list_users_permission, users.list_users_links, send.json],
+    list: [users.listUsers, users.listUsersPermission, users.listUsersLinks, send.json],
 
-    read: [users.read_user, send.json],
+    read: [users.readUser, send.json],
 
-    edit_repo_permission: [permissions.edit_repo_permission_for_user, send.no_content],
+    editRepoPermission: [permissions.editRepoPermissionForUser, send.noContent],
 
-    remove_repo_permission: [permissions.remove_repo_permission_for_user, send.no_content]
+    removeRepoPermission: [permissions.removeRepoPermissionForUser, send.noContent]
 
 };

@@ -8,12 +8,12 @@ var repos = require('../middleware/repos'),
 
 module.exports = {
 
-    list: [repos.list_repos, repos.list_repos_permission, repos.list_repos_links, send.json],
+    list: [repos.listRepos, repos.listReposPermission, repos.listReposLinks, send.json],
 
-    read: [repos.read_repo, send.json],
+    read: [repos.readRepo, send.json],
 
-    edit_user_permission: [permissions.edit_repo_permission_for_user, send.no_content],
+    editUserPermission: [permissions.editRepoPermissionForUser, send.noContent],
 
-    remove_user_permission: [permissions.remove_repo_permission_for_user, send.no_content]
+    removeUserPermission: [permissions.removeRepoPermissionForUser, send.noContent]
 
 };

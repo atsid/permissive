@@ -4,7 +4,7 @@ var userService = require('../services/github/users');
 
 module.exports = {
 
-    list_users: function (req, res, next) {
+    listUsers: function (req, res, next) {
 
         console.log('listing users [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
@@ -27,7 +27,7 @@ module.exports = {
 
     },
 
-    list_users_permission: function (req, res, next) {
+    listUsersPermission: function (req, res, next) {
 
         console.log('looking up repo permissions for users');
 
@@ -44,7 +44,7 @@ module.exports = {
 
     },
 
-    list_users_links: function (req, res, next) {
+    listUsersLinks: function (req, res, next) {
 
         console.log('checking for links on user list');
 
@@ -70,7 +70,7 @@ module.exports = {
 
     },
 
-    read_user: function (req, res, next) {
+    readUser: function (req, res, next) {
 
         console.log('getting user [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));

@@ -8,7 +8,7 @@ module.exports = {
         res.json(req.entity);
     },
 
-    no_content: function (req, res, next) {
+    noContent: function (req, res, next) {
         res.status(204).end();
     }
 

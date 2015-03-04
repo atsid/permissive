@@ -4,43 +4,41 @@
  */
 var repos = require('../../middleware/repos'),
     permissions = require('../../middleware/permissions'),
-    send = require('../../middleware/send'),
-    wire = require('../../wire'),
-    routes = {
-        list: {
-            method: 'GET',
-            path: '/repos',
-            middleware: [
-                repos.listRepos,
-                repos.listReposPermission,
-                repos.listReposLinks,
-                send.json
-            ]
-        },
-        read: {
-            method: 'GET',
-            path: '/repos/:id',
-            middleware: [
-                repos.readRepo,
-                send.json
-            ]
-        },
-        editUserPermission: {
-            method: 'PUT',
-            path: '/repos/:id/users/:username/permissions/:permission',
-            middleware: [
-                permissions.editRepoPermissionForUser,
-                send.noContent
-            ]
-        },
-        removeUserPermission: {
-            method: 'DELETE',
-            path: '/repos/:id/users/:username',
-            middleware: [
-                permissions.removeRepoPermissionForUser,
-                send.noContent
-            ]
-        }
-    };
+    send = require('../../middleware/send');
 
-module.exports = wire(routes);
+module.exports = {
+    list: {
+        method: 'GET',
+        path: '/repos',
+        middleware: [
+            repos.listRepos,
+            repos.listReposPermission,
+            repos.listReposLinks,
+            send.json
+        ]
+    },
+    read: {
+        method: 'GET',
+        path: '/repos/:id',
+        middleware: [
+            repos.readRepo,
+            send.json
+        ]
+    },
+    editUserPermission: {
+        method: 'PUT',
+        path: '/repos/:id/users/:username/permissions/:permission',
+        middleware: [
+            permissions.editRepoPermissionForUser,
+            send.noContent
+        ]
+    },
+    removeUserPermission: {
+        method: 'DELETE',
+        path: '/repos/:id/users/:username',
+        middleware: [
+            permissions.removeRepoPermissionForUser,
+            send.noContent
+        ]
+    }
+};

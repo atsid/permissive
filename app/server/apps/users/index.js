@@ -2,10 +2,10 @@
 /**
  * Business logic routes for working with user objects
  */
-var users = require('../middleware/users'),
-    permissions = require('../middleware/permissions'),
-    send = require('../middleware/send'),
-    wire = require('../wire'),
+var users = require('../../middleware/users'),
+    permissions = require('../../middleware/permissions'),
+    send = require('../../middleware/send'),
+    wire = require('../../wire'),
     routes = {
         list: {
             method: 'GET',

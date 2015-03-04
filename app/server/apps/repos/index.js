@@ -2,10 +2,10 @@
 /**
  * Business logic routes for working with repos.
  */
-var repos = require('../middleware/repos'),
-    permissions = require('../middleware/permissions'),
-    send = require('../middleware/send'),
-    wire = require('../wire'),
+var repos = require('../../middleware/repos'),
+    permissions = require('../../middleware/permissions'),
+    send = require('../../middleware/send'),
+    wire = require('../../wire'),
     routes = {
         list: {
             method: 'GET',

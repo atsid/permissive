@@ -37,61 +37,78 @@ The following details the node-github methods that will be called by permissive.
 1. For each member
  1. Get the user data (user.getFrom)
 1. Get a list of repos in the organization (repos.getFromOrg)
+1. Create a mapping of Repo -> User
 1. Get a list of teams in the organization (orgs.getTeams)
 1. For each team (which defines permission)
  1. Get each team member (orgs.getTeamMembers)
-1. Create a mapping of Repo -> User -> Permission
+ 1. Update mapping to include permission (Repo -> User -> Permission)
 1. Return the mapping for the requested repo
 
 
 ### 2 Get details for a user
-* user.getFrom
+1. Get the user data (user.getFrom)
 
 
 ### 3 Add repo permission for a user
-* repos.getFromOrg
-* orgs.getTeams
-* orgs.addTeamMember
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Find the appropriate repo
+1. Get a list of teams in the organization (orgs.getTeams)
+1. Find the appropriate team (permission)
+1. Add the user to the team (orgs.addTeamMember)
 
 
 ### 3a Update repo permission for a user
-* repos.getFromOrg
-* orgs.getTeams
-* orgs.deleteTeamMember
-* orgs.addTeamMember
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Find the appropriate repo
+1. Get a list of teams in the organization (orgs.getTeams)
+1. Find the users current team
+1. Remove the user from the team (orgs.deleteTeamMember)
+1. Find the users new team (permission)
+1. Add the user to the team (orgs.addTeamMember)
 
 
 ### 4 Remove all repo access for a user
-* repos.getFromOrg
-* orgs.getTeams
-* orgs.getTeamMembers
-* orgs.deleteTeamMember
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Find the appropriate repo
+1. Get a list of teams in the organization (orgs.getTeams)
+1. For each team associated with the repo
+ 1. Get the members (orgs.getTeamMembers)
+ 1. If the user is on the team, remove them (orgs.deleteTeamMember)
 
 
 ### 5 Get list of repos
-* repos.getFromOrg
+1. Get a list of repos in the organization (repos.getFromOrg)
 
 
 ### 6 Get details for a repo
-* repos.get
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Find the appropriate repo
 
 
 ### 7 Add user permission for a repo
-* orgs.getTeams
-* orgs.addTeamMember
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Find the appropriate repo
+1. Get a list of teams in the organization (orgs.getTeams)
+1. Find the users new team (permission)
+1. Add the user to the team (orgs.addTeamMember)
 
 
 ### 7a Update user permission for a repo
-* orgs.getTeams
-* orgs.deleteTeamMember
-* orgs.addTeamMember
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Find the appropriate repo
+1. Get a list of teams in the organization (orgs.getTeams)
+1. Find the users current team
+1. Remove the user from the team (orgs.deleteTeamMember)
+1. Find the users new team (permission)
+1. Add the user to the team (orgs.addTeamMember)
 
 
 ### 8 Remove all user access to a repo
-* orgs.getTeams
-* orgs.deleteTeam
-
-
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Find the appropriate repo
+1. Get a list of teams in the organization (orgs.getTeams)
+1. For each team associated with the repo
+ 1. Delete the team (orgs.deleteTeam)
 
 
 # Mapping node-github to github
@@ -137,16 +154,6 @@ This method will be used to retrieve a list of all repos that belong to an organ
 * Github URL - GET /orgs/:org/repos
 * node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.getFromOrg
 * node-github method - repos.getFromOrg
-
-
-### Single Repo by User
-
-This method returns the full set of data on a github repo.
-
-* Github API - https://developer.github.com/v3/repos/#get
-* Github URL - GET /repos/:owner/:repo
-* node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.get
-* node-github method - repos.get
 
 
 

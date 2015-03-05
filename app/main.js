@@ -1,6 +1,6 @@
 'use strict';
 
-exports.start = function () {
+exports.start = () => {
 
     var express = require('express'),
         http = require('http'),
@@ -11,17 +11,15 @@ exports.start = function () {
 
     app.use(express.static(__dirname + '/client/native'));
 
-    discovery.find(__dirname + '/server/apps').then(function (apps) {
+    discovery.find(__dirname + '/server/apps').then((apps) => {
 
-        apps.forEach(function (subapp) {
+        apps.forEach((subapp) => {
             app.use(subapp);
         });
 
-        http.createServer(app).listen(app.get('port'), function () {
+        http.createServer(app).listen(app.get('port'), () => {
             console.log('-----------------------------------------------------------------------');
             console.log('Express server listening on port ' + app.get('port'));
         });
-
     });
-
 };

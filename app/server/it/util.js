@@ -4,11 +4,11 @@
  * @type {*}
  */
 var request = require('request'),
-    Promise = require('bluebird'),
+    Bluebird = require('bluebird'),
     root = 'http://localhost:3000', //TODO: read from config
     methods = ['get', 'put', 'post', 'del'];
 
-Promise.promisifyAll(request);
+Bluebird.promisifyAll(request);
 
 /**
  * Wraps up a request, using localhost and the configured app port.

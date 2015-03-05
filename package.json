@@ -30,6 +30,6 @@
     },
     "scripts": {
         "test": "./node_modules/.bin/gulp",
-        "start": "node app.js"
+        "start": "node --harmony app.js"
     }
 }

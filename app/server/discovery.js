@@ -9,7 +9,7 @@ var fs = require('fs'),
     Bluebird = require('bluebird'),
     wire = require('./wire');
 
-Promise.promisifyAll(fs);
+Bluebird.promisifyAll(fs);
 
 module.exports = {
 

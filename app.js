@@ -1,10 +1,10 @@
 'use strict';
 
 var cluster = require('cluster'),
-    cpuCount = require('os').cpus().length,
     clusteringEnabled = process.env.ENABLE_CLUSTERING,
     startMaster = () => {
         let workerLimit = process.env.WORKER_LIMIT,
+            cpuCount = require('os').cpus().length,
             workerCount = workerLimit ? workerLimit : cpuCount;
         console.log("Spawning " + workerCount + " workers");
         for (let i = 0; i < workerCount; i += 1) {

@@ -23,29 +23,20 @@ module.exports = {
      * @param root - root folder to read subapp folders from.
      * @returns {Promise} - arg is a list of express apps ready for mounting.
      */
-    find: function (root) {
-
-        var promise = new Promise(function (resolve, reject) {
-
+    find: (root) => {
+        return new Promise((resolve, reject) => {
             console.log('finding apps in path: ' + root);
-
-            fs.readdirAsync(root).then(function (files) {
-
+            fs.readdirAsync(root)
+            .then((files) => {
                 console.log('apps found:' + files);
 
-                var routes = files.map(function (file) {
+                var routes = files.map((file) => {
                     return require(path.join(root, file));
                 }),
-                    apps = routes.map(function (route) {
-                        return wire(route);
-                    });
+                    apps = routes.map((route) => { return wire(route); });
 
                 resolve(apps);
-
             }, reject);
         });
-
-        return promise;
     }
-
 };

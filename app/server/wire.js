@@ -10,12 +10,12 @@
  *   }
  * }
  */
-module.exports = function (routes) {
+module.exports = (routes) => {
 
     var express = require('express'),
         app = express();
 
-    Object.keys(routes).forEach(function (name) {
+    Object.keys(routes).forEach((name) => {
         var route = routes[name];
         app[route.method.toLowerCase()](route.path, route.middleware);
     });

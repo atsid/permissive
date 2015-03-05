@@ -18,7 +18,7 @@ var gulp         = require('gulp'),
 /**
  * Javascript Linting
  */
-gulp.task('lint', function () {
+gulp.task('lint', () => {
     return gulp.src(ALL_SRC)
        .pipe(jshint({lookup: true}))
        .pipe(jshint.reporter('default'));
@@ -27,7 +27,7 @@ gulp.task('lint', function () {
 /**
  * Javascript Code Style Checking
  */
-gulp.task('jscs', function () {
+gulp.task('jscs', () => {
     return gulp.src(ALL_SRC)
         .pipe(jscs());
 });

@@ -10,7 +10,7 @@ var cluster = require('cluster'),
         for (let i = 0; i < workerCount; i += 1) {
             cluster.fork();
         }
-        cluster.on('exit', function (worker, code, signal) {
+        cluster.on('exit', (worker, code, signal) => {
             console.log('worker %d died (%s). restarting...', worker.process.pid, signal || code);
             cluster.fork();
         });

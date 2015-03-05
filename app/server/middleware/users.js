@@ -1,6 +1,7 @@
 'use strict';
 
-var userService = require('../components/repositories/users');
+var userService = require('../components/repositories/users'),
+    Bluebird = require('bluebird');
 
 module.exports = {
 
@@ -8,15 +9,28 @@ module.exports = {
         console.log('listing users [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
-        userService.get().then((users) => {
-            req.entity = users.map((user) => {
-                return {
-                    username: user.login,
-                    name: user.name, //this actually requires a secondary lookup to user api, not members
-                    avatar_url: user.avatar_url
-                };
+        userService.getUsers().then((users) => {
+            let profiles = [];
+
+            users.forEach((user) => {
+                profiles.push(userService.getUser(user.login).then((profile) => {
+                    user.name = profile.name;
+                }));
             });
-            next();
+
+            Bluebird.all(profiles).then(() => {
+                console.log('all user profiles retrieved');
+
+                req.entity = users.map((user) => {
+                    return {
+                        username: user.login,
+                        name: user.name,
+                        avatar_url: user.avatar_url
+                    };
+                });
+
+                next();
+            });
 
         }).catch((err) => {
             next(err);
@@ -64,9 +78,15 @@ module.exports = {
         console.log('getting user [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
 
-        req.entity = {
-            username: req.params.username
-        };
-        next();
+        userService.getUser(req.params.username).then((profile) => {
+            req.entity = {
+                username: profile.login,
+                name: profile.name,
+                avatar_url: profile.avatar_url
+            };
+
+            next();
+
+        });
     }
 };

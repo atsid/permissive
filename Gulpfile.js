@@ -17,7 +17,7 @@ var gulp         = require('gulp'),
 /**
  * Javascript Linting
  */
-gulp.task('lint', function () {
+gulp.task('lint', () => {
     return gulp.src(ALL_SRC)
        .pipe(jshint({lookup: true}))
        .pipe(jshint.reporter('default'));
@@ -26,7 +26,7 @@ gulp.task('lint', function () {
 /**
  * Javascript Code Style Checking
  */
-gulp.task('jscs', function () {
+gulp.task('jscs', () => {
     return gulp.src(ALL_SRC)
         .pipe(jscs());
 });
@@ -34,7 +34,7 @@ gulp.task('jscs', function () {
 /**
  * Unit Testing
  */
-gulp.task('server-mocha', function () {
+gulp.task('server-mocha', () => {
     return gulp.src(SERVER_TEST_SRC)
         .pipe(mocha({reporter: 'nyan'}));
 });

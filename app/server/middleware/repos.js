@@ -2,7 +2,7 @@
 
 module.exports = {
 
-    listRepos: function (req, res, next) {
+    listRepos: (req, res, next) => {
         console.log('listing repos [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
@@ -16,28 +16,28 @@ module.exports = {
         next();
     },
 
-    listReposPermission: function (req, res, next) {
+    listReposPermission: (req, res, next) => {
         console.log('looking up user permission for repos');
 
-        var user = req.query.permission_user,
+        let user = req.query.permission_user,
             repos = req.entity;
 
         if (user) {
-            repos.forEach(function (repo) {
+            repos.forEach((repo) => {
                 repo.permission = 'read';
             });
         }
         next();
     },
 
-    listReposLinks: function (req, res, next) {
+    listReposLinks: (req, res, next) => {
         console.log('checking for links on repo list');
 
-        var user = req.query.permission_user,
+        let user = req.query.permission_user,
             repos = req.entity;
 
         if (user) {
-            repos.forEach(function (repo) {
+            repos.forEach((repo) => {
                 repo.links = [{
                     rel: 'edit-user-permission',
                     href: 'repos/' + repo.id + '/users/' + user + '/permissions/{permission}',
@@ -52,7 +52,7 @@ module.exports = {
         next();
     },
 
-    readRepo: function (req, res, next) {
+    readRepo: (req, res, next) => {
         console.log('getting repo [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
 

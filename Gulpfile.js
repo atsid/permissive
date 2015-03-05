@@ -11,7 +11,7 @@ var gulp         = require('gulp'),
      * Build Constants
      */
     APP_SRC = 'app/**/*.js',
-    ALL_SRC = [APP_SRC, 'Gulpfile.js'],
+    ALL_SRC = [APP_SRC, '*.js'],
     SERVER_TEST_SRC = 'app/server/test/**/Test*.js';
 
 /**

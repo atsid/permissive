@@ -3,7 +3,7 @@
 var github = require('../services/github');
 
 module.exports = {
-    get: function () {
+    get: () => {
         return github.getMembers({
             user: github.config.username,
             org: github.config.org,

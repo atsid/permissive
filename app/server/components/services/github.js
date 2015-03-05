@@ -1,7 +1,7 @@
 'use strict';
 
 var GitHubApi = require('github'),
-    Promise = require('bluebird'),
+    Bluebird = require('bluebird'),
     username = process.env.GITHUB_USER,
     password = process.env.GITHUB_PASSWORD,
     org = 'atsid',
@@ -31,5 +31,5 @@ module.exports = {
         username: username,
         org: org
     },
-    getMembers: Promise.promisify(github.orgs.getMembers)
+    getMembers: Bluebird.promisify(github.orgs.getMembers)
 };

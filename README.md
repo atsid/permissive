@@ -1,3 +1,5 @@
+[![Dependency Status](https://david-dm.org/atsid/permissive.svg)](https://david-dm.org/atsid/permissive)
+
 # permissive
 Permissions management console and services
 

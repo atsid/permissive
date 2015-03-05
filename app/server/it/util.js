@@ -11,7 +11,8 @@ var request = require('request'),
 Promise.promisifyAll(request);
 
 /**
- * Wraps up a request, using localhost and the configured app port, and parsing JSON automatically.
+ * Wraps up a request, using localhost and the configured app port.
+ * Uses a promisified request and returns a promise, to simplify usage.
  * @param path - relative path of request (not including host:port).
  * @returns {Promise}
  */

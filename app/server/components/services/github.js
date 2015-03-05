@@ -4,7 +4,7 @@ var GitHubApi = require('github'),
     Bluebird = require('bluebird'),
     username = process.env.GITHUB_USER,
     password = process.env.GITHUB_PASSWORD,
-    org = 'atsid',
+    org = process.env.GITHUB_ORG,
     github = new GitHubApi({
         version: '3.0.0',
         protocol: 'https',
@@ -31,5 +31,6 @@ module.exports = {
         username: username,
         org: org
     },
-    getMembers: Bluebird.promisify(github.orgs.getMembers)
+    getMembers: Bluebird.promisify(github.orgs.getMembers),
+    getFrom: Bluebird.promisify(github.user.getFrom)
 };

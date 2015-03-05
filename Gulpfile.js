@@ -30,29 +30,34 @@ gulp.task('jscs', () => {
         .pipe(jscs());
 });
 
+gulp.task('static-checks', [
+    'lint',
+    'jscs'
+]);
+
 /**
  * Testing Tasks
  */
-gulp.task('server-unit-test', () => {
+gulp.task('server-test', () => {
     return gulp.src(SERVER_TEST_SRC)
         .pipe(mocha({reporter: 'spec'}));
 });
 
-gulp.task('server-integration-tests', ['server'], () => {
+gulp.task('exec-server-itest', ['start-server'], () => {
     return gulp.src(SERVER_IT_SRC)
         .pipe(mocha({reporter: 'spec'}));
 });
 
-gulp.task('execute-server-integration-tests', [
-    'server',
-    'server-integration-tests',
+gulp.task('server-itest', [
+    'start-server',
+    'exec-server-itest',
     'halt-server'
 ]);
 
 /**
  * App-Server Startup (for test)
  */
-gulp.task('server', () => {
+gulp.task('start-server', () => {
     return new Promise((resolve, reject) => {
         devServer = nodemon({
             script: 'app.js',
@@ -69,7 +74,7 @@ gulp.task('server', () => {
         .on('exit', () => {
             gutil.log("Process exiting");
         })
-        .on('change', ['static-checking'])
+        .on('change', ['static-checks'])
         .on('restart', () => {
             gutil.log('**** Server Restarted ****');
         })
@@ -83,16 +88,11 @@ gulp.task('server', () => {
     });
 });
 
-gulp.task('halt-server', ['server-integration-tests'], () => {
+gulp.task('halt-server', ['exec-server-itest'], () => {
     devServer.emit('quit');
 });
 
-gulp.task('static-checking', [
-    'lint',
-    'jscs'
-]);
-
 gulp.task('default', [
-    'static-checking',
-    'server-unit-test'
+    'static-checks',
+    'server-test'
 ]);

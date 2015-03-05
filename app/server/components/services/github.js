@@ -31,5 +31,6 @@ module.exports = {
         username: username,
         org: org
     },
-    getMembers: Bluebird.promisify(github.orgs.getMembers)
+    getMembers: Bluebird.promisify(github.orgs.getMembers),
+    getFrom: Bluebird.promisify(github.user.getFrom)
 };

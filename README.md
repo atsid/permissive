@@ -5,9 +5,9 @@ Permissive is intended to simplify the GitHub user/team/repo permissions structu
 
 Common use cases we will address initially:
 
-1. New user: a new user has been added to atsid org, and needs permissions grants across various apps they are going to work on.
-2. New repo: a new repo has been created, and users within atsid need permissions granted to it.
-3. Remove user: a user has been offboarded, and needs to be safely removed from all repo access.
+1. New user: a new user has been added to your org, and needs permissions grants across various apps they are going to work on.
+2. New repo: a new repo has been created, and users within your org need permissions granted to it.
+3. Remove user: a user has been offboarded, and needs to be safely aremoved from all repo access.
 4. Remove repo: a repo has been deleted. (This may work itself out automatically with no side effects.)
 
 Permissive will provide a user interface for simple management of these use cases, and also provides a RESTful service API so that the functionality is available for other tooling with an organization.

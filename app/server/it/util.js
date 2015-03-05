@@ -35,11 +35,7 @@ methods.forEach((method) => {
                     reject(e);
                 }
             });
-
         });
-
         return promise;
-
     };
-
 });

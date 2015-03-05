@@ -14,6 +14,11 @@ Permissive will provide a user interface for simple management of these use case
 
 ## Getting Started
 
+First, enable NodeJS harmony in your shell:
+
+* alias node='node --harmony'
+* alias gulp='node --harmony /usr/local/bin/gulp'
+
 To run the application:
 
 * npm install

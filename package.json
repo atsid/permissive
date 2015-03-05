@@ -17,12 +17,10 @@
     "devDependencies": {
         "chai": "^2.1.0",
         "gulp": "^3.8.11",
-        "gulp-changed": "^1.1.1",
         "gulp-cli": "^0.1.5",
         "gulp-jscs": "^1.4.0",
         "gulp-jshint": "^1.9.2",
         "gulp-mocha": "^2.0.0",
-        "gulp-rimraf": "^0.1.1",
         "gulp-util": "^3.0.4",
         "load-grunt-tasks": "^3.1.0",
         "mocha": "^2.1.0",

@@ -3,12 +3,11 @@
 var cluster = require('cluster'),
     cpuCount = require('os').cpus().length,
     clusteringEnabled = process.env.ENABLE_CLUSTERING,
-    i,
-    startMaster = function () {
-        var workerLimit = process.env.WORKER_LIMIT,
+    startMaster = () => {
+        let workerLimit = process.env.WORKER_LIMIT,
             workerCount = workerLimit ? workerLimit : cpuCount;
         console.log("Spawning " + workerCount + " workers");
-        for (i = 0; i < workerCount; i += 1) {
+        for (let i = 0; i < workerCount; i += 1) {
             cluster.fork();
         }
         cluster.on('exit', function (worker, code, signal) {
@@ -16,8 +15,8 @@ var cluster = require('cluster'),
             cluster.fork();
         });
     },
-    startApplication = function () {
-        var permissive = require('./app/main');
+    startApplication = () => {
+        let permissive = require('./app/main');
         permissive.start();
     };
 

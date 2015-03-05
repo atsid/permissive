@@ -10,7 +10,7 @@ module.exports = {
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
         userService.getUsers().then((users) => {
-            var profiles = [];
+            let profiles = [];
 
             users.forEach((user) => {
                 profiles.push(userService.getUser(user.login).then((profile) => {
@@ -83,7 +83,7 @@ module.exports = {
                 username: profile.login,
                 name: profile.name,
                 avatar_url: profile.avatar_url
-            }
+            };
 
             next();
 

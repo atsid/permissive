@@ -12,7 +12,8 @@ var gulp         = require('gulp'),
      */
     APP_SRC = 'app/**/*.js',
     ALL_SRC = [APP_SRC, 'Gulpfile.js'],
-    SERVER_TEST_SRC = 'app/server/test/**/Test*.js';
+    SERVER_TEST_SRC = 'app/server/test/**/Test*.js',
+    SERVER_IT_SRC = 'app/server/it/**/Test*.js';
 
 /**
  * Javascript Linting
@@ -34,13 +35,22 @@ gulp.task('jscs', function () {
 /**
  * Unit Testing
  */
-gulp.task('server-mocha', function () {
+gulp.task('server-test', function () {
     return gulp.src(SERVER_TEST_SRC)
         .pipe(mocha({reporter: 'spec'}));
 });
 
+/**
+ * Integration Testing
+ */
+gulp.task('server-it', function () {
+    return gulp.src(SERVER_IT_SRC)
+        .pipe(mocha({reporter: 'spec'}));
+});
+
+
 gulp.task('default', [
     'lint',
     'jscs',
-    'server-mocha'
+    'server-test'
 ]);

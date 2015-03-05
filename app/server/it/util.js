@@ -5,7 +5,8 @@
  */
 var request = require('request'),
     Promise = require('bluebird'),
-    root = 'http://localhost:3000'; //TODO: read from config
+    root = 'http://localhost:3000', //TODO: read from config
+    methods = ['get', 'put', 'post', 'del'];
 
 Promise.promisifyAll(request);
 
@@ -14,13 +15,14 @@ Promise.promisifyAll(request);
  * @param path - relative path of request (not including host:port).
  * @returns {Promise}
  */
-module.exports = {
+module.exports = {};
+methods.forEach(function (method) {
 
-    get: function (path) {
+    module.exports[method] = function (path, options) {
 
         var promise = new Promise(function (resolve, reject) {
 
-            request.getAsync(root + path).then(function (args) {
+            request[method + 'Async'](root + path, options).then(function (args) {
                 try {
                     var resp = args[0],
                         result = {
@@ -36,50 +38,7 @@ module.exports = {
         });
 
         return promise;
-    },
 
-    put: function (path, entity) {
+    };
 
-        var promise = new Promise(function (resolve, reject) {
-
-            request.putAsync(root + path, {body: entity}).then(function (args) {
-                try {
-                    var resp = args[0],
-                        result = {
-                            statusCode: resp.statusCode,
-                            body: resp.body
-                        };
-                    resolve(result);
-                } catch (e) {
-                    reject(e);
-                }
-            });
-
-        });
-
-        return promise;
-    },
-
-    del: function (path, entity) {
-
-        var promise = new Promise(function (resolve, reject) {
-
-            request.delAsync(root + path).then(function (args) {
-                try {
-                    var resp = args[0],
-                        result = {
-                            statusCode: resp.statusCode,
-                            body: resp.body
-                        };
-                    resolve(result);
-                } catch (e) {
-                    reject(e);
-                }
-            });
-
-        });
-
-        return promise;
-    }
-
-};
+});

@@ -4,7 +4,7 @@ var GitHubApi = require('github'),
     Bluebird = require('bluebird'),
     username = process.env.GITHUB_USER,
     password = process.env.GITHUB_PASSWORD,
-    org = 'atsid',
+    org = process.env.GITHUB_ORG,
     github = new GitHubApi({
         version: '3.0.0',
         protocol: 'https',

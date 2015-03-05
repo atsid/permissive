@@ -7,7 +7,7 @@ describe('User model HTTP requests', function () {
 
     this.timeout(10000);
 
-    describe('GET /users', function () {
+    describe('list', function () {
 
         var users,
             status;
@@ -35,7 +35,7 @@ describe('User model HTTP requests', function () {
 
     });
 
-    describe('GET /users?permission_repo=:id', function () {
+    describe('list?permission_repo={repo}', function () {
 
         var users,
             status;
@@ -63,7 +63,7 @@ describe('User model HTTP requests', function () {
 
     });
 
-    describe('PUT /users/:username/repos/:id/permissions/:permission', function () {
+    describe('editRepoPermission', function () {
 
         var status;
 
@@ -80,7 +80,7 @@ describe('User model HTTP requests', function () {
 
     });
 
-    describe('DELETE /users/:username/repos/:id', function () {
+    describe('removeRepoPermission', function () {
 
         var status;
 

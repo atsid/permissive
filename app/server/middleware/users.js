@@ -1,6 +1,6 @@
 'use strict';
 
-var userService = require('../services/github/users'),
+var userService = require('../components/repositories/users'),
     Promise = require('bluebird');
 
 module.exports = {

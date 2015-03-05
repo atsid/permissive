@@ -63,4 +63,38 @@ describe('User model HTTP requests', function () {
 
     });
 
+    describe('PUT /users/:username/repos/:id/permissions/:permission', function () {
+
+        var status;
+
+        before(function (done) {
+            util.put('/users/testuser/repos/1/permissions/read').then(function (result) {
+                status = result.statusCode;
+                done();
+            });
+        });
+
+        it('returns a 204', function () {
+            chai.assert.equal(status, 204);
+        });
+
+    });
+
+    describe('DELETE /users/:username/repos/:id', function () {
+
+        var status;
+
+        before(function (done) {
+            util.del('/users/testuser/repos/1').then(function (result) {
+                status = result.statusCode;
+                done();
+            });
+        });
+
+        it('returns a 204', function () {
+            chai.assert.equal(status, 204);
+        });
+
+    });
+
 });

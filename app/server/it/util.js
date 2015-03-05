@@ -14,24 +14,72 @@ Promise.promisifyAll(request);
  * @param path - relative path of request (not including host:port).
  * @returns {Promise}
  */
-exports.get = function (path) {
+module.exports = {
 
-    var promise = new Promise(function (resolve, reject) {
+    get: function (path) {
 
-        request.getAsync(root + path).then(function (args) {
-            try {
-                var resp = args[0],
-                    result = {
-                        statusCode: resp.statusCode,
-                        body: resp.body
-                    };
-                resolve(result);
-            } catch (e) {
-                reject(e);
-            }
+        var promise = new Promise(function (resolve, reject) {
+
+            request.getAsync(root + path).then(function (args) {
+                try {
+                    var resp = args[0],
+                        result = {
+                            statusCode: resp.statusCode,
+                            body: resp.body
+                        };
+                    resolve(result);
+                } catch (e) {
+                    reject(e);
+                }
+            });
+
         });
 
-    });
+        return promise;
+    },
 
-    return promise;
+    put: function (path, entity) {
+
+        var promise = new Promise(function (resolve, reject) {
+
+            request.putAsync(root + path, {body: entity}).then(function (args) {
+                try {
+                    var resp = args[0],
+                        result = {
+                            statusCode: resp.statusCode,
+                            body: resp.body
+                        };
+                    resolve(result);
+                } catch (e) {
+                    reject(e);
+                }
+            });
+
+        });
+
+        return promise;
+    },
+
+    del: function (path, entity) {
+
+        var promise = new Promise(function (resolve, reject) {
+
+            request.delAsync(root + path).then(function (args) {
+                try {
+                    var resp = args[0],
+                        result = {
+                            statusCode: resp.statusCode,
+                            body: resp.body
+                        };
+                    resolve(result);
+                } catch (e) {
+                    reject(e);
+                }
+            });
+
+        });
+
+        return promise;
+    }
+
 };

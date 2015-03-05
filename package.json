@@ -28,7 +28,7 @@
         "mocha": "^2.1.0"
     },
     "scripts": {
-        "test": "./node_modules/.bin/gulp",
+        "test": "node --harmony ./node_modules/.bin/gulp",
         "start": "node --harmony app.js"
     }
 }

@@ -17,15 +17,15 @@ Bluebird.promisifyAll(request);
  * @returns {Promise}
  */
 module.exports = {};
-methods.forEach(function (method) {
+methods.forEach((method) => {
 
-    module.exports[method] = function (path, options) {
+    module.exports[method] = (path, options) => {
 
-        var promise = new Promise(function (resolve, reject) {
+        let promise = new Promise((resolve, reject) => {
 
-            request[method + 'Async'](root + path, options).then(function (args) {
+            request[method + 'Async'](root + path, options).then((args) => {
                 try {
-                    var resp = args[0],
+                    let resp = args[0],
                         result = {
                             statusCode: resp.statusCode,
                             body: resp.body

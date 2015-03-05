@@ -1,17 +1,16 @@
 'use strict';
 
-var chai = require('chai'),
-    express = require('express'),
+let chai = require('chai'),
     wire = require('../wire');
 
 //helper to find a valid route within the Routers
 //express provides some defaults, so we need to find one with a valid route
 function findRoute(app) {
 
-    var route;
+    let route;
 
     // jscs:disable disallowDanglingUnderscores
-    app._router.stack.some(function (router) {
+    app._router.stack.some((router) => {
         if (router.route) {
             route = router.route;
             return true;
@@ -21,14 +20,14 @@ function findRoute(app) {
     return route;
 }
 
-describe('wire.js', function () {
+describe('wire.js', () => {
 
-    it('wire creates successful express app from valid route config', function () {
+    it('wire creates successful express app from valid route config', () => {
 
-        var config = {
+        let config = {
             method: 'GET',
             path: '/test-path',
-            middleware: [function (req, res, next) {}]
+            middleware: [function () {}]
         },
             subapp = wire([config]),
             route = findRoute(subapp);
@@ -38,40 +37,40 @@ describe('wire.js', function () {
 
     });
 
-    it('wire fails to create express app if route config method is missing', function () {
+    it('wire fails to create express app if route config method is missing', () => {
 
-        var config = {
+        let config = {
             path: '/test-path',
-            middleware: [function (req, res, next) {}]
+            middleware: [function () {}]
         };
 
-        chai.assert.throws(function () {
+        chai.assert.throws(() => {
             wire([config]);
         });
 
     });
 
-    it('wire fails to create express app if route config path is missing', function () {
+    it('wire fails to create express app if route config path is missing', () => {
 
-        var config = {
+        let config = {
             method: 'GET',
-            middleware: [function (req, res, next) {}]
+            middleware: [function () {}]
         };
 
-        chai.assert.throws(function () {
+        chai.assert.throws(() => {
             wire([config]);
         });
 
     });
 
-    it('wire fails to create express app if route config middleware is missing', function () {
+    it('wire fails to create express app if route config middleware is missing', () => {
 
-        var config = {
+        let config = {
             method: 'GET',
             path: '/test-path'
         };
 
-        chai.assert.throws(function () {
+        chai.assert.throws(() => {
             wire([config]);
         });
 

@@ -1,120 +1,120 @@
 'use strict';
 
-var chai = require('chai'),
+let chai = require('chai'),
     util = require('./util');
 
-describe('Repo model HTTP requests', function () {
+describe('Repo model HTTP requests', () => {
 
     this.timeout(10000);
 
-    describe('list', function () {
+    describe('list', () => {
 
-        var items,
+        let items,
             status;
 
-        before(function (done) {
-            util.get('/repos').then(function (result) {
+        before((done) => {
+            util.get('/repos').then((result) => {
                 items = JSON.parse(result.body);
                 status = result.statusCode;
                 done();
             });
         });
 
-        it('returns a 200', function () {
+        it('returns a 200', () => {
             chai.assert.equal(status, 200);
         });
 
-        it('returns at least one repo', function () {
+        it('returns at least one repo', () => {
             chai.assert.ok(items.length > 0);
             chai.assert.ok(items[0].id);
         });
 
-        it('repo has no links', function () {
+        it('repo has no links', () => {
             chai.assert.isUndefined(items[0].links);
         });
 
     });
 
-    describe('list?permission_user={user}', function () {
+    describe('list?permission_user={user}', () => {
 
-        var items,
+        let items,
             status;
 
-        before(function (done) {
-            util.get('/repos?permission_user=testuser').then(function (result) {
+        before((done) => {
+            util.get('/repos?permission_user=testuser').then((result) => {
                 items = JSON.parse(result.body);
                 status = result.statusCode;
                 done();
             });
         });
 
-        it('returns a 200', function () {
+        it('returns a 200', () => {
             chai.assert.equal(status, 200);
         });
 
-        it('returns at least one repo', function () {
+        it('returns at least one repo', () => {
             chai.assert.ok(items.length > 0);
             chai.assert.ok(items[0].id);
         });
 
-        it('repo has links', function () {
+        it('repo has links', () => {
             chai.assert.ok(items[0].links.length > 0);
         });
 
     });
 
-    describe('read', function () {
+    describe('read', () => {
 
-        var item,
+        let item,
             status;
 
-        before(function (done) {
-            util.get('/repos/1').then(function (result) {
+        before((done) => {
+            util.get('/repos/1').then((result) => {
                 item = JSON.parse(result.body);
                 status = result.statusCode;
                 done();
             });
         });
 
-        it('returns a 200', function () {
+        it('returns a 200', () => {
             chai.assert.equal(status, 200);
         });
 
-        it('returns a repo', function () {
+        it('returns a repo', () => {
             chai.assert.ok(item.id);
         });
 
     });
 
-    describe('editUserPermission', function () {
+    describe('editUserPermission', () => {
 
-        var status;
+        let status;
 
-        before(function (done) {
-            util.put('/repos/1/users/testuser/permissions/read').then(function (result) {
+        before((done) => {
+            util.put('/repos/1/users/testuser/permissions/read').then((result) => {
                 status = result.statusCode;
                 done();
             });
         });
 
-        it('returns a 204', function () {
+        it('returns a 204', () => {
             chai.assert.equal(status, 204);
         });
 
     });
 
-    describe('removeUserPermission', function () {
+    describe('removeUserPermission', () => {
 
-        var status;
+        let status;
 
-        before(function (done) {
-            util.del('/repos/1/users/testuser').then(function (result) {
+        before((done) => {
+            util.del('/repos/1/users/testuser').then((result) => {
                 status = result.statusCode;
                 done();
             });
         });
 
-        it('returns a 204', function () {
+        it('returns a 204', () => {
             chai.assert.equal(status, 204);
         });
 

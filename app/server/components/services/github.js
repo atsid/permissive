@@ -31,5 +31,6 @@ module.exports = {
         username: username,
         org: org
     },
-    getMembers: Promise.promisify(github.orgs.getMembers)
+    getMembers: Promise.promisify(github.orgs.getMembers),
+    getFrom: Promise.promisify(github.user.getFrom)
 };

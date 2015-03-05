@@ -1,6 +1,6 @@
 'use strict';
 
-var userService = require('../services/github/users');
+var userService = require('../components/repositories/users');
 
 module.exports = {
 
@@ -9,7 +9,6 @@ module.exports = {
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
         userService.get().then((users) => {
-
             req.entity = users.map((user) => {
                 return {
                     username: user.login,
@@ -17,7 +16,6 @@ module.exports = {
                     avatar_url: user.avatar_url
                 };
             });
-
             next();
 
         }).catch((err) => {
@@ -36,7 +34,6 @@ module.exports = {
                 user.permission = 'read';
             });
         }
-
         next();
     },
 
@@ -60,7 +57,6 @@ module.exports = {
                 }];
             });
         }
-
         next();
     },
 
@@ -71,7 +67,6 @@ module.exports = {
         req.entity = {
             username: req.params.username
         };
-
         next();
     }
 };

@@ -13,7 +13,6 @@ module.exports = {
             id: 2,
             name: 'stub-repo-2'
         }];
-
         next();
     },
 
@@ -24,11 +23,10 @@ module.exports = {
             repos = req.entity;
 
         if (user) {
-            repos.forEach(function (repo) {
+            repos.forEach((repo) => {
                 repo.permission = 'read';
             });
         }
-
         next();
     },
 
@@ -39,7 +37,7 @@ module.exports = {
             repos = req.entity;
 
         if (user) {
-            repos.forEach(function (repo) {
+            repos.forEach((repo) => {
                 repo.links = [{
                     rel: 'edit-user-permission',
                     href: 'repos/' + repo.id + '/users/' + user + '/permissions/{permission}',
@@ -51,7 +49,6 @@ module.exports = {
                 }];
             });
         }
-
         next();
     },
 
@@ -63,7 +60,6 @@ module.exports = {
             id: req.params.id,
             name: 'stub-repo-' + req.params.id
         };
-
         next();
     }
 };

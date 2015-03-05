@@ -38,19 +38,19 @@ gulp.task('static-checks', [
 /**
  * Testing Tasks
  */
-gulp.task('server-test', () => {
+gulp.task('test', () => {
     return gulp.src(SERVER_TEST_SRC)
         .pipe(mocha({reporter: 'spec'}));
 });
 
-gulp.task('exec-server-itest', ['start-server'], () => {
+gulp.task('exec-itest', ['start-server'], () => {
     return gulp.src(SERVER_IT_SRC)
         .pipe(mocha({reporter: 'spec'}));
 });
 
-gulp.task('server-itest', [
+gulp.task('itest', [
     'start-server',
-    'exec-server-itest',
+    'exec-itest',
     'halt-server'
 ]);
 
@@ -88,11 +88,11 @@ gulp.task('start-server', () => {
     });
 });
 
-gulp.task('halt-server', ['exec-server-itest'], () => {
+gulp.task('halt-server', ['exec-itest'], () => {
     devServer.emit('quit');
 });
 
 gulp.task('default', [
     'static-checks',
-    'server-test'
+    'test'
 ]);

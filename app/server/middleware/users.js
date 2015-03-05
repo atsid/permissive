@@ -26,7 +26,7 @@ module.exports = {
     listUsersPermission: (req, res, next) => {
         console.log('looking up repo permissions for users');
 
-        var repo = req.query.permission_repo,
+        let repo = req.query.permission_repo,
             users = req.entity;
 
         if (repo) {
@@ -40,7 +40,7 @@ module.exports = {
     listUsersLinks: (req, res, next) => {
         console.log('checking for links on user list');
 
-        var repo = req.query.permission_repo,
+        let repo = req.query.permission_repo,
             users = req.entity;
 
         //TODO: of course, these links should only appear if logged in user has admin on the repo also

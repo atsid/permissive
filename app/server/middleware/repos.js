@@ -19,7 +19,7 @@ module.exports = {
     listReposPermission: (req, res, next) => {
         console.log('looking up user permission for repos');
 
-        var user = req.query.permission_user,
+        let user = req.query.permission_user,
             repos = req.entity;
 
         if (user) {
@@ -33,7 +33,7 @@ module.exports = {
     listReposLinks: (req, res, next) => {
         console.log('checking for links on repo list');
 
-        var user = req.query.permission_user,
+        let user = req.query.permission_user,
             repos = req.entity;
 
         if (user) {

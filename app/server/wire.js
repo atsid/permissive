@@ -16,10 +16,9 @@ module.exports = (routes) => {
         app = express();
 
     Object.keys(routes).forEach((name) => {
-        var route = routes[name];
+        let route = routes[name];
         app[route.method.toLowerCase()](route.path, route.middleware);
     });
 
     return app;
-
 };

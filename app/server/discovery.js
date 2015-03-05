@@ -6,7 +6,7 @@
  */
 var fs = require('fs'),
     path = require('path'),
-    Promise = require('bluebird'),
+    Bluebird = require('bluebird'),
     wire = require('./wire');
 
 Promise.promisifyAll(fs);
@@ -30,10 +30,12 @@ module.exports = {
             .then((files) => {
                 console.log('apps found:' + files);
 
-                var routes = files.map((file) => {
+                let routes = files.map((file) => {
                     return require(path.join(root, file));
                 }),
-                    apps = routes.map((route) => { return wire(route); });
+                apps = routes.map((route) => {
+                    return wire(route);
+                });
 
                 resolve(apps);
             }, reject);

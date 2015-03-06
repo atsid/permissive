@@ -17,4 +17,4 @@ harmony-aliases:
     - name: /home/vagrant/.bashrc
     - text:
       - "alias node='node --harmony'"
-      - "alias gulp='node --harmony /usr/local/bin/gulp'"
+      - "alias gulp='node --harmony /vagrant/node_modules/gulp/bin/gulp'"

@@ -10,5 +10,5 @@ devaliases:
   file.append:
     - name: /home/vagrant/.bashrc
     - text:
-      - "alias gulp='node /vagrant/node_modules/gulp/bin/gulp'" 
-      - "alias bower='node /vagrant/node_modules/bower/bin/bower'"
+      - "alias gulp='node /vagrant/node_modules/.bin/gulp'" 
+      - "alias bower='node /vagrant/node_modules/.bin/bower'"

@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     rimraf = require('gulp-rimraf'),
     Promise = require('bluebird'),
     jade = require('gulp-jade'),
+    sourcemaps = require('gulp-sourcemaps'),
 
     /**
      * Build Constants
@@ -32,7 +33,9 @@ var gulp = require('gulp'),
 gulp.task('transpile', function () {
     return gulp.src([APP_SRC])
         .pipe(changed(APP_DIST))
+        .pipe(sourcemaps.init())
         .pipe(babel())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(APP_DIST));
 });
 gulp.task('templates', function () {

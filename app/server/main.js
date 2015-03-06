@@ -15,10 +15,12 @@ exports.start = () => {
         apps.forEach((subapp) => {
             app.use(subapp);
         });
-
         http.createServer(app).listen(app.get('port'), () => {
             console.log('-----------------------------------------------------------------------');
             console.log('Express server listening on port ' + app.get('port'));
         });
+    })
+    .catch((err) => {
+        console.error("Error starting permissive", err);
     });
 };

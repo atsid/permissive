@@ -27,6 +27,9 @@ To run the application:
 
     vagrant ssh
     cd /vagrant
+
+Then:
+
     GITHUB_USER=<your username> GITHUB_PASSWORD=<your password> GITHUB_ORG=<your org> npm start
 
 or

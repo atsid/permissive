@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/atsid/permissive.svg?branch=master)](https://travis-ci.org/atsid/permissive)
-[![Coverage Status](https://coveralls.io/repos/atsid/permissive/badge.svg)](https://coveralls.io/r/atsid/permissive)
+[![Coverage Status](https://coveralls.io/repos/atsid/permissive/badge.svg?branch=master)](https://coveralls.io/r/atsid/permissive?branch=master)
 [![Dependency Status](https://david-dm.org/atsid/permissive.svg)](https://david-dm.org/atsid/permissive)
 
 # permissive

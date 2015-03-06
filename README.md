@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/atsid/permissive.svg)](https://travis-ci.org/atsid/permissive)
+[![Build Status](https://travis-ci.org/atsid/permissive.svg?branch=master)](https://travis-ci.org/atsid/permissive)
 [![Dependency Status](https://david-dm.org/atsid/permissive.svg)](https://david-dm.org/atsid/permissive)
 
 # permissive

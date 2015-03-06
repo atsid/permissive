@@ -11,3 +11,10 @@ nodev0.12:
     - name: nodejs
     - require:
       - pkgrepo: nodesource
+
+harmony-aliases:
+  file.append:
+    - name: /home/vagrant/.bashrc
+    - text:
+      - "alias node='node --harmony'"
+      - "alias gulp='node --harmony /usr/local/bin/gulp'"

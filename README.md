@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/atsid/permissive.svg)](https://travis-ci.org/atsid/permissive)
+[![Build Status](https://travis-ci.org/atsid/permissive.svg?branch=master)](https://travis-ci.org/atsid/permissive)
 [![Coverage Status](https://coveralls.io/repos/atsid/permissive/badge.svg)](https://coveralls.io/r/atsid/permissive)
 [![Dependency Status](https://david-dm.org/atsid/permissive.svg)](https://david-dm.org/atsid/permissive)
 
@@ -18,14 +18,25 @@ Permissive will provide a user interface for simple management of these use case
 
 ## Getting Started
 
-First, enable NodeJS harmony in your shell:
+We use [Vagrant](http://vagrantup.com) to manage our local development environments. To get started, just launch:
 
-* alias node='node --harmony'
-* alias gulp='node --harmony /usr/local/bin/gulp'
+    vagrant up
+
+That'll grab a recent Ubuntu 14.04 (trusty) 64-bit base image, provision it with node.js v0.12, and pull all the dependencies for the permissive app.
 
 To run the application:
 
-* npm install
-* GITHUB_USER=<your username> GITHUB_PASSWORD=<your password> GITHUB_ORG=<your org> npm start
+    vagrant ssh
+    cd /vagrant
 
-That should start the application using your credentials to interact with the GitHub API using basic auth.
+Then:
+
+    GITHUB_USER=<your username> GITHUB_PASSWORD=<your password> GITHUB_ORG=<your org> npm start
+
+or
+
+    GITHUB_TOKEN=<your token> GITHUB_ORG=<your org> npm start
+
+You can use either basic authentication (username/password) or an OAuth token to authenticate with the GitHub API.
+
+As you develop, you can pull down the latest dependencies with either `npm install` from within the Vagrant VM or `vagrant provision` from your host.

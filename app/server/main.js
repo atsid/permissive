@@ -4,15 +4,14 @@ exports.start = () => {
 
     var express = require('express'),
         http = require('http'),
+        path = require('path'),
         app = express(),
-        discovery = require('./server/discovery');
+        discovery = require('./discovery');
 
     app.set('port', 3000);
-
-    app.use(express.static(__dirname + '/client/native'));
-
-    discovery.find(__dirname + '/server/apps').then((apps) => {
-
+    app.use(express.static(path.join(__dirname, '../client/native')));
+    discovery.find(path.join(__dirname, './apps'))
+    .then((apps) => {
         apps.forEach((subapp) => {
             app.use(subapp);
         });

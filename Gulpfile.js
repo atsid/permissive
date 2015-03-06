@@ -9,7 +9,7 @@ var gulp = require('gulp'),
     changed = require('gulp-changed'),
     runSequence = require('run-sequence'),
     rimraf = require('gulp-rimraf'),
-    Promise = require('bluebird'),
+    Bluebird = require('bluebird'),
     jade = require('gulp-jade'),
     sourcemaps = require('gulp-sourcemaps'),
 
@@ -92,7 +92,7 @@ gulp.task('itest', [
  * App-Server Startup (for test)
  */
 gulp.task('start-server', function () {
-    return new Promise(function (resolve, reject) {
+    return new Bluebird(function (resolve, reject) {
         devServer = nodemon({
             script: 'dist/app.js',
             ext: 'js',

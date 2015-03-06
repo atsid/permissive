@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/atsid/permissive.svg?branch=master)](https://travis-ci.org/atsid/permissive)
+[![Coverage Status](https://coveralls.io/repos/atsid/permissive/badge.svg)](https://coveralls.io/r/atsid/permissive)
 [![Dependency Status](https://david-dm.org/atsid/permissive.svg)](https://david-dm.org/atsid/permissive)
 
 # permissive
@@ -10,7 +11,7 @@ Common use cases we will address initially:
 
 1. New user: a new user has been added to your org, and needs permissions grants across various apps they are going to work on.
 2. New repo: a new repo has been created, and users within your org need permissions granted to it.
-3. Remove user: a user has been offboarded, and needs to be safely aremoved from all repo access.
+3. Remove user: a user has been offboarded, and needs to be safely removed from all repo access.
 4. Remove repo: a repo has been deleted. (This may work itself out automatically with no side effects.)
 
 Permissive will provide a user interface for simple management of these use cases, and also provides a RESTful service API so that the functionality is available for other tooling with an organization.

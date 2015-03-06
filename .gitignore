@@ -21,6 +21,7 @@ build/Release
 
 # Output Dirs
 dist/
+coverage/
 
 # Dependency directory
 # Commenting this out is preferred by some people, see

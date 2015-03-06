@@ -12,14 +12,16 @@ var gulp = require('gulp'),
     Bluebird = require('bluebird'),
     jade = require('gulp-jade'),
     sourcemaps = require('gulp-sourcemaps'),
+    istanbul = require('gulp-istanbul'),
+    coveralls = require('gulp-coveralls'),
 
     /**
      * Build Constants
      */
     APP_SRC = 'app/**/*.js',
     APP_DIST = 'dist/',
-    SERVER_SRC = ['app/server/**/*.js'],
-    SERVER_DIST = 'dist/server',
+    SERVER_SRC = ['src/server/**/*.js', 'src/server/*.js'],
+    SERVER_DIST = ['dist/server/**/*.js', 'dist/server/*.js'],
     APP_TEMPLATES = 'app/**/*.jade',
     ALL_SRC = [APP_SRC, '*.js'],
     SERVER_TEST_SRC = 'dist/server/test/**/Test*.js',
@@ -38,6 +40,7 @@ gulp.task('transpile', function () {
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(APP_DIST));
 });
+
 gulp.task('templates', function () {
     gulp.src([APP_TEMPLATES])
         .pipe(changed(APP_DIST))
@@ -72,14 +75,35 @@ gulp.task('static-checks', [
 /**
  * Testing Tasks
  */
+function instrumentSource() {
+    return gulp.src(SERVER_DIST)
+        .pipe(istanbul({
+            reporters: ['lcov', 'text-summary']
+        }))
+        .pipe(istanbul.hookRequire());
+}
 gulp.task('test', function () {
-    return gulp.src(SERVER_TEST_SRC)
-        .pipe(mocha({reporter: 'spec'}));
+    return new Bluebird(function (resolve, reject) {
+        instrumentSource()
+            .on('finish', function () {
+                gulp.src(SERVER_TEST_SRC)
+                    .pipe(mocha())
+                    .pipe(istanbul.writeReports())
+                    .on('end', resolve);
+            });
+    });
 });
 
 gulp.task('exec-itest', ['start-server'], function () {
-    return gulp.src(SERVER_IT_SRC)
-        .pipe(mocha({reporter: 'spec'}));
+    return new Bluebird(function (resolve, reject) {
+        instrumentSource()
+            .on('finish', function () {
+                gulp.src(SERVER_IT_SRC)
+                    .pipe(mocha())
+                    .pipe(istanbul.writeReports())
+                    .on('end', resolve);
+            });
+    });
 });
 
 gulp.task('itest', [
@@ -87,6 +111,11 @@ gulp.task('itest', [
     'exec-itest',
     'halt-server'
 ]);
+
+gulp.task('report-coverage', function () {
+    return gulp.src('coverage/**/lcov.info')
+        .pipe(coveralls());
+});
 
 /**
  * App-Server Startup (for test)
@@ -100,12 +129,14 @@ gulp.task('start-server', function () {
             env: {
                 'NODE_ENV': 'development'
             },
-            stdout: false
+            stdout: false,
+            stderr: true
         });
 
         devServer
         .on('exit', function () {
             gutil.log("Process exiting");
+            reject();
         })
         .on('change', ['static-checks', 'transpile'])
         .on('restart', function () {
@@ -113,6 +144,7 @@ gulp.task('start-server', function () {
         })
         .on('stdout', function (data) {
             var output = data.toString();
+            gutil.log(output);
             if (output.indexOf("Express server listening on port") !== -1) {
                 gutil.log("**** Server Ready ****");
                 resolve(devServer);
@@ -129,5 +161,6 @@ gulp.task('default', function (cb) {
     runSequence(
         ['transpile', 'templates', 'static-checks'],
         'test',
+        'report-coverage',
         cb);
 });

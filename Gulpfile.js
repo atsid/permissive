@@ -43,7 +43,7 @@ gulp.task('templates', function () {
         .pipe(changed(APP_DIST))
         .pipe(jade())
         .pipe(gulp.dest(APP_DIST));
-})
+});
 
 gulp.task('clean', function () {
     return gulp.src(APP_DIST)

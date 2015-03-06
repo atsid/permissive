@@ -2,7 +2,7 @@
 
 module.exports = {
 
-    listRepos: (req, res, next) => {
+    listRepos (req, res, next) {
         console.log('listing repos [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
@@ -16,7 +16,7 @@ module.exports = {
         next();
     },
 
-    listReposPermission: (req, res, next) => {
+    listReposPermission (req, res, next) {
         console.log('looking up user permission for repos');
 
         let user = req.query.permission_user,
@@ -30,7 +30,7 @@ module.exports = {
         next();
     },
 
-    listReposLinks: (req, res, next) => {
+    listReposLinks (req, res, next) {
         console.log('checking for links on repo list');
 
         let user = req.query.permission_user,
@@ -52,7 +52,7 @@ module.exports = {
         next();
     },
 
-    readRepo: (req, res, next) => {
+    readRepo (req, res, next) {
         console.log('getting repo [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
 

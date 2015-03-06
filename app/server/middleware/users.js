@@ -5,7 +5,7 @@ var userService = require('../components/repositories/users'),
 
 module.exports = {
 
-    listUsers: (req, res, next) => {
+    listUsers (req, res, next) {
         console.log('listing users [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
@@ -37,7 +37,7 @@ module.exports = {
         });
     },
 
-    listUsersPermission: (req, res, next) => {
+    listUsersPermission (req, res, next) {
         console.log('looking up repo permissions for users');
 
         let repo = req.query.permission_repo,
@@ -51,7 +51,7 @@ module.exports = {
         next();
     },
 
-    listUsersLinks: (req, res, next) => {
+    listUsersLinks (req, res, next) {
         console.log('checking for links on user list');
 
         let repo = req.query.permission_repo,
@@ -74,7 +74,7 @@ module.exports = {
         next();
     },
 
-    readUser: (req, res, next) => {
+    readUser (req, res, next) {
         console.log('getting user [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
 

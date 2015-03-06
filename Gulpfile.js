@@ -13,6 +13,7 @@ var gulp = require('gulp'),
     jade = require('gulp-jade'),
     sourcemaps = require('gulp-sourcemaps'),
     istanbul = require('gulp-istanbul'),
+    coveralls = require('gulp-coveralls'),
 
     /**
      * Build Constants
@@ -39,6 +40,7 @@ gulp.task('transpile', function () {
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(APP_DIST));
 });
+
 gulp.task('templates', function () {
     gulp.src([APP_TEMPLATES])
         .pipe(changed(APP_DIST))
@@ -110,6 +112,11 @@ gulp.task('itest', [
     'halt-server'
 ]);
 
+gulp.task('report-coverage', function() {
+    return gulp.src('coverage/**/lcov.info')
+        .pipe(coveralls());
+});
+
 /**
  * App-Server Startup (for test)
  */
@@ -154,5 +161,6 @@ gulp.task('default', function (cb) {
     runSequence(
         ['transpile', 'templates', 'static-checks'],
         'test',
+        'report-coverage',
         cb);
 });

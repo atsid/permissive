@@ -16,7 +16,7 @@ var cluster = require('cluster'),
         });
     },
     startApplication = () => {
-        let permissive = require('./app/main');
+        let permissive = require('./server/main');
         permissive.start();
     };
 

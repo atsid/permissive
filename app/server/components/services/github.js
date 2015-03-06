@@ -4,22 +4,32 @@ var GitHubApi = require('github'),
     Bluebird = require('bluebird'),
     username = process.env.GITHUB_USER,
     password = process.env.GITHUB_PASSWORD,
-    org = 'atsid',
+    org = process.env.GITHUB_ORG,
+    token = process.env.GITHUB_TOKEN,
     github = new GitHubApi({
         version: '3.0.0',
         protocol: 'https',
         host: 'api.github.com',
         timeout: 5000,
         headers: {
-            'user-agent': username
+            'user-agent': 'permissive'
         }
     });
 
-github.authenticate({
-    type: 'basic',
-    username: username,
-    password: password
-});
+if (token) {
+    github.authenticate({
+        type: "oauth",
+        token: token
+    });
+    console.log("Github Authentication Method: Token");
+} else {
+    github.authenticate({
+        type: 'basic',
+        username: username,
+        password: password
+    });
+    console.log("Github Authentication Method: Username and Password");
+}
 
 /**
  * Emit an object with Promisified Github methods and a raw, configured github API object.
@@ -28,8 +38,8 @@ github.authenticate({
 module.exports = {
     github: github,
     config: {
-        username: username,
         org: org
     },
-    getMembers: Bluebird.promisify(github.orgs.getMembers)
+    getMembers: Bluebird.promisify(github.orgs.getMembers),
+    getFrom: Bluebird.promisify(github.user.getFrom)
 };

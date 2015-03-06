@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/atsid/permissive.svg)](https://travis-ci.org/atsid/permissive)
+[![Dependency Status](https://david-dm.org/atsid/permissive.svg)](https://david-dm.org/atsid/permissive)
+
 # permissive
 Permissions management console and services
 
@@ -22,6 +25,6 @@ First, enable NodeJS harmony in your shell:
 To run the application:
 
 * npm install
-* GITHUB_USER=<your username> GITHUB_PASSWORD=<your password> npm start
+* GITHUB_USER=<your username> GITHUB_PASSWORD=<your password> GITHUB_ORG=<your org> npm start
 
 That should start the application using your credentials to interact with the GitHub API using basic auth.

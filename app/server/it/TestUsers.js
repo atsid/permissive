@@ -3,7 +3,7 @@
 var chai = require('chai'),
     util = require('./util');
 
-describe('User model HTTP requests', () => {
+describe('User model HTTP requests', function () {
 
     this.timeout(10000);
 

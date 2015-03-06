@@ -3,7 +3,7 @@
 let chai = require('chai'),
     util = require('./util');
 
-describe('Repo model HTTP requests', () => {
+describe('Repo model HTTP requests', function () {
 
     this.timeout(10000);
 

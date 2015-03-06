@@ -32,3 +32,6 @@ node_modules
 
 # IDE Generated Files
 .idea/
+
+# Vagrant runtime data
+.vagrant/

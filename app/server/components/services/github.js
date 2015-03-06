@@ -10,7 +10,7 @@ var GitHubApi = require('github'),
         version: '3.0.0',
         protocol: 'https',
         host: 'api.github.com',
-        timeout: 5000,
+        timeout: 10000,
         headers: {
             'user-agent': 'permissive'
         }

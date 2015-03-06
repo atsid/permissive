@@ -112,7 +112,7 @@ gulp.task('itest', [
     'halt-server'
 ]);
 
-gulp.task('report-coverage', function() {
+gulp.task('report-coverage', function () {
     return gulp.src('coverage/**/lcov.info')
         .pipe(coveralls());
 });

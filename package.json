@@ -17,18 +17,23 @@
   "devDependencies": {
     "chai": "^2.1.0",
     "gulp": "^3.8.11",
+    "gulp-babel": "^4.0.0",
+    "gulp-changed": "^1.1.1",
     "gulp-cli": "^0.1.5",
+    "gulp-jade": "^1.0.0",
     "gulp-jscs": "^1.4.0",
     "gulp-jshint": "^1.9.2",
     "gulp-mocha": "^2.0.0",
     "gulp-nodemon": "^1.0.5",
+    "gulp-rimraf": "^0.1.1",
     "gulp-util": "^3.0.4",
     "load-grunt-tasks": "^3.1.0",
     "mocha": "^2.1.0",
-    "request": "2.53.0"
+    "request": "2.53.0",
+    "run-sequence": "^1.0.2"
   },
   "scripts": {
-    "test": "node --harmony ./node_modules/.bin/gulp",
-    "start": "node --harmony app.js"
+    "test": "./node_modules/.bin/gulp",
+    "start": "node dist/app.js"
   }
 }

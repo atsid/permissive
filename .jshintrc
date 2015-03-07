@@ -77,6 +77,8 @@
         "it": false,
         //amd
         "define": false,
-        "require": false
+        "require": false,
+        //browser
+        "angular": false
     }
 }

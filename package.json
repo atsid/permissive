@@ -15,28 +15,59 @@
     "github": "^0.2.3"
   },
   "devDependencies": {
+    "babelify": "^5.0.4",
+    "browserify": "^9.0.3",
+    "browserify-shim": "^3.6.0",
     "chai": "^2.1.0",
+    "connect": "^2.24.2",
     "gulp": "^3.8.11",
+    "gulp-angular-templatecache": "^1.2.1",
+    "gulp-autoprefixer": "0.0.8",
     "gulp-babel": "^4.0.0",
     "gulp-changed": "^1.1.1",
+    "gulp-chug": "^0.4.2",
     "gulp-cli": "^0.1.5",
+    "gulp-csso": "^0.2.9",
+    "gulp-header": "^1.2.2",
+    "gulp-if": "^1.2.1",
+    "gulp-imagemin": "^0.6.1",
     "gulp-coveralls": "^0.1.3",
     "gulp-istanbul": "^0.6.0",
     "gulp-jade": "^1.0.0",
     "gulp-jscs": "^1.4.0",
     "gulp-jshint": "^1.9.2",
+    "gulp-livereload": "^2.1.0",
+    "gulp-minify-html": "^0.1.4",
     "gulp-mocha": "^2.0.0",
+    "gulp-ng-annotate": "^0.1.1",
     "gulp-nodemon": "^1.0.5",
+    "gulp-rename": "^1.2.0",
+    "gulp-replace": "^0.4.0",
     "gulp-rimraf": "^0.1.1",
+    "gulp-sass": "^1.3.3",
     "gulp-sourcemaps": "^1.5.0",
+    "gulp-uglify": "^0.3.0",
     "gulp-util": "^3.0.4",
-    "load-grunt-tasks": "^3.1.0",
+    "gulp-watch": "^0.6.9",
+    "jshint-stylish": "^0.2.0",
     "mocha": "^2.1.0",
     "request": "2.53.0",
-    "run-sequence": "^1.0.2"
+    "run-sequence": "^1.0.2",
+    "vinyl-source-stream": "^0.1.1",
+    "watchify": "^0.10.2",
+    "yargs": "^1.2.2"
   },
   "scripts": {
     "test": "./node_modules/.bin/gulp",
     "start": "node dist/app.js"
-  }
+  },
+  "browser": {
+    "angular": "./app/client/bower_components/angular/angular.min.js",
+    "angular-material": "./app/client/bower_components/angular-material/angular-material.min.js",
+    "angular-animate": "./app/client/bower_components/angular-animate/angular-animate.min.js",
+    "angular-aria": "./app/client/bower_components/angular-aria/angular-aria.min.js",
+    "angular-resource": "./app/client/bower_components/angular-resource/angular-resource.min.js",
+    "angular-ui-router": "./app/client/bower_components/angular-ui-router/release/angular-ui-router.min.js"
+  },
+  "browserify-shim": {}
 }

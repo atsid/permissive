@@ -9,7 +9,9 @@ exports.start = () => {
         discovery = require('./discovery');
 
     app.set('port', 3000);
-    app.use(express.static(path.join(__dirname, '../client/native')));
+
+    app.use(express.static(path.resolve(__dirname, '../../app/client/build')));
+
     discovery.find(path.join(__dirname, './apps'))
     .then((apps) => {
         apps.forEach((subapp) => {

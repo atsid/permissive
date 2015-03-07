@@ -1,0 +1,16 @@
+@import "variables";
+@import "imports";
+@import "user";
+@import "navbar";
+
+body {
+    color: #222;
+    font-family: "Roboto", Arial;
+    font-size: 14px;
+    margin: 0;
+    background-color: #f3f3f3;
+}
+
+*, *:after, *:before {
+    box-sizing: border-box;
+}

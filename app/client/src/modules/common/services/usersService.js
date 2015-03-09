@@ -2,7 +2,7 @@
 
 module.exports = /*@ngInject*/
     function usersService($resource) {
-        return $resource('users/:userId', {}, {
+        return $resource('api/v1/users/:userId', {}, {
             'query': { method: 'GET', isArray: true }
         });
     };

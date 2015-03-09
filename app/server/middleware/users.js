@@ -2,7 +2,6 @@
 
 
 var userRepository = require('../components/repositories/users'),
-    repoService = require('../components/repositories/repos'),
     Bluebird = require('bluebird');
 
 module.exports = {
@@ -33,7 +32,6 @@ module.exports = {
                 next(err);
             });
         }
-        next();
     },
 
     listUsersLinks (req, res, next) {

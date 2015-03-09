@@ -1,6 +1,6 @@
 #RESTful Services API for permissive
 
-This is a draft of the operations available to meet the initial views of the app. The models will be formalized as JSON Schema with link definitions (fields indicating operations allowed for the logged in user will be represented as links, such as 'editable' below). Note that this first iteration does not include batch endpoints yet. Those will effectively be an optimization task.
+This is a draft of the operations available to meet the initial views of the app. The models will be formalized as JSON Schema with link definitions. Note that this first iteration does not include batch endpoints yet. Those will effectively be an optimization task.
 
 ##Operations
 
@@ -51,7 +51,7 @@ Basic details for a user. Note that GitHub API uses "login" as the username fiel
         username: string, //username, forms ID throughout GitHub API
         name: string, //friendly name, optional
         avatar_url: string, //link to GitHub avatar, optional
-        permission: string //permission level of user on a repo (pull, push, admin). only present if permission_repo is specified on request.
+        permission: Permission, //details of user permission on a repo . only present if permission_repo is specified on request.
     }
 
 ###Repo
@@ -62,8 +62,16 @@ Basic details for a repo.
         name: string, //name of the repo
         description: string, //short description of the repo, optional
         public: boolean, //indicates if the repo is public (defaults to false)
-        editable: boolean, //indicates that the logged in user can edit permissions for this repo (defaults to false)
-        permission: string //permission level of user on this repo (pull, push, admin). only present if permission_user is specified on request.
+        permission: Permission //details of user permission on this repo. only present if permission_user is specified on request.
+    }
+
+###Permission
+Details for the permission level of a user on a repo.
+Indicates multiple permissions because the permissive-managed levels can be overridden by other teams in the GitHub org, which permissive is not going to edit.
+
+    {
+        permissive: string, //permissive-managed highest permission level found for a user on the repo pull, push, admin).
+        github: string //github-managed (non zzz-permissive teams) highest permission level found for a user on the repo (pull, push, admin).
     }
 
 ##Views
@@ -73,12 +81,10 @@ The first iteration of the draft will support two views (by-user and by-repo). T
 * raw list of organization users visible to logged in user (1)
 * expanding a user retrieves the list of repos visible to them (5 with permission_user={selected user})
 * toggle button will be present on each repo with None|Read|Write|Admin (5)
-    * note that only repos that the logged in user has **admin** access to will have these buttons
 * clicking toggle button for a set of repos and then "save" will send changes one-at-a-time (3 or 4 for each repo)
 
 ###By-repo
 * raw list of organization repos visible to logged in user (5)
 * expanding a repo retrieves the list of users with access (1 with permission_repo={selected repo})
 * toggle button will be present on each user with None|Read|Write|Admin (1)
-    * note that these buttons will only be present if the logged in user has **admin** access to the selected repo
 * clicking toggle button for a set of repos and then "save" will send changes one-at-a-time (7 or 8 for each repo)

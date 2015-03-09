@@ -6,4 +6,5 @@
 
 module.exports =
     angular.module('permissive.common.services', [])
-    .factory('usersService', require('./usersService'));
+    .factory('usersService', require('./usersService'))
+    .factory('reposService', require('./reposService'));

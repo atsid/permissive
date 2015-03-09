@@ -14,7 +14,8 @@ module.exports =
         require('../common').name,
 
         require('./main/main').name,
-        require('./users/users').name
+        require('./users/users').name,
+        require('./repos/repos').name
 
         //load other app modules here, e.g.:
         //require('./account').name

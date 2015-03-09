@@ -19,7 +19,7 @@ module.exports = {
             });
 
             Bluebird.all(profiles).then(() => {
-                console.log('all user profiles retrieved');
+                console.log('all user profiles retrieved [' + profiles.length + ']');
 
                 req.entity = users.map((user) => {
                     return {

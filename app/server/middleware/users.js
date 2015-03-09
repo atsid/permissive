@@ -1,6 +1,5 @@
 'use strict';
 
-
 var userRepository = require('../components/repositories/users'),
     Bluebird = require('bluebird');
 
@@ -21,7 +20,7 @@ module.exports = {
     listUsersPermission (req, res, next) {
         console.log('looking up repo permissions for users');
 
-        let repoId = req.query.permission_repo,
+        let repo = req.query.permission_repo,
             users = req.entity;
 
         if (repoId) {

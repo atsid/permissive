@@ -1,5 +1,7 @@
 'use strict';
 
+require('babel/polyfill');
+
 exports.start = () => {
 
     var express = require('express'),
@@ -15,7 +17,7 @@ exports.start = () => {
     discovery.find(path.join(__dirname, './apps'))
     .then((apps) => {
         apps.forEach((subapp) => {
-            app.use(subapp);
+            app.use('/api/v1', subapp);
         });
         http.createServer(app).listen(app.get('port'), () => {
             console.log('-----------------------------------------------------------------------');

@@ -10,18 +10,18 @@ describe('Repo model HTTP requests', function () {
     describe('list', () => {
 
         let items,
-            status;
+            statusCode;
 
         before((done) => {
             util.get('/repos').then((result) => {
                 items = JSON.parse(result.body);
-                status = result.statusCode;
+                statusCode = result.statusCode;
                 done();
             });
         });
 
         it('returns a 200', () => {
-            chai.assert.equal(status, 200);
+            chai.assert.equal(statusCode, 200);
         });
 
         it('returns at least one repo', () => {
@@ -38,18 +38,18 @@ describe('Repo model HTTP requests', function () {
     describe('list?permission_user={user}', () => {
 
         let items,
-            status;
+            statusCode;
 
         before((done) => {
-            util.get('/repos?permission_user=testuser').then((result) => {
+            util.get('/repos?permission_user=testuser1').then((result) => {
                 items = JSON.parse(result.body);
-                status = result.statusCode;
+                statusCode = result.statusCode;
                 done();
             });
         });
 
         it('returns a 200', () => {
-            chai.assert.equal(status, 200);
+            chai.assert.equal(statusCode, 200);
         });
 
         it('returns at least one repo', () => {
@@ -66,18 +66,18 @@ describe('Repo model HTTP requests', function () {
     describe('read', () => {
 
         let item,
-            status;
+            statusCode;
 
         before((done) => {
             util.get('/repos/1').then((result) => {
                 item = JSON.parse(result.body);
-                status = result.statusCode;
+                statusCode = result.statusCode;
                 done();
             });
         });
 
         it('returns a 200', () => {
-            chai.assert.equal(status, 200);
+            chai.assert.equal(statusCode, 200);
         });
 
         it('returns a repo', () => {
@@ -88,34 +88,34 @@ describe('Repo model HTTP requests', function () {
 
     describe('editUserPermission', () => {
 
-        let status;
+        let statusCode;
 
         before((done) => {
-            util.put('/repos/1/users/testuser/permissions/read').then((result) => {
-                status = result.statusCode;
+            util.put('/repos/1/users/testuser1/permissions/read').then((result) => {
+                statusCode = result.statusCode;
                 done();
             });
         });
 
         it('returns a 204', () => {
-            chai.assert.equal(status, 204);
+            chai.assert.equal(statusCode, 204);
         });
 
     });
 
     describe('removeUserPermission', () => {
 
-        let status;
+        let statusCode;
 
         before((done) => {
-            util.del('/repos/1/users/testuser').then((result) => {
-                status = result.statusCode;
+            util.del('/repos/1/users/testuser1').then((result) => {
+                statusCode = result.statusCode;
                 done();
             });
         });
 
         it('returns a 204', () => {
-            chai.assert.equal(status, 204);
+            chai.assert.equal(statusCode, 204);
         });
 
     });

@@ -1,7 +1,7 @@
 'use strict';
 
 var userPath = '../components/repositories/users',
-    mock = process.env.SERVICE === 'mock' ? '.mock' : "",
+    mock = process.env.SERVICE === 'mock' ? '.mock' : '',
     userService = require(userPath + mock),
     Bluebird = require('bluebird');
 

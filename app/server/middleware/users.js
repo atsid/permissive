@@ -1,11 +1,8 @@
 'use strict';
 
-var userPath = '../components/repositories/users',
-    mock = process.env.SERVICE === 'mock' ? '.mock' : '',
-    userService = require(userPath + mock),
+var userService = require('../components/repositories/users'),
     Bluebird = require('bluebird');
 
-console.log('loading users at repository: ' + userPath + mock);
 module.exports = {
 
     listUsers (req, res, next) {

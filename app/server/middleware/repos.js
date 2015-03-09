@@ -1,8 +1,6 @@
 'use strict';
 
-var repoPath = '../components/repositories/repos',
-    mock = process.env.SERVICE === 'mock' ? '.mock' : '',
-    repoService = require(repoPath + mock);
+var repoService = require('../components/repositories/repos');
 
 module.exports = {
 

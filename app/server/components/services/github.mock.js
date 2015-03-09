@@ -49,7 +49,7 @@ var mask = require('json-mask'),
     teams = {
         '1': {
             id: 1,
-                name: 'Contributors',
+            name: 'Contributors',
             permission: 'write',
             _repos: [1, 2],
             _users: ['testuser1']
@@ -127,6 +127,7 @@ module.exports = {
             resolve(list);
         });
     },
+
     getTeamMembers (msg) {
         let id = msg.id;
         console.log('looking up mock team [' + id + '] members');
@@ -142,6 +143,7 @@ module.exports = {
             }
         });
     },
+
     getTeamRepos (msg) {
         let id = msg.id;
         console.log('looking up mock team [' + id + '] repos');

@@ -126,6 +126,8 @@ module.exports = {
                 next(err);
             });
         }
+
+        next();
     },
 
     listUsersLinks (req, res, next) {

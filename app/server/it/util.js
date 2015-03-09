@@ -5,7 +5,7 @@
  */
 var request = require('request'),
     Bluebird = require('bluebird'),
-    root = 'http://localhost:3000', //TODO: read from config
+    root = 'http://localhost:3000/api/v1', //TODO: read from config
     methods = ['get', 'put', 'post', 'del'];
 
 Bluebird.promisifyAll(request);

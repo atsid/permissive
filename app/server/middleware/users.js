@@ -45,7 +45,7 @@ module.exports = {
                 users.forEach(user => {
                     user.links = [{
                         rel: 'edit-repo-permission',
-                        href: 'users/' + user.name + '/repos/' + repo + '/permissions/{permission}',
+                        href: 'users/' + user.username + '/repos/' + repoId + '/permissions/{permission}',
                         method: 'PUT'
                     }];
                 });

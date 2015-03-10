@@ -20,7 +20,7 @@ module.exports = {
     listUsersPermission (req, res, next) {
         console.log('looking up repo permissions for users');
 
-        let repo = req.query.permission_repo,
+        let repoId = req.query.permission_repo,
             users = req.entity;
 
         if (repoId) {
@@ -30,6 +30,8 @@ module.exports = {
             }).catch((err) => {
                 next(err);
             });
+        } else {
+            next();
         }
     },
 

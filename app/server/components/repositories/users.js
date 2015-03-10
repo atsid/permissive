@@ -57,9 +57,9 @@ function getGithubTeamRepos(teamId) {
     });
 }
 
-function isPermissiveManaged(repo) {
-    let name = repo.name,
-        prefix = 'zzz_permissive_repo_' + name + '_';
+function isPermissiveManaged(team, repo) {
+    let name = team.name,
+        prefix = 'zzz-permissive-repo-' + repo.name + '-';
 
     return (name.indexOf(prefix) === 0);
 }
@@ -79,12 +79,13 @@ function getPermissionMap() {
             rosters.push(getGithubTeamMembers(team.id).then((roster) => {
 
                 let teamPermission = team.permission;
+
                 return getGithubTeamRepos(team.id).then((repos) => {
 
                     repos.forEach((repo) => {
 
                         let repoId = repo.id,
-                            permissiveManaged = isPermissiveManaged(repo),
+                            permissiveManaged = isPermissiveManaged(team, repo),
                             userMap = repositoryMap[repoId];
 
                         if (!userMap) {
@@ -92,7 +93,6 @@ function getPermissionMap() {
                         }
 
                         roster.forEach((member) => {
-
                             let username = member.login,
                                 permission = userMap[username],
                                 current;

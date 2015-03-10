@@ -63,7 +63,7 @@ describe('Repo model HTTP requests', function () {
 
     });
 
-    describe('read', () => {
+    describe('pull', () => {
 
         let item,
             statusCode;
@@ -91,7 +91,7 @@ describe('Repo model HTTP requests', function () {
         let statusCode;
 
         before((done) => {
-            util.put('/repos/1/users/testuser1/permissions/read').then((result) => {
+            util.put('/repos/1/users/testuser1/permissions/pull').then((result) => {
                 statusCode = result.statusCode;
                 done();
             });

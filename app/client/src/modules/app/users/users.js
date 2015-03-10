@@ -6,13 +6,16 @@ module.exports =
         //require('./bar').name
     ])
     .config(function ($stateProvider) {
+        console.log('configuring state provider');
         $stateProvider
             .state('users', {
                 url: '/users',
                 templateUrl: 'app/users/users.html',
-                controller: 'usersController as ctrl'
+                controller: 'usersController as listCtrl'
             });
     })
     .controller('usersController', function ($http, usersService) {
+        console.log('getting list of users');
         this.users = usersService.query();
+        console.log(this);
     });

@@ -1,9 +1,16 @@
-<div class="user">
-    <div ng-if="user.avatar_url" class="user-avatar">
-        <img ng-src="{{user.avatar_url}}">
+<div class="user" ng-click="userCtrl.userClick()">
+    <div class="user-container">
+        <div ng-if="userCtrl.user.avatar_url" class="user-avatar">
+            <img ng-src="{{userCtrl.user.avatar_url}}">
+        </div>
+        <div class="user-details">
+            <div ng-if="userCtrl.user.name" class="user-details-name">{{userCtrl.user.name}}</div>
+            <div ng-if="userCtrl.user.username" class="user-details-username">{{userCtrl.user.username}}</div>
+        </div>
     </div>
-    <div class="user-details">
-        <div ng-if="user.name" class="user-details-name">{{user.name}}</div>
-        <div ng-if="user.username" class="user-details-username">{{user.username}}</div>
+</div>
+<div ng-if="userCtrl.toggled">
+    <div class="user-repos">
+        <div repo="r" ng-repeat="r in userCtrl.repos"></div>
     </div>
 </div>

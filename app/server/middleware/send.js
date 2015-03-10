@@ -4,6 +4,17 @@
  */
 module.exports = {
 
+    delay (req, res, next) {
+        let delay = req.query.delay;
+        if (delay > 0) {
+            setTimeout(() => {
+                next();
+            }, delay);
+        } else {
+            next();
+        }
+    },
+
     json (req, res, next) {
         res.json(req.entity);
     },

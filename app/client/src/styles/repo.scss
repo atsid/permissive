@@ -6,7 +6,6 @@
     height: 75px;
     align-items: center;
     position: relative;
-    background: #fff;
 
     &.repo_active {
         box-shadow: 0px 0px 15px rgba(0,0,0,.3), -4px 0 0 #2196F3;
@@ -35,6 +34,11 @@
 
     .repo-details-description {
         color: #808080;
+    }
+
+    .repo-details-edit-permissions {
+      color: #808080;
+      margin-right: 8px;
     }
 
     .repo-details-private {

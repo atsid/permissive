@@ -14,6 +14,7 @@ module.exports = {
             users.listUsers,
             users.listUsersPermission,
             users.listUsersLinks,
+            send.delay,
             send.json
         ]
     },

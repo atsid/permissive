@@ -1,0 +1,7 @@
+<nav class="navbar">
+    <ul>
+        <li ng-repeat="item in ctrl.menu">
+            <a ui-sref-active="active" ui-sref="{{item.sref}}" >{{item.title}}</a>
+        </li>
+    </ul>
+</nav>

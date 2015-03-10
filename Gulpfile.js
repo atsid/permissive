@@ -18,12 +18,10 @@ var gulp = require('gulp'),
     /**
      * Build Constants
      */
-    APP_SRC = 'app/**/*.js',
+    APP_SRC = ['app/**/*.js', 'app/*.js', '!app/client/**'],
     APP_DIST = 'dist/',
-    SERVER_SRC = ['src/server/**/*.js', 'src/server/*.js'],
-    SERVER_DIST = ['dist/server/**/*.js', 'dist/server/*.js'],
-    APP_TEMPLATES = 'app/**/*.jade',
-    ALL_SRC = [APP_SRC, '*.js'],
+    SERVER_DIST = 'dist/server/**/*.js',
+    ALL_SRC = APP_SRC.concat(['*.js']),
     SERVER_TEST_SRC = 'dist/server/test/**/Test*.js',
     SERVER_IT_SRC = 'dist/server/it/**/Test*.js',
 
@@ -33,18 +31,11 @@ var gulp = require('gulp'),
  * Transpilation
  */
 gulp.task('transpile', function () {
-    return gulp.src([APP_SRC])
+    return gulp.src(APP_SRC)
         .pipe(changed(APP_DIST))
         .pipe(sourcemaps.init())
         .pipe(babel())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(APP_DIST));
-});
-
-gulp.task('templates', function () {
-    gulp.src([APP_TEMPLATES])
-        .pipe(changed(APP_DIST))
-        .pipe(jade())
         .pipe(gulp.dest(APP_DIST));
 });
 
@@ -159,7 +150,7 @@ gulp.task('halt-server', ['exec-itest'], function () {
 
 gulp.task('default', function (cb) {
     runSequence(
-        ['transpile', 'templates', 'static-checks'],
+        ['transpile', 'static-checks'],
         'test',
         'report-coverage',
         cb);

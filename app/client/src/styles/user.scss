@@ -1,0 +1,50 @@
+.user {
+    display: flex;
+    margin-top: -1px;
+    border-top: 1px solid #ddd;
+    padding: 12px;
+    height: 75px;
+    align-items: center;
+    position: relative;
+    background: #fff;
+
+    &.user_active {
+        box-shadow: 0px 0px 15px rgba(0,0,0,.3), -4px 0 0 #2196F3;
+        height: 400px;
+        transition: height .25s;
+    }
+
+    &:hover {
+        z-index: 3;
+        box-shadow: 0px 0px 15px rgba(0,0,0,.3), -4px 0 0 #2196F3;
+    }
+
+    .user-details {
+        flex: 1;
+        padding-left: 12px;
+    }
+
+    .user-details-username {
+        font-weight: 600;
+        margin-bottom: 6px;
+
+        &:only-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .user-details-name {
+        color: #808080;
+    }
+
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+
+        > img {
+            border-radius: 2px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+}

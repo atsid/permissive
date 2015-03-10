@@ -1,0 +1,9 @@
+<div class="user">
+    <div ng-if="user.avatar_url" class="user-avatar">
+        <img ng-src="{{user.avatar_url}}">
+    </div>
+    <div class="user-details">
+        <div ng-if="user.name" class="user-details-name">{{user.name}}</div>
+        <div ng-if="user.username" class="user-details-username">{{user.username}}</div>
+    </div>
+</div>

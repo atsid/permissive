@@ -34,7 +34,7 @@ module.exports = {
         console.log('checking for links on repo list');
 
         let repos = req.entity,
-            username, //TODO: get username for logged in user
+            username = req.query.permission_user,
             permissions; //TODO: get permissions got logged in uer
 
         if (username && permissions) {

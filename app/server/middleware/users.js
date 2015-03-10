@@ -35,7 +35,6 @@ module.exports = {
 
         let repoId = req.query.permission_repo,
             users = req.entity,
-            username, //TODO: get username for logged in user
             permissions; //TODO: get permissions got logged in uer
 
         if (repoId && permissions) {
@@ -46,7 +45,7 @@ module.exports = {
                 users.forEach(user => {
                     user.links = [{
                         rel: 'edit-repo-permission',
-                        href: 'users/' + username + '/repos/' + repo + '/permissions/{permission}',
+                        href: 'users/' + user.name + '/repos/' + repo + '/permissions/{permission}',
                         method: 'PUT'
                     }];
                 });

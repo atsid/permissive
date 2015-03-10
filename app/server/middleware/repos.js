@@ -33,12 +33,13 @@ module.exports = {
     listReposLinks (req, res, next) {
         console.log('checking for links on repo list');
 
-        let username = req.query.permission_user,
-            repos = req.entity;
+        let repos = req.entity,
+            username, //TODO: get username for logged in user
+            permissions; //TODO: get permissions got logged in uer
 
-        if (username) {
+        if (username && permissions) {
             repos.forEach(repo => {
-                let permission = repo.permission;
+                let permission = permissions[repo.id];
                 if (permission.permissive === 'admin' || permission.github === 'admin') {
                     repo.links = [{
                         rel: 'edit-user-permission',

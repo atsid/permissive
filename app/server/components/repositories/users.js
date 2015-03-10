@@ -8,12 +8,7 @@ module.exports = {
 
     getUsers () {
         return userUtil.getGithubUsers().then(users => {
-            let profiles = [];
-            users.forEach(user => {
-                profiles.push(userUtil.getGithubUser(user.login).then(profile => {
-                    user.name = profile.name;
-                }));
-            });
+            let profiles = users.map(user => userUtil.getGithubUser(user.login).then(profile => user.name = profile.name));
             return Bluebird.all(profiles).then(() => users.map(user => userUtil.convertGithubUser(user)));
         });
     },

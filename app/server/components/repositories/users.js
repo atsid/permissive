@@ -7,14 +7,14 @@ var userUtil = require('./util/users'),
 module.exports = {
 
     getUsers () {
-        return userUtil.getGithubUsers().then((users) => {
+        return userUtil.getGithubUsers().then(users => {
             let profiles = [];
-            users.forEach((user) => {
-                profiles.push(userUtil.getGithubUser(user.login).then((profile) => {
+            users.forEach(user => {
+                profiles.push(userUtil.getGithubUser(user.login).then(profile => {
                     user.name = profile.name;
                 }));
             });
-            return Bluebird.all(profiles).then(() => users.map((user) => userUtil.convertGithubUser(user)));
+            return Bluebird.all(profiles).then(() => users.map(user => userUtil.convertGithubUser(user)));
         });
     },
 
@@ -23,9 +23,9 @@ module.exports = {
     },
 
     getPermissions (repoId, users) {
-        return permUtil.getPermissionMap().then((map) => {
+        return permUtil.getPermissionMap().then(map => {
             let userMap = map[repoId];
-            users.forEach((user) => {
+            users.forEach(user => {
                 user.permission = userMap[user.username] || permUtil.getDefaultPermissions();
             });
             return users;

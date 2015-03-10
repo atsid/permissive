@@ -8,12 +8,10 @@ module.exports = {
         console.log('listing repos [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
-        repoRepository.getRepos().then((repos) => {
+        repoRepository.getRepos().then(repos => {
             req.entity = repos;
             next();
-        }).catch((err) => {
-            next(err);
-        });
+        }).catch(err => next(err));
     },
 
     listReposPermission (req, res, next) {
@@ -23,12 +21,10 @@ module.exports = {
             repos = req.entity;
 
         if (username) {
-            repoRepository.getPermissions(username, repos).then((repos) => {
+            repoRepository.getPermissions(username, repos).then(repos => {
                 req.entity = repos;
                 next();
-            }).catch((err) => {
-                next(err);
-            });
+            }).catch(err => next(err));
         } else {
             next();
         }
@@ -41,7 +37,7 @@ module.exports = {
             repos = req.entity;
 
         if (username) {
-            repos.forEach((repo) => {
+            repos.forEach(repo => {
                 let permission = repo.permission;
                 if (permission.permissive === 'admin' || permission.github === 'admin') {
                     repo.links = [{
@@ -60,11 +56,9 @@ module.exports = {
         console.log('params:' + JSON.stringify(req.params, null, 2));
 
         let repoId = req.params.id;
-        repoRepository.getRepo(repoId).then((repo) => {
+        repoRepository.getRepo(repoId).then(repo => {
             req.entity = repo;
             next();
-        }).catch((err) => {
-            next(err);
-        });
+        }).catch(err => next(err));
     }
 };

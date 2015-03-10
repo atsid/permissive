@@ -31,18 +31,17 @@ module.exports = {
 
     getPermissionMap () {
         let repositoryMap = {};
-        return teamUtil.getGithubTeams().then((teams) => {
+        return teamUtil.getGithubTeams().then(teams => {
 
             let rosters = [];
-            teams.forEach((team) => {
+            teams.forEach(team => {
 
-                rosters.push(teamUtil.getGithubTeamMembers(team.id).then((roster) => {
+                rosters.push(teamUtil.getGithubTeamMembers(team.id).then(roster => {
 
                     let teamPermission = team.permission;
+                    return teamUtil.getGithubTeamRepos(team.id).then(repos => {
 
-                    return teamUtil.getGithubTeamRepos(team.id).then((repos) => {
-
-                        repos.forEach((repo) => {
+                        repos.forEach(repo => {
 
                             let repoId = repo.id,
                                 permissiveManaged = isPermissiveManaged(team, repo),
@@ -52,7 +51,7 @@ module.exports = {
                                 userMap = repositoryMap[repoId] = {};
                             }
 
-                            roster.forEach((member) => {
+                            roster.forEach(member => {
                                 let username = member.login,
                                     permission = userMap[username],
                                     current;

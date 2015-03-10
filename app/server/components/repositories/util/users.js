@@ -20,9 +20,7 @@ module.exports = {
     getGithubUser (username) {
         return github.getUser({
             'user': username
-        }).then((user) => {
-            return convertGithubUser(user);
-        });
+        }).then(user => convertGithubUser(user));
     },
 
     getGithubUsers() {

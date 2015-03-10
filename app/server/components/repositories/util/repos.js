@@ -34,9 +34,9 @@ module.exports = {
 
     getGithubRepo (repoId) {
         let args = getDefaultRepoArgs();
-        return github.getRepos(args).then((repos) => {
+        return github.getRepos(args).then(repos => {
             let id = parseInt(repoId, 10);
-            return repos.find((repo) => repo.id === id);
+            return repos.find(repo => repo.id === id);
         });
     }
 

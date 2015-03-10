@@ -40,3 +40,16 @@ or
 You can use either basic authentication (username/password) or an OAuth token to authenticate with the GitHub API.
 
 As you develop, you can pull down the latest dependencies with either `npm install` from within the Vagrant VM or `vagrant provision` from your host.
+
+###Angular UI
+
+Scaffolding for a UI is in place, but full build system integration is not yet complete. To get started in the meantime:
+
+Get your server running using the starter instructions above.
+Open a new cmd tab, then:
+
+    cd app/client
+    bower install
+    ../../node_modules/.bin/gulp
+    
+That'll start a watcher that compiles the client and serves it up.

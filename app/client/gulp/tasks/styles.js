@@ -12,11 +12,12 @@ var es = require('event-stream');
 
 module.exports = gulp.task('styles', function () {
   return es.merge(
+        gulp.src(config.paths.src.bowerStyles),
         gulp.src(config.paths.src.styles)
             .pipe(gulpif(!release, sourcemaps.init()))
             .pipe(sass())
-            .pipe(gulpif(!release, sourcemaps.write())),
-        gulp.src(config.paths.src.bowerStyles))
+            .pipe(gulpif(!release, sourcemaps.write()))
+        )
     .pipe(concat('app.css'))
     .pipe(autoprefixer('last 1 version'))
     .pipe(gulpif(release, csso()))

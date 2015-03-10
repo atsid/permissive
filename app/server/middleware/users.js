@@ -41,18 +41,20 @@ module.exports = {
         let repo = req.query.permission_repo,
             users = req.entity;
 
-        //TODO: of course, these links should only appear if logged in user has admin on the repo also
         if (repo) {
             users.forEach((user) => {
-                user.links = [{
-                    rel: 'edit-repo-permission',
-                    href: 'users/' + user.username + '/repos/' + repo + '/permissions/{permission}',
-                    method: 'PUT'
-                }, {
-                    rel: 'remove-repo-permission',
-                    href: 'users/' + user.username + '/repos/' + repo,
-                    method: 'DELETE'
-                }];
+                let permission = user.permission;
+                if (permission.permissive === 'admin' || permission.github === 'admin') {
+                    user.links = [{
+                        rel: 'edit-repo-permission',
+                        href: 'users/' + user.username + '/repos/' + repo + '/permissions/{permission}',
+                        method: 'PUT'
+                    }, {
+                        rel: 'remove-repo-permission',
+                        href: 'users/' + user.username + '/repos/' + repo,
+                        method: 'DELETE'
+                    }];
+                }
             });
         }
         next();

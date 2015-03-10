@@ -9,17 +9,11 @@ var svcPath = '../services/github',
 module.exports = {
 
     getRepos () {
-        return repoUtil.getGithubRepos().then((repos) => {
-            return repos.map((repo) => {
-                return repoUtil.convertGithubRepo(repo);
-            });
-        });
+        return repoUtil.getGithubRepos().then((repos) => repos.map((repo) => repoUtil.convertGithubRepo(repo)));
     },
 
     getRepo (repoId) {
-        return repoUtil.getGithubRepo(repoId).then((repo) => {
-            return repoUtil.convertGithubRepo(repo);
-        });
+        return repoUtil.getGithubRepo(repoId).then((repo) => repoUtil.convertGithubRepo(repo));
     },
 
     getPermissions (username, repos) {

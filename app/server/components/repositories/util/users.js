@@ -2,15 +2,16 @@
 
 var svcPath = '../../services/github',
     mock = process.env.SERVICE === 'mock' ? '.mock' : '',
-    github = require(svcPath + mock);
+    github = require(svcPath + mock),
+    convertGithubUser;
 
-function convertGithubUser(user) {
+convertGithubUser = (user) => {
     return {
         username: user.login,
         name: user.name,
         avatar_url: user.avatar_url
     };
-}
+};
 
 module.exports = {
 

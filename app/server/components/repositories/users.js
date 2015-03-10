@@ -14,11 +14,7 @@ module.exports = {
                     user.name = profile.name;
                 }));
             });
-            return Bluebird.all(profiles).then(() => {
-                return users.map((user) => {
-                    return userUtil.convertGithubUser(user);
-                });
-            });
+            return Bluebird.all(profiles).then(() => users.map((user) => userUtil.convertGithubUser(user)));
         });
     },
 

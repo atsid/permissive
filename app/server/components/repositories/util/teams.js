@@ -2,14 +2,15 @@
 
 var svcPath = '../../services/github',
     mock = process.env.SERVICE === 'mock' ? '.mock' : '',
-    github = require(svcPath + mock);
+    github = require(svcPath + mock),
+    getDefaultTeamArgs;
 
-function getDefaultTeamArgs() {
+getDefaultTeamArgs = () => {
     return {
         org: github.config.org,
         per_page: 100
     };
-}
+};
 
 module.exports = {
 

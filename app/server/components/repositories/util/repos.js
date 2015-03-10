@@ -2,23 +2,26 @@
 
 var svcPath = '../../services/github',
     mock = process.env.SERVICE === 'mock' ? '.mock' : '',
-    github = require(svcPath + mock);
+    github = require(svcPath + mock),
+    getDefaultRepoArgs,
+    convertGithubRepo;
 
-function getDefaultRepoArgs() {
+
+getDefaultRepoArgs = () => {
     return {
         org: github.config.org,
         per_page: 100
     };
-}
+};
 
-function convertGithubRepo(repo) {
+convertGithubRepo = (repo) => {
     return {
         'id': repo.id,
         'name': repo.name,
         'description': repo.description,
         'public': !repo.private
     };
-}
+};
 
 module.exports = {
 

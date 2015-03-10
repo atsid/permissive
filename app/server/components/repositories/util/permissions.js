@@ -7,18 +7,23 @@ var teamUtil = require('./teams'),
         push: 2,
         pull: 1,
         none: 0
-    };
+    },
+    isPermissiveManaged,
+    getDefaultPermissions;
 
-function isPermissiveManaged(team, repo) {
+isPermissiveManaged = (team, repo) => {
     let name = team.name,
         prefix = 'zzz-permissive-repo-' + repo.name + '-';
 
     return (name.indexOf(prefix) === 0);
-}
+};
 
-function getDefaultPermissions() {
-    return { github: 'none', permissive: 'none'};
-}
+getDefaultPermissions = () => {
+    return {
+        github: 'none',
+        permissive: 'none'
+    };
+};
 
 module.exports = {
 
@@ -73,9 +78,7 @@ module.exports = {
                 }));
             });
 
-            return Bluebird.all(rosters).then(() => {
-                return repositoryMap;
-            });
+            return Bluebird.all(rosters).then(() => repositoryMap);
         });
     }
 };

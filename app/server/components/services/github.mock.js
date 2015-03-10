@@ -50,21 +50,21 @@ var mask = require('json-mask'),
         '1': {
             id: 1,
             name: 'Contributors',
-            permission: 'write',
+            permission: 'push',
             _repos: [1, 2],
             _users: ['testuser1']
         },
         '2': {
             id: 2,
-            name: 'zzz-permissive-repo-Test-Repo-1-read',
-            permission: 'read',
+            name: 'zzz-permissive-repo-Test-Repo-1-pull',
+            permission: 'pull',
             _repos: [1],
             _users: ['testuser1']
         },
         '3':{
             id: 3,
-            name: 'zzz-permissive-repo-Test-Repo-1-write',
-            permission: 'write',
+            name: 'zzz-permissive-repo-Test-Repo-1-push',
+            permission: 'push',
             _repos: [1],
             _users: ['testuser2']
         },

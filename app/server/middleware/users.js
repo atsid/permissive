@@ -1,7 +1,6 @@
 'use strict';
 
-var userRepository = require('../components/repositories/users'),
-    Bluebird = require('bluebird');
+var userRepository = require('../components/repositories/users');
 
 module.exports = {
 
@@ -49,10 +48,6 @@ module.exports = {
                         rel: 'edit-repo-permission',
                         href: 'users/' + user.username + '/repos/' + repo + '/permissions/{permission}',
                         method: 'PUT'
-                    }, {
-                        rel: 'remove-repo-permission',
-                        href: 'users/' + user.username + '/repos/' + repo,
-                        method: 'DELETE'
                     }];
                 }
             });

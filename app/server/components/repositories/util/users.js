@@ -1,0 +1,33 @@
+'use strict';
+
+var svcPath = '../../services/github',
+    mock = process.env.SERVICE === 'mock' ? '.mock' : '',
+    github = require(svcPath + mock);
+
+function convertGithubUser(user) {
+    return {
+        username: user.login,
+        name: user.name,
+        avatar_url: user.avatar_url
+    };
+}
+
+module.exports = {
+
+    convertGithubUser: convertGithubUser,
+
+    getGithubUser (username) {
+        return github.getUser({
+            'user': username
+        }).then((user) => {
+            return convertGithubUser(user);
+        });
+    },
+
+    getGithubUsers() {
+        return github.getUsers({
+            org: github.config.org,
+            per_page: 100
+        });
+    }
+};

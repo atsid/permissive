@@ -1,6 +1,6 @@
 'use strict';
 
-var repoService = require('../components/repositories/repos');
+var repoRepository = require('../components/repositories/repos');
 
 module.exports = {
 
@@ -8,18 +8,9 @@ module.exports = {
         console.log('listing repos [' + req.path + ']');
         console.log('query:' + JSON.stringify(req.query, null, 2));
 
-        repoService.getRepos().then((repos) => {
-            req.entity = repos.map((repo) => {
-                return {
-                    'id': repo.id,
-                    'name': repo.name,
-                    'description': repo.description,
-                    'public': !repo.private
-                };
-            });
-
+        repoRepository.getRepos().then((repos) => {
+            req.entity = repos;
             next();
-
         }).catch((err) => {
             next(err);
         });
@@ -28,34 +19,37 @@ module.exports = {
     listReposPermission (req, res, next) {
         console.log('looking up user permission for repos');
 
-        let user = req.query.permission_user,
+        let username = req.query.permission_user,
             repos = req.entity;
 
-        if (user) {
-            repos.forEach((repo) => {
-                repo.permission = 'read';
+        if (username) {
+            repoRepository.getPermissions(username, repos).then((repos) => {
+                req.entity = repos;
+                next();
+            }).catch((err) => {
+                next(err);
             });
+        } else {
+            next();
         }
-        next();
     },
 
     listReposLinks (req, res, next) {
         console.log('checking for links on repo list');
 
-        let user = req.query.permission_user,
+        let username = req.query.permission_user,
             repos = req.entity;
 
-        if (user) {
+        if (username) {
             repos.forEach((repo) => {
-                repo.links = [{
-                    rel: 'edit-user-permission',
-                    href: 'repos/' + repo.id + '/users/' + user + '/permissions/{permission}',
-                    method: 'PUT'
-                }, {
-                    rel: 'remove-user-permission',
-                    href: 'repos/' + repo.id + '/users/' + user,
-                    method: 'DELETE'
-                }];
+                let permission = repo.permission;
+                if (permission.permissive === 'admin' || permission.github === 'admin') {
+                    repo.links = [{
+                        rel: 'edit-user-permission',
+                        href: 'repos/' + repo.id + '/users/' + username + '/permissions/{permission}',
+                        method: 'PUT'
+                    }];
+                }
             });
         }
         next();
@@ -65,22 +59,10 @@ module.exports = {
         console.log('getting repo [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
 
-        repoService.getRepos().then((repos) => {
-            let id = req.params.id;
-            repos.some((repo) => {
-                if (repo.id === parseInt(id, 10)) {
-                    req.entity = {
-                        'id': repo.id,
-                        'name': repo.name,
-                        'description': repo.description,
-                        'public': !repo.private
-                    };
-                    return true;
-                }
-            });
-
+        let repoId = req.params.id;
+        repoRepository.getRepo(repoId).then((repo) => {
+            req.entity = repo;
             next();
-
         }).catch((err) => {
             next(err);
         });

@@ -1,14 +1,19 @@
-<div class="repo">
+<div class="repo" ng-click="repoCtrl.repoClick()">
     <div class="repo-container">
         <div class="repo-details">
-            <div ng-if="repo.name" class="repo-details-name">{{repo.name}}</div>
-            <div ng-if="repo.description" class="repo-details-description">{{repo.description}}</div>
+            <div ng-if="repoCtrl.repo.name" class="repo-details-name">{{repoCtrl.repo.name}}</div>
+            <div ng-if="repoCtrl.repo.description" class="repo-details-description">{{repoCtrl.repo.description}}</div>
         </div>
         <div class="repo-links">
-            <div ng-if="repo.links && repo.links[0]" class="repo-details-edit-permissions">{{repo.links[0].rel}}</div>
+            <div ng-if="repoCtrl.repo.links && repoCtrl.repo.links[0]" class="repo-details-edit-permissions">{{repoCtrl.repo.links[0].rel}}</div>
         </div>
-        <div ng-if="!repo.public" class="repo-details-private">
+        <div ng-if="!repoCtrl.repo.public" class="repo-details-private">
             private
         </div>
+    </div>
+</div>
+<div ng-if="repoCtrl.toggled">
+    <div class="repo-users">
+            hello
     </div>
 </div>

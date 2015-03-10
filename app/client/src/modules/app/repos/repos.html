@@ -1,4 +1,4 @@
 <div class="repos">
-    <h4 ng-if="!ctrl.repos.length" style="text-align: center;">Fetching repos...</h4>
-    <div repo="r" ng-repeat="r in ctrl.repos | orderBy:'name'" ></div>
+    <h4 ng-if="!listCtrl.repos.length" style="text-align: center;">Fetching repos...</h4>
+    <div repo="r" ng-repeat="r in listCtrl.repos | orderBy:'name'" ></div>
 </div>

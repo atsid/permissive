@@ -6,7 +6,6 @@ module.exports =
         //require('./bar').name
     ])
     .config(function ($stateProvider) {
-        console.log('configuring state provider');
         $stateProvider
             .state('users', {
                 url: '/users',
@@ -17,5 +16,4 @@ module.exports =
     .controller('usersController', function ($http, usersService) {
         console.log('getting list of users');
         this.users = usersService.query();
-        console.log(this);
     });

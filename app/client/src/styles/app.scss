@@ -1,0 +1,12 @@
+@import "variables";
+@import "imports";
+@import "user";
+@import "repo";
+@import "navbar";
+
+body {
+    font-family: "Roboto", Helvetica Neue, Helvetica, Arial;
+    font-size: 14px;
+    margin: 0;
+    background-color: #f3f3f3;
+}

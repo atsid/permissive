@@ -2,7 +2,6 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
@@ -10,30 +9,24 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu-cloud-images/trusty64"
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
+  # VM tuning
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.memory = 2048
+    vb.cpus = 4
+  end
+
   # Forward server ports from guest to host
   config.vm.network "forwarded_port", guest: 3000, host: 3000
 
-  # Required for NFS to work
+  # Shared folders with NFS
   config.vm.network :private_network, type: "dhcp"
-
-  # Use NFS for shared folders for better performance
   config.vm.synced_folder '.', '/vagrant', nfs: true
   config.vm.synced_folder "salt/roots/", "/srv/salt", nfs: true
 
-  # SSH Agent Forwarding
+  # SSH agent forwarding
   config.ssh.forward_agent = true
-
-  # VM tuning
-  config.vm.provider :virtualbox do |vb|
-    # Improves network speed in guest
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-
-    # Increase memory and cpu usage
-    vb.memory = 2048
-    vb.cpus = 4
-    vb.customize ["modifyvm", :id, "--ioapic", "on"]
-  end
 
   # Provision with salt
   config.vm.provision :salt do |salt|
@@ -41,5 +34,4 @@ Vagrant.configure(2) do |config|
     salt.run_highstate = true
     salt.verbose = true
   end
-
 end

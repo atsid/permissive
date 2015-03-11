@@ -20,6 +20,7 @@ module.exports = /*@ngInject*/
                             this.users = usersService.query({
                                 permission_repo: this.repo.id
                             });
+                            console.log(this);
                         }
                     };
                 }

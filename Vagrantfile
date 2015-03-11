@@ -20,6 +20,10 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder '.', '/vagrant', nfs: true
   config.vm.synced_folder "salt/roots/", "/srv/salt", nfs: true
 
+  # SSH Agent Forwarding
+  config.ssh.forward_agent = true
+
+  # VM tuning
   config.vm.provider :virtualbox do |vb|
     # Improves network speed in guest
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]

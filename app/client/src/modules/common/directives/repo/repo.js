@@ -7,7 +7,7 @@ module.exports = /*@ngInject*/
             scope: {
                 repo: '='
             },
-            controllerAs: 'repoCtrl',
+            controllerAs: 'ctrl',
             bindToController: true,
             controller: /*@ngInject*/
                 function (usersService) {

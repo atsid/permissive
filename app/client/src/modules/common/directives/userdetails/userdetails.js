@@ -7,7 +7,7 @@ module.exports = /*@ngInject*/
             scope: {
                 user: '=userdetails'
             },
-            controllerAs: 'userCtrl',
+            controllerAs: 'ctrl',
             bindToController: true,
             controller: /*@ngInject*/
                 function () {

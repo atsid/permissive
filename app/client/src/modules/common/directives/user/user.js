@@ -11,8 +11,6 @@ module.exports = /*@ngInject*/
             bindToController: true,
             controller: /*@ngInject*/
                 function (reposService) {
-                    // use this var to toggle a class using ng-class="{visible: ctrl.toggled}"
-                    // in the view to toggle a div where the repos will show up
                     this.toggled = false;
 
                     this.userClick = () => {

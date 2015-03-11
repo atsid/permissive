@@ -15,7 +15,10 @@
     "bluebird": "^2.9.13",
     "express": "^4.12.0",
     "github": "^0.2.3",
-    "json-mask": "0.3.4"
+    "json-mask": "0.3.4",
+    "method-override": "^2.3.1",
+    "passport": "^0.2.1",
+    "passport-github": "^0.1.5"
   },
   "devDependencies": {
     "babelify": "^5.0.4",

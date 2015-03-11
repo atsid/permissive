@@ -10,9 +10,10 @@ module.exports =
             .state('users', {
                 url: '/users',
                 templateUrl: 'app/users/users.html',
-                controller: 'usersController as ctrl'
+                controller: 'usersController as listCtrl'
             });
     })
     .controller('usersController', function ($http, usersService) {
+        console.log('getting list of users');
         this.users = usersService.query();
     });

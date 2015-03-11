@@ -1,9 +1,8 @@
-<div class="repo">
-    <div class="repo-details">
-        <div ng-if="repo.name" class="repo-details-name">{{repo.name}}</div>
-        <div ng-if="repo.description" class="repo-details-description">{{repo.description}}</div>
-    </div>
-    <div ng-if="!repo.public" class="repo-details-private">
-        private
+<div ng-click="repoCtrl.repoClick()">
+    <div repodetails="repoCtrl.repo"></div>
+</div>
+<div ng-if="repoCtrl.toggled">
+    <div class="repo-users">
+        <div userdetails="u" ng-repeat="u in repoCtrl.users"></div>
     </div>
 </div>

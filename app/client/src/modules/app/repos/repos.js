@@ -10,9 +10,10 @@ module.exports =
             .state('repos', {
                 url: '/repos',
                 templateUrl: 'app/repos/repos.html',
-                controller: 'reposController as ctrl'
+                controller: 'reposController as listCtrl'
             });
     })
     .controller('reposController', function ($http, reposService) {
+        console.log('getting list of repos');
         this.repos = reposService.query();
     });

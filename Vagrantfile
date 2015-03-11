@@ -13,13 +13,12 @@ Vagrant.configure(2) do |config|
   # Forward server ports from guest to host
   config.vm.network "forwarded_port", guest: 3000, host: 3000
 
-  # Required for NFS to work, pick any local IP
-  config.vm.network :private_network, ip: '192.168.50.50'
+  # Required for NFS to work
+  config.vm.network :private_network, type: "dhcp"
 
   # Use NFS for shared folders for better performance
   config.vm.synced_folder '.', '/vagrant', nfs: true
   config.vm.synced_folder "salt/roots/", "/srv/salt", nfs: true
-
 
   config.vm.provider :virtualbox do |vb|
     # Improves network speed in guest

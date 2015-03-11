@@ -63,7 +63,7 @@ describe('User model HTTP requests', function () {
 
     });
 
-    describe('read',  () => {
+    describe('pull',  () => {
 
         let item,
             statusCode;
@@ -91,7 +91,7 @@ describe('User model HTTP requests', function () {
         let statusCode;
 
         before((done) => {
-            util.put('/users/testuser1/repos/1/permissions/read').then((result) => {
+            util.put('/users/testuser1/repos/1/permissions/pull').then((result) => {
                 statusCode = result.statusCode;
                 done();
             });

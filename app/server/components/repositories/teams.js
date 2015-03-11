@@ -27,7 +27,6 @@ module.exports = {
 
             // user already on the team
             if (current.permissive === team) {
-                console.log('User already assigned the desired permission');
                 return new Error('User already assigned the desired permission');
             }
 

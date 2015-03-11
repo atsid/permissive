@@ -25,7 +25,6 @@ module.exports = {
     removeRepoPermissionForUser (req, res, next) {
         console.log('removing user repo permission level [' + req.path + ']');
         console.log('params:' + JSON.stringify(req.params, null, 2));
-        next();
 
         // get params
         let params = req.params,

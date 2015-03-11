@@ -40,18 +40,15 @@ module.exports = {
 
                     // remove-only, don't add to new team
                     if (team === 'none') {
-                        console.log('remove-only');
                         return teamUtil.removeFromGithubTeam(username, oldTeam.id);
                     }
 
                     // add-only, not currently on a team
                     if (current.permissive === 'none') {
-                        console.log('add-only');
                         return teamUtil.addToGithubTeam(username, newTeam.id);
                     }
 
                     // remove from current team, add to new team
-                    console.log('remove, then add');
                     return teamUtil.removeFromGithubTeam(username, oldTeam.id).then(() => teamUtil.addToGithubTeam(username, newTeam.id));
                 });
             });

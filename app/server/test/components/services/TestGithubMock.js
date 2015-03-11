@@ -173,7 +173,7 @@ describe('github.mock.js', () => {
 
     it('deleteTeamMember fail - not on team', (done) => {
 
-        github.addTeamMember({user: 'testuser1', id: 1}).then(() => {
+        github.deleteTeamMember({user: 'testuser1', id: 1}).then(() => {
             chai.assert.fail();
             done();
         }).catch((err) => {
@@ -184,7 +184,7 @@ describe('github.mock.js', () => {
 
     it('deleteTeamMember fail - no such team', (done) => {
 
-        github.addTeamMember({user: 'testuser1', id: 99}).then(() => {
+        github.deleteTeamMember({user: 'testuser1', id: 99}).then(() => {
             chai.assert.fail();
             done();
         }).catch((err) => {

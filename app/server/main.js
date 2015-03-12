@@ -30,13 +30,13 @@ exports.start = () => {
         http = require('http'),
         path = require('path'),
         session = require('express-session'),
-        authenticator = require('./authenticator.js'),
         discovery = require('./discovery'),
+        passport = require('./passport'),
         app = express();
 
     app.use(session(config.session));
 
-    authenticator.setup(app, config);
+    passport.setup(app, config);
 
     app.set('port', config.server.port);
     app.use(express.static(path.resolve(__dirname, '../../app/client/build')));

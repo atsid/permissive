@@ -16,7 +16,7 @@ module.exports = {
         passport.use(new GitHubStrategy({
                 clientID: config.github.clientID,
                 clientSecret: config.github.clientSecret,
-                callbackURL: config.server.hostName + ":" + config.app.port + config.github.authCallbackRoute
+                callbackURL: config.server.hostName + ":" + config.server.port + config.server.api_prefix + config.github.authCallbackRoute
             },
             function (accessToken, refreshToken, profile, done) {
                 done(null, { displayName: profile.displayName, id: profile.id, token: accessToken });
@@ -33,8 +33,8 @@ module.exports = {
         app.use(passport.initialize());
         app.use(passport.session());
 
-        app.get(config.github.authRoute, passport.authenticate('github'));
-        app.get(config.github.authCallbackRoute, passport.authenticate('github', { failureRedirect: config.github.failureRedirect, session: true }),
+        app.get(config.server.api_prefix + config.github.authRoute, passport.authenticate('github'));
+        app.get(config.server.api_prefix + config.github.authCallbackRoute, passport.authenticate('github', { failureRedirect: config.github.failureRedirect, session: true }),
             function (req, res) {
                 // TODO: redirect to initial request location...
                 res.redirect('/');

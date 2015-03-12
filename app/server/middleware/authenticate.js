@@ -1,16 +1,12 @@
 'use strict';
 
 module.exports = {
-    isAuthenticated: function (req, res, next) {
-        console.log("isAuthenticated");
+    isAuthenticated (req, res, next) {
         if (req.isAuthenticated()) {
-            console.log("Authenticated");
             next();
         }
 
-        console.log("redirecting to authentication");
-
-        // todo : use config object to create this url...
-        res.redirect('/api/v1/auth/github');
+        console.log("Not authenticated, sending 401");
+        res.send(401);
     }
 };

@@ -5,7 +5,7 @@
 var users = require('../../middleware/users'),
     permissions = require('../../middleware/permissions'),
     send = require('../../middleware/send'),
-    auth = require('../../authenticate');
+    auth = require('../../middleware/authenticate');
 
 module.exports = {
     list: {

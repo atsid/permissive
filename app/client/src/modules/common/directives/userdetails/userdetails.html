@@ -8,7 +8,13 @@
             <div ng-if="ctrl.user.username" class="user-details-username">{{ctrl.user.username}}</div>
         </div>
         <div class="user-links">
-            <div ng-if="ctrl.user.links && ctrl.user.links[0]" class="user-details-edit-permissions">{{ctrl.user.links[0].rel}}</div>
+            <div ng-if="ctrl.editLink" class="user-details-edit-permissions">
+                <div togglebuttons
+                     options="ctrl.buttons"
+                     value="ctrl.permission"
+                     on-change="ctrl.handlePermissionChange(value)">
+                </div>
+            </div>
         </div>
     </div>
 </div>

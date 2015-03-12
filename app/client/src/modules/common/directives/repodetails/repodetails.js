@@ -1,6 +1,7 @@
 'use strict';
 
-let links = require('../../../links');
+let links = require('../../../links'),
+    buttons = require('../config/permission-buttons');
 
 module.exports = /*@ngInject*/
     function repodetails() {
@@ -19,20 +20,7 @@ module.exports = /*@ngInject*/
 
                     this.permission = 'none'; //TODO: pull from model
 
-                    this.buttons = [{
-                        label: 'NONE',
-                        value: 'none',
-                        selected: true
-                    }, {
-                        label: 'READ',
-                        value: 'pull'
-                    }, {
-                        label: 'WRITE',
-                        value: 'push'
-                    }, {
-                        label: 'ADMIN',
-                        value: 'admin'
-                    }];
+                    this.buttons = buttons;
 
                     this.handlePermissionChange = (value) => {
                         console.log('permission change', value);

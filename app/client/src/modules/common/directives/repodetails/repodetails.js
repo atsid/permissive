@@ -17,13 +17,31 @@ module.exports = /*@ngInject*/
 
                     this.editLink = links.findByRel('edit-user-permission', this.repo.links);
 
-                    this.permissionClick = (link, permission) => {
-                        console.log('permission clicked [' + permission + ']');
+                    this.permission = 'none'; //TODO: pull from model
 
-                        linkService.exec(link, {
-                            permission: permission
+                    this.buttons = [{
+                        label: 'NONE',
+                        value: 'none',
+                        selected: true
+                    }, {
+                        label: 'READ',
+                        value: 'pull'
+                    }, {
+                        label: 'WRITE',
+                        value: 'push'
+                    }, {
+                        label: 'ADMIN',
+                        value: 'admin'
+                    }];
+
+                    this.handlePermissionChange = (value) => {
+                        console.log('permission change', value);
+                        this.permission = value;
+                        linkService.exec(this.editLink, {
+                            permission: this.permission
                         });
                     };
+
                 }
         };
     };

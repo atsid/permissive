@@ -1,0 +1,7 @@
+<span ng-repeat="o in ctrl.options">
+    <md-button
+            ng-class="{'md-accent': ctrl.value == o.value}"
+            ng-click="ctrl.click(o.value)">
+        {{o.label}}
+    </md-button>
+</span>

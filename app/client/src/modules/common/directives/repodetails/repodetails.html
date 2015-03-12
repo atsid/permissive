@@ -9,20 +9,11 @@
         </div>
         <div class="repo-links">
             <div ng-if="ctrl.editLink" class="repo-details-edit-permissions">
-                <md-radio-group>
-                    <md-button ng-click="ctrl.permissionClick(ctrl.editLink, 'none')">
-                        NONE
-                    </md-button>
-                    <md-button ng-click="ctrl.permissionClick(ctrl.editLink, 'pull')">
-                        READ
-                    </md-button>
-                    <md-button ng-click="ctrl.permissionClick(ctrl.editLink, 'push')">
-                        WRITE
-                    </md-button>
-                    <md-button ng-click="ctrl.permissionClick(ctrl.editLink, 'admin')">
-                        ADMIN
-                    </md-button>
-                </md-radio-group>
+                <div togglebuttons
+                     options="ctrl.buttons"
+                     value="ctrl.permission"
+                     on-change="ctrl.handlePermissionChange(value)">
+                 </div>
             </div>
         </div>
     </div>

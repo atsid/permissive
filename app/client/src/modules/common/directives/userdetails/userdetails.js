@@ -18,7 +18,11 @@ module.exports = /*@ngInject*/
 
                     this.editLink = links.findByRel('edit-repo-permission', this.user.links);
 
-                    this.permission = 'none'; //TODO: pull from model
+                    let perm = this.user.permission;
+                    if (perm) {
+                        this.permission = perm.permissive;
+                        this.github = perm.github;
+                    }
 
                     this.buttons = buttons;
 

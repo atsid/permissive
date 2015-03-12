@@ -2,14 +2,18 @@
 
 module.exports = [{
     label: 'NONE',
-    value: 'none'
+    value: 'none',
+    level: 0
 }, {
     label: 'READ',
-    value: 'pull'
+    value: 'pull',
+    level: 1
 }, {
     label: 'WRITE',
-    value: 'push'
+    value: 'push',
+    level: 2
 }, {
     label: 'ADMIN',
-    value: 'admin'
+    value: 'admin',
+    level: 3
 }];

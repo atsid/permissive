@@ -23,11 +23,11 @@ module.exports = {
         return permUtil.getPermissionMap().then(map => {
 
             let users = map[repoId],
-                current = users[username];
+                current = users[username] || permUtil.getDefaultPermissions();
 
             // user already on the team
             if (current.permissive === team) {
-                return new Error('User already assigned the desired permission');
+                return;
             }
 
             // need repo name and team id
@@ -62,13 +62,8 @@ module.exports = {
             let users = map[repoId],
                 current = users[username];
 
-            if (team === 'none') {
-                return new Error('Cannot remove none permission');
-            }
-
-            // user not on the team
-            if (current.permissive !== team) {
-                return new Error('User does not have the permission you want to remove');
+            if (team === 'none' || current.permissive !== team) {
+                return;
             }
 
             // need repo name and team id

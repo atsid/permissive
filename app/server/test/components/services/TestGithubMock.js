@@ -139,17 +139,6 @@ describe('github.mock.js', () => {
         });
     });
 
-    it('addTeamMember fail - already on team', (done) => {
-
-        github.addTeamMember({user: 'testuser2', id: 1}).then(() => {
-            chai.assert.fail();
-            done();
-        }).catch((err) => {
-            chai.assert.ok(err);
-            done();
-        });
-    });
-
     it('addTeamMember fail - no such team', (done) => {
 
         github.addTeamMember({user: 'testuser2', id: 99}).then(() => {
@@ -168,17 +157,6 @@ describe('github.mock.js', () => {
                 chai.assert.equal(teamMembers.length, 1);
                 done();
             });
-        });
-    });
-
-    it('deleteTeamMember fail - not on team', (done) => {
-
-        github.deleteTeamMember({user: 'testuser1', id: 1}).then(() => {
-            chai.assert.fail();
-            done();
-        }).catch((err) => {
-            chai.assert.ok(err);
-            done();
         });
     });
 

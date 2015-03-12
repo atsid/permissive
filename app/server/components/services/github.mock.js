@@ -170,14 +170,11 @@ module.exports = {
             let team = teams[id];
 
             if (team) {
-
                 let found = team._users.indexOf(username);
-                if (found > -1) {
-                    reject(new Error('User [' + username + '] already on team: ' + id));
-                } else {
+                if (found === -1) {
                     team._users.push(username);
-                    resolve();
                 }
+                resolve();
             } else {
                 reject(new Error('No mock team: ' + id));
             }
@@ -194,14 +191,11 @@ module.exports = {
             let team = teams[id];
 
             if (team) {
-
                 let found = team._users.indexOf(username);
-                if (found === -1) {
-                    reject(new Error('User [' + username + '] is not on team: ' + id));
-                } else {
+                if (found > -1) {
                     team._users = team._users.filter(user => user !== username);
-                    resolve();
                 }
+                resolve();
             } else {
                 reject(new Error('No mock team: ' + id));
             }

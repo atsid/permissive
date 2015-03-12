@@ -1,5 +1,7 @@
 'use strict';
 
+let links = require('../../../links');
+
 module.exports = /*@ngInject*/
     function repodetails() {
         return {
@@ -12,8 +14,11 @@ module.exports = /*@ngInject*/
             controller: /*@ngInject*/
                 function (linkService) {
                     console.log('binding repo details controller', this);
+
+                    this.editLink = links.findByRel('edit-user-permission', this.repo.links);
+
                     this.permissionClick = (link, permission) => {
-                        console.log('permission clicked', permission);
+                        console.log('permission clicked [' + permission + ']');
 
                         linkService.exec(link, {
                             permission: permission

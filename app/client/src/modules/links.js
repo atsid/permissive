@@ -15,12 +15,14 @@ module.exports = {
     findByRel (rel, links) {
         //TODO: es6 polyfill for 'find'
         let link;
-        links.some((l) => {
-            if (l.rel === rel) {
-                link = l;
-                return true;
-            }
-        });
+        if (links) {
+            links.some((l) => {
+                if (l.rel === rel) {
+                    link = l;
+                    return true;
+                }
+            });
+        }
         return link;
     }
 };

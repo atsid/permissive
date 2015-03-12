@@ -158,5 +158,47 @@ module.exports = {
                 reject(new Error('No mock team: ' + id));
             }
         });
+    },
+
+    addTeamMember (msg) {
+        let id = msg.id,
+            username = msg.user;
+        console.log('adding mock user [' + username + '] to mock team [' + id + ']');
+
+        return new Promise((resolve, reject) => {
+
+            let team = teams[id];
+
+            if (team) {
+                let found = team._users.indexOf(username);
+                if (found === -1) {
+                    team._users.push(username);
+                }
+                resolve();
+            } else {
+                reject(new Error('No mock team: ' + id));
+            }
+        });
+    },
+
+    deleteTeamMember (msg) {
+        let id = msg.id,
+            username = msg.user;
+        console.log('removing mock user [' + username + '] from mock team [' + id + ']');
+
+        return new Promise((resolve, reject) => {
+
+            let team = teams[id];
+
+            if (team) {
+                let found = team._users.indexOf(username);
+                if (found > -1) {
+                    team._users = team._users.filter(user => user !== username);
+                }
+                resolve();
+            } else {
+                reject(new Error('No mock team: ' + id));
+            }
+        });
     }
 };

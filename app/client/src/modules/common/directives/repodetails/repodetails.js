@@ -10,8 +10,15 @@ module.exports = /*@ngInject*/
             controllerAs: 'ctrl',
             bindToController: true,
             controller: /*@ngInject*/
-                function () {
+                function (linkService) {
                     console.log('binding repo details controller', this);
+                    this.permissionClick = (link, permission) => {
+                        console.log('permission clicked', permission);
+
+                        linkService.exec(link, {
+                            permission: permission
+                        });
+                    };
                 }
         };
     };

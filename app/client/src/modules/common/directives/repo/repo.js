@@ -13,7 +13,7 @@ module.exports = /*@ngInject*/
                 function (usersService) {
                     this.toggled = false;
 
-                    this.repoClick = () => {
+                    this.click = () => {
                         console.log('repo click ' + this.repo.name);
                         this.toggled = !this.toggled;
                         if (this.toggled && !this.users) {

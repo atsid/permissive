@@ -25,16 +25,14 @@ exports.start = () => {
             cookie: {
                 secure: false
             }
-        }
-    }
-
-    var express = require('express'),
+        }},
+        express = require('express'),
         http = require('http'),
         path = require('path'),
         session = require('express-session'),
-        authenticator = require('./authenticator'),
-        app = express(),
-        discovery = require('./discovery');
+        authenticator = require('./authenticator.js'),
+        discovery = require('./discovery'),
+        app = express();
 
     app.use(session(config.session));
 

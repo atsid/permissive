@@ -6,11 +6,11 @@ var repoUtil = require('./util/repos'),
 module.exports = {
 
     getRepos () {
-        return repoUtil.getGithubRepos().then(repos => repos.map(repo => repoUtil.convertGithubRepo(repo)));
+        return repoUtil.getGithubRepos();
     },
 
     getRepo (repoId) {
-        return repoUtil.getGithubRepo(repoId).then(repo => repoUtil.convertGithubRepo(repo));
+        return repoUtil.getGithubRepo(repoId);
     },
 
     getPermissions (username, repos) {

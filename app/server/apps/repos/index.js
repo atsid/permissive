@@ -4,13 +4,15 @@
  */
 var repos = require('../../middleware/repos'),
     permissions = require('../../middleware/permissions'),
-    send = require('../../middleware/send');
+    send = require('../../middleware/send'),
+    auth = require('../../middleware/authenticate');
 
 module.exports = {
     list: {
         method: 'GET',
         path: '/repos',
         middleware: [
+            auth.isAuthenticated,
             repos.listRepos,
             repos.listReposPermission,
             repos.listReposLinks,
@@ -21,6 +23,7 @@ module.exports = {
         method: 'GET',
         path: '/repos/:id',
         middleware: [
+            auth.isAuthenticated,
             repos.readRepo,
             send.json
         ]
@@ -29,6 +32,7 @@ module.exports = {
         method: 'PUT',
         path: '/repos/:id/users/:username/permissions/:permission',
         middleware: [
+            auth.isAuthenticated,
             permissions.editRepoPermissionForUser,
             send.noContent
         ]
@@ -37,6 +41,7 @@ module.exports = {
         method: 'DELETE',
         path: '/repos/:id/users/:username',
         middleware: [
+            auth.isAuthenticated,
             permissions.removeRepoPermissionForUser,
             send.noContent
         ]

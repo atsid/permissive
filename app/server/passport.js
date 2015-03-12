@@ -16,29 +16,42 @@ module.exports = {
         passport.use(new GitHubStrategy({
                 clientID: config.github.clientID,
                 clientSecret: config.github.clientSecret,
-                callbackURL: config.server.hostName + ":" + config.server.port + config.server.api_prefix + config.github.authCallbackRoute
+                callbackURL: "http://" + config.server.hostname + ":" + config.server.port + config.github.authCallbackRoute
             },
             function (accessToken, refreshToken, profile, done) {
+                console.log("Authentication success!");
                 done(null, { displayName: profile.displayName, id: profile.id, token: accessToken });
             }));
 
         passport.serializeUser(function (user, done) {
+            console.log("serialize user");
+            console.log(user);
             done(null, user);
         });
 
         passport.deserializeUser(function (user, done) {
+            console.log("deserialize user");
+            console.log(user);
             done(null, user);
         });
 
         app.use(passport.initialize());
         app.use(passport.session());
 
-        app.get(config.server.api_prefix + config.github.authRoute, passport.authenticate('github'));
-        app.get(config.server.api_prefix + config.github.authCallbackRoute, passport.authenticate('github', { failureRedirect: config.github.failureRedirect, session: true }),
+        app.get(config.github.authRoute, passport.authenticate('github'));
+        app.get(config.github.authCallbackRoute, passport.authenticate('github',
+            { failureRedirect: config.github.failureRedirect, session: true }),
             function (req, res) {
+                console.log("authenticated, redirect to /");
+                var authenticated = req.isAuthenticated();
+                console.log("authenticated? " + authenticated);
                 // TODO: redirect to initial request location...
                 res.redirect('/');
             }
         );
+        app.get(config.github.failureCallback, function (req, res, next) {
+            console.log("Error authenticating with github...");
+            res.send(401);
+        });
     }
 };

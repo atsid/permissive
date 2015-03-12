@@ -2,11 +2,14 @@
 
 module.exports = {
     isAuthenticated (req, res, next) {
-        if (req.isAuthenticated()) {
-            next();
-        }
+        var authenticated = req.isAuthenticated();
+        console.log("authenticated? " + authenticated);
 
-        console.log("Not authenticated, sending 401");
-        res.send(401);
+        if (authenticated) {
+            console.log("next....");
+            next();
+        } else {
+            res.send(401);
+        }
     }
 };

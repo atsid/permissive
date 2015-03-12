@@ -9,14 +9,14 @@ exports.start = () => {
         server: {
             port: '3000',
             api_prefix: '/api/v1',
-            hostname: process.env.HOSTNAME
+            hostname: 'localhost'
         },
         github: {
             clientID: process.env.GITHUB_CLIENTID,
             clientSecret: process.env.GITHUB_CLIENT_KEY,
             authRoute: '/auth/github',
             authCallbackRoute: '/auth/github/callback',
-            failureCallback: '/signup'
+            failureCallback: '/auth/failure'
         },
         session: {
             secret: 'keyboard cat',

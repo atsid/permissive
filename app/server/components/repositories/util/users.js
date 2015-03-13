@@ -1,11 +1,10 @@
 'use strict';
 
-var svcPath = '../../services/github',
-    mock = process.env.SERVICE === 'mock' ? '.mock' : '',
-    github = require(svcPath + mock),
+var provider = require('./provider'),
     convertGithubUser;
 
 convertGithubUser = (user) => {
+    console.log('user', user);
     return {
         username: user.login,
         name: user.name,
@@ -15,18 +14,14 @@ convertGithubUser = (user) => {
 
 module.exports = {
 
-    convertGithubUser: convertGithubUser,
-
     getGithubUser (username) {
-        return github.getUser({
-            'user': username
-        }).then(user => convertGithubUser(user));
+        var args = provider.getDefaultItemArgs();
+        args.user = username;
+        return provider.github.getUser(args).then(user => convertGithubUser(user));
     },
 
     getGithubUsers() {
-        return github.getUsers({
-            org: github.config.org,
-            per_page: 100
-        });
+        var args = provider.getDefaultListArgs();
+        return provider.github.getUsers(args).then(users => users.map(user => convertGithubUser(user)));
     }
 };

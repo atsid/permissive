@@ -1,6 +1,8 @@
 'use strict';
 
-var userRepository = require('../components/repositories/users');
+var permissionRepository = require('../components/repositories/permissions'),
+    userRepository = require('../components/repositories/users'),
+    session = require('../session');
 
 module.exports = {
 
@@ -21,7 +23,7 @@ module.exports = {
             users = req.entity;
 
         if (repoId) {
-            userRepository.getPermissions(repoId, users).then(users => {
+            permissionRepository.setRepoPermissionForUsers(users, repoId).then(users => {
                 req.entity = users;
                 next();
             }).catch(err => next(err));
@@ -35,23 +37,24 @@ module.exports = {
 
         let repoId = req.query.permission_repo,
             users = req.entity,
-            permissions; //TODO: get permissions got logged in uer
+            username = session.user.username;
 
-        if (repoId && permissions) {
-            let permission = permissions[repoId],
-                admin = permission.permissive === 'admin' || permission.github === 'admin';
-
-            if (admin) {
-                users.forEach(user => {
-                    user.links = [{
-                        rel: 'edit-repo-permission',
-                        href: 'users/' + user.username + '/repos/' + repoId + '/permissions/{permission}',
-                        method: 'PUT'
-                    }];
-                });
-            }
+        if (repoId) {
+            permissionRepository.getUserPermissionForRepo(username, repoId).then(permission => {
+                if (permission.permissive === 'admin' || permission.github === 'admin') {
+                    users.forEach(user => {
+                        user.links = [{
+                            rel: 'edit-repo-permission',
+                            href: 'users/' + user.username + '/repos/' + repoId + '/permissions/{permission}',
+                            method: 'PUT'
+                        }];
+                    });
+                }
+                next();
+            }).catch(err => next(err));
+        } else {
+            next();
         }
-        next();
     },
 
     readUser (req, res, next) {

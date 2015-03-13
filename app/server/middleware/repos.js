@@ -1,6 +1,8 @@
 'use strict';
 
-var repoRepository = require('../components/repositories/repos');
+var permissionRepository = require('../components/repositories/permissions'),
+    repoRepository = require('../components/repositories/repos'),
+    session = require('../session');
 
 module.exports = {
 
@@ -21,7 +23,7 @@ module.exports = {
             repos = req.entity;
 
         if (username) {
-            repoRepository.getPermissions(username, repos).then(repos => {
+            permissionRepository.setUserPermissionForRepos(repos, username).then(repos => {
                 req.entity = repos;
                 next();
             }).catch(err => next(err));
@@ -34,22 +36,26 @@ module.exports = {
         console.log('checking for links on repo list');
 
         let repos = req.entity,
-            username = req.query.permission_user,
-            permissions; //TODO: get permissions got logged in uer
+            user = req.query.permission_user,
+            username = session.user.username;
 
-        if (username && permissions) {
-            repos.forEach(repo => {
-                let permission = permissions[repo.id];
-                if (permission.permissive === 'admin' || permission.github === 'admin') {
-                    repo.links = [{
-                        rel: 'edit-user-permission',
-                        href: 'repos/' + repo.id + '/users/' + username + '/permissions/{permission}',
-                        method: 'PUT'
-                    }];
-                }
-            });
+        if (user) {
+            permissionRepository.getRepoPermissionsForUser(repos, username).then(permissions => {
+                repos.forEach(repo => {
+                    let permission = permissions[repo.id];
+                    if (permission.permissive === 'admin' || permission.github === 'admin') {
+                        repo.links = [{
+                            rel: 'edit-user-permission',
+                            href: 'repos/' + repo.id + '/users/' + username + '/permissions/{permission}',
+                            method: 'PUT'
+                        }];
+                    }
+                });
+                next();
+            }).catch(err => next(err));
+        } else {
+            next();
         }
-        next();
     },
 
     readRepo (req, res, next) {

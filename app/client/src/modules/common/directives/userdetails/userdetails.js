@@ -16,16 +16,8 @@ module.exports = /*@ngInject*/
             controller: /*@ngInject*/
                 function (linkService) {
                     console.log('binding user details controller', this);
-
                     this.editLink = links.findByRel('edit-repo-permission', this.user.links);
-
-                    //TODO: clone
-                    this.buttons = buttonConfig.map((config) => {
-                        return {
-                            label: config.label,
-                            value: config.value
-                        };
-                    });
+                    this.buttons = angular.copy(buttonConfig);
 
                     let perm = this.user.permission;
 

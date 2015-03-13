@@ -1,7 +1,6 @@
 'use strict';
 
 var userUtil = require('./util/users'),
-    permUtil = require('./util/permissions'),
     Bluebird = require('bluebird');
 
 module.exports = {
@@ -15,15 +14,6 @@ module.exports = {
 
     getUser (username) {
         return userUtil.getGithubUser(username);
-    },
-
-    getPermissions (repoId, users) {
-        return permUtil.getPermissionMap().then(map => {
-            let userMap = map[repoId];
-            users.forEach(user => {
-                user.permission = userMap[user.username] || permUtil.getDefaultPermissions();
-            });
-            return users;
-        });
     }
+
 };

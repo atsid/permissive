@@ -2,8 +2,6 @@
 
 var GitHubApi = require('github'),
     Bluebird = require('bluebird'),
-    username = process.env.GITHUB_USER,
-    password = process.env.GITHUB_PASSWORD,
     org = process.env.GITHUB_ORG,
     token = process.env.GITHUB_TOKEN,
     github = new GitHubApi({
@@ -23,12 +21,7 @@ if (token) {
     });
     console.log("Github Authentication Method: Token");
 } else {
-    github.authenticate({
-        type: 'basic',
-        username: username,
-        password: password
-    });
-    console.log("Github Authentication Method: Username and Password");
+    console.log("No Github Token found. App will be unable to authenticate.");
 }
 
 /**

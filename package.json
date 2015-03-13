@@ -13,6 +13,7 @@
   "dependencies": {
     "babel": "4.7.1",
     "bluebird": "^2.9.13",
+    "debug": "^2.1.3",
     "express": "^4.12.0",
     "github": "^0.2.3",
     "json-mask": "0.3.4"

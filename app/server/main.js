@@ -20,7 +20,6 @@ exports.start = () => {
             app.use('/api/v1', subapp);
         });
         http.createServer(app).listen(app.get('port'), () => {
-            console.log('-----------------------------------------------------------------------');
             console.log('Express server listening on port ' + app.get('port'));
         });
     })

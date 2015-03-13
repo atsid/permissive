@@ -2,7 +2,6 @@
 
 var permissionRepository = require('../components/repositories/permissions'),
     userRepository = require('../components/repositories/users'),
-    session = require('../session'),
     debug = require('debug')('app:middleware:users');
 
 module.exports = {
@@ -38,7 +37,7 @@ module.exports = {
 
         let repoId = req.query.permission_repo,
             users = req.entity,
-            username = session.user.username;
+            username = req.auth.username;
 
         if (repoId) {
             permissionRepository.getUserPermissionForRepo(username, repoId).then(permission => {

@@ -5,44 +5,22 @@ var gulp = require('gulp'),
     mocha = require('gulp-mocha'),
     nodemon = require('gulp-nodemon'),
     gutil = require('gulp-util'),
-    babel = require('gulp-babel'),
     changed = require('gulp-changed'),
     runSequence = require('run-sequence'),
-    rimraf = require('gulp-rimraf'),
     Bluebird = require('bluebird'),
-    jade = require('gulp-jade'),
-    sourcemaps = require('gulp-sourcemaps'),
     istanbul = require('gulp-istanbul'),
     coveralls = require('gulp-coveralls'),
+    isparta = require('isparta'),
 
     /**
      * Build Constants
      */
     APP_SRC = ['app/**/*.js', 'app/*.js', '!app/client/**'],
-    APP_DIST = 'dist/',
-    SERVER_DIST = 'dist/server/**/*.js',
+    SERVER_SRC = 'app/server/**/*.js',
     ALL_SRC = APP_SRC.concat(['*.js']),
-    SERVER_TEST_SRC = 'dist/server/test/**/Test*.js',
-    SERVER_IT_SRC = 'dist/server/it/**/Test*.js',
-
+    SERVER_TEST_SRC = 'app/server/test/**/Test*.js',
+    SERVER_IT_SRC = 'app/server/it/**/Test*.js',
     devServer = null;
-
-/**
- * Transpilation
- */
-gulp.task('transpile', () => {
-    return gulp.src(APP_SRC)
-        .pipe(changed(APP_DIST))
-        .pipe(sourcemaps.init())
-        .pipe(babel())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(APP_DIST));
-});
-
-gulp.task('clean', () => {
-    return gulp.src(APP_DIST)
-        .pipe(rimraf());
-});
 
 /**
  * Static Analysis Tasks
@@ -67,9 +45,9 @@ gulp.task('static-checks', [
  * Testing Tasks
  */
 function instrumentSource() {
-    return gulp.src(SERVER_DIST)
+    return gulp.src(SERVER_SRC)
         .pipe(istanbul({
-            reporters: ['lcov', 'text-summary']
+            instrumenter: isparta.Instrumenter
         }))
         .pipe(istanbul.hookRequire());
 }
@@ -79,7 +57,9 @@ gulp.task('test', () => {
             .on('finish', () => {
                 gulp.src(SERVER_TEST_SRC)
                     .pipe(mocha())
-                    .pipe(istanbul.writeReports())
+                    .pipe(istanbul.writeReports({
+                        reporters: ['lcov', 'text-summary']
+                    }))
                     .on('end', resolve);
             });
     });
@@ -114,7 +94,7 @@ gulp.task('report-coverage', () => {
 gulp.task('start-server', () => {
     return new Bluebird((resolve, reject) => {
         devServer = nodemon({
-            script: 'dist/app.js',
+            script: 'app.js',
             ext: 'js',
             watch: ['app/server/**/*.js', 'app/*.js'],
             env: {
@@ -129,7 +109,7 @@ gulp.task('start-server', () => {
                 gutil.log("Process exiting");
                 reject();
             })
-            .on('change', ['static-checks', 'transpile'])
+            .on('change', ['static-checks'])
             .on('restart', () => {
                 gutil.log('**** Server Restarted ****');
             })
@@ -150,7 +130,7 @@ gulp.task('halt-server', ['exec-itest'], () => {
 
 gulp.task('default', (cb) => {
     runSequence(
-        ['transpile', 'static-checks'],
+        'static-checks',
         'test',
         'report-coverage',
         cb);

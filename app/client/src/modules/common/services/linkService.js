@@ -8,7 +8,7 @@ let templates = require('url-template');
  * @returns {{exec: Function}}
  */
 module.exports = /*@ngInject*/
-    function linkService($http) {
+    ($http) => {
         return {
             /**
              * Executes a link using http.

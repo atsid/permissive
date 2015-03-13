@@ -5,7 +5,7 @@ let links = require('../../../links'),
     buttonConfig = require('../config/permission-buttons');
 
 module.exports = /*@ngInject*/
-    function repodetails() {
+    () => {
         return {
             templateUrl: 'common/directives/repodetails/repodetails.html',
             scope: {
@@ -24,9 +24,7 @@ module.exports = /*@ngInject*/
 
                     if (perm) {
                         this.permission = permissions.highest([perm.permissive, perm.github]);
-                        this.buttons.forEach((button) => {
-                            button.disabled = permissions.greaterThan(perm.github, button.value);
-                        });
+                        this.github = permissions.friendly(perm.github);
                     }
 
                     this.handlePermissionChange = (value) => {

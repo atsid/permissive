@@ -5,7 +5,13 @@ let levels = {
     'pull': 1,
     'push': 2,
     'admin': 3
-};
+},
+    labels = {
+        'none': 'none',
+        'pull': 'read',
+        'push': 'write',
+        'admin': 'admin'
+    };
 
 /**
  * Utilities for working with permission levels.
@@ -33,6 +39,15 @@ module.exports = {
      */
     greaterThan (left, right) {
         return levels[left] > levels[right];
+    },
+
+    /**
+     * Maps precise GitHub-defined permission levels to friendly names.
+     * @param permission
+     * @returns {*}
+     */
+    friendly (permission) {
+        return labels[permission];
     }
 
 };

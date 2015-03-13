@@ -25,5 +25,13 @@ module.exports = {
             });
             return users;
         });
+    },
+
+    isMember (username) {
+        console.log("isMember(" + username + ")");
+        return userUtil.isMember(username).then(function (data){
+            console.log(data);
+            return "204 No Content" === data.meta.success;
+        });
     }
 };

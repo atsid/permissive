@@ -20,7 +20,7 @@ module.exports = {
             },
             function (accessToken, refreshToken, profile, done) {
                 console.log("Authentication success!");
-                done(null, { displayName: profile.displayName, id: profile.id, token: accessToken });
+                done(null, { username: profile.username, displayName: profile.displayName, id: profile.id, token: accessToken });
             }));
 
         passport.serializeUser(function (user, done) {
@@ -38,6 +38,15 @@ module.exports = {
         app.use(passport.initialize());
         app.use(passport.session());
 
+
+        app.get('/auth/authenticated', function (req, res) {
+            var authenticated = req.isAuthenicated();
+            if (authenticated) {
+                res.send(200);
+            } else {
+                res.send(401);
+            }
+        });
         app.get(config.github.authRoute, passport.authenticate('github'));
         app.get(config.github.authCallbackRoute, passport.authenticate('github',
             { failureRedirect: config.github.failureRedirect, session: true }),

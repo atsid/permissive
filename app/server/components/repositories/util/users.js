@@ -28,5 +28,12 @@ module.exports = {
             org: github.config.org,
             per_page: 100
         });
+    },
+
+    isMember(username) {
+        return github.isMember({
+            org: githug.config.org,
+            username: username
+        });
     }
 };

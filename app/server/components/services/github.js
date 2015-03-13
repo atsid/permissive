@@ -40,6 +40,7 @@ module.exports = {
     config: {
         org: org
     },
+    isMember: Bluebird.promisify(github.orgs.getMember),
     getUsers: Bluebird.promisify(github.orgs.getMembers),
     getUser: Bluebird.promisify(github.user.getFrom),
     getRepos: Bluebird.promisify(github.repos.getFromOrg),

@@ -1,36 +1,11 @@
 'use strict';
 /**
- * Business logic routes for working with user objects
+ * Business logic routes for working with repos.
  */
-var users = require('../../middleware/users'),
-    permissions = require('../../middleware/permissions'),
-    send = require('../../middleware/send');
+var express = require('express'),
+    jefferson = require('express-jefferson'),
+    conf = require('./routes'),
+    app = express();
 
-module.exports = {
-    list: {
-        method: 'GET',
-        path: '/users',
-        middleware: [
-            users.listUsers,
-            users.listUsersPermission,
-            users.listUsersLinks,
-            send.json
-        ]
-    },
-    read: {
-        method: 'GET',
-        path: '/users/:username',
-        middleware: [
-            users.readUser,
-            send.json
-        ]
-    },
-    editRepoPermission: {
-        method: 'PUT',
-        path: '/users/:username/repos/:id/permissions/:permission',
-        middleware: [
-            permissions.editRepoPermissionForUser,
-            send.noContent
-        ]
-    }
-};
+jefferson(app, conf);
+module.exports = app;

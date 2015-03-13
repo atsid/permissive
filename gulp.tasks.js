@@ -47,7 +47,8 @@ gulp.task('static-checks', [
 function instrumentSource() {
     return gulp.src(SERVER_SRC)
         .pipe(istanbul({
-            instrumenter: isparta.Instrumenter
+            instrumenter: isparta.Instrumenter,
+            includeUntested: true
         }))
         .pipe(istanbul.hookRequire());
 }

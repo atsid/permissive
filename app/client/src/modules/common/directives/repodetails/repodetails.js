@@ -1,7 +1,9 @@
 'use strict';
 
 let links = require('../../../links'),
-    buttons = require('../config/permission-buttons');
+    hash = require('../../../hash'),
+    buttons = require('../config/permission-buttons'),
+    buttonHash = hash(buttons, 'value');
 
 module.exports = /*@ngInject*/
     function repodetails() {
@@ -18,13 +20,24 @@ module.exports = /*@ngInject*/
 
                     this.editLink = links.findByRel('edit-user-permission', this.repo.links);
 
+                    //TODO: clone
+                    this.buttons = buttons.map((button) => {
+                        return {
+                            label: button.label,
+                            value: button.value,
+                            level: button.level
+                        };
+                    });
+
                     let perm = this.repo.permission;
+
                     if (perm) {
                         this.permission = perm.permissive;
                         this.github = perm.github;
+                        this.buttons.forEach((button) => {
+                            button.disabled = buttonHash[this.github].level > button.level;
+                        });
                     }
-
-                    this.buttons = buttons;
 
                     this.handlePermissionChange = (value) => {
                         console.log('permission change', value);

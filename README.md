@@ -32,13 +32,9 @@ To run the application:
 
 Then:
 
-    GITHUB_USER=<your username> GITHUB_PASSWORD=<your password> GITHUB_ORG=<your org> npm start
-
-or
-
     GITHUB_TOKEN=<your token> GITHUB_ORG=<your org> npm start
 
-You can use either basic authentication (username/password) or an OAuth token to authenticate with the GitHub API.
+You need to use an OAuth token to authenticate with the GitHub API.
 
 As you develop, you can pull down the latest dependencies with either `npm install` from within the Vagrant VM or `vagrant provision` from your host.
 

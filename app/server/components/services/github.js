@@ -2,6 +2,7 @@
 
 var GitHubApi = require('github'),
     Bluebird = require('bluebird'),
+    debug = require('debug')('app:services:github'),
     org = process.env.GITHUB_ORG,
     token = process.env.GITHUB_TOKEN,
     github = new GitHubApi({
@@ -19,9 +20,9 @@ if (token) {
         type: "oauth",
         token: token
     });
-    console.log("Github Authentication Method: Token");
+    debug("Github authentication method: Token");
 } else {
-    console.log("No Github Token found. App will be unable to authenticate.");
+    debug("No Github Token found. App will be unable to authenticate.");
 }
 
 /**

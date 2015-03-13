@@ -1,17 +1,18 @@
 'use strict';
 
 var cluster = require('cluster'),
+    debug = require('debug')('app:clustering'),
     clusteringEnabled = process.env.ENABLE_CLUSTERING,
     startMaster = () => {
         let workerLimit = process.env.WORKER_LIMIT,
             cpuCount = require('os').cpus().length,
             workerCount = workerLimit ? workerLimit : cpuCount;
-        console.log("Spawning " + workerCount + " workers");
+        debug("Spawning " + workerCount + " workers");
         for (let i = 0; i < workerCount; i += 1) {
             cluster.fork();
         }
         cluster.on('exit', (worker, code, signal) => {
-            console.log('worker %d died (%s). restarting...', worker.process.pid, signal || code);
+            debug('worker %d died (%s). restarting...', worker.process.pid, signal || code);
             cluster.fork();
         });
     },

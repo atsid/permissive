@@ -2,13 +2,14 @@
 
 var permissionRepository = require('../components/repositories/permissions'),
     userRepository = require('../components/repositories/users'),
-    session = require('../session');
+    session = require('../session'),
+    debug = require('debug')('app:middleware:users');
 
 module.exports = {
 
     listUsers (req, res, next) {
-        console.log('listing users [' + req.path + ']');
-        console.log('query:' + JSON.stringify(req.query, null, 2));
+        debug('listing users [' + req.path + ']');
+        debug('query:' + JSON.stringify(req.query, null, 2));
 
         userRepository.getUsers().then(users => {
             req.entity = users;
@@ -17,7 +18,7 @@ module.exports = {
     },
 
     listUsersPermission (req, res, next) {
-        console.log('looking up repo permissions for users');
+        debug('looking up repo permissions for users');
 
         let repoId = req.query.permission_repo,
             users = req.entity;
@@ -33,7 +34,7 @@ module.exports = {
     },
 
     listUsersLinks (req, res, next) {
-        console.log('checking for links on user list');
+        debug('checking for links on user list');
 
         let repoId = req.query.permission_repo,
             users = req.entity,
@@ -58,8 +59,8 @@ module.exports = {
     },
 
     readUser (req, res, next) {
-        console.log('getting user [' + req.path + ']');
-        console.log('params:' + JSON.stringify(req.params, null, 2));
+        debug('getting user [' + req.path + ']');
+        debug('params:' + JSON.stringify(req.params, null, 2));
 
         let username = req.params.username;
         userRepository.getUser(username).then(user => {

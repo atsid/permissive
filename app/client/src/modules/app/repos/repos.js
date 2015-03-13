@@ -10,7 +10,7 @@ module.exports =
             .state('repos', {
                 url: '/repos',
                 templateUrl: 'app/repos/repos.html',
-                controller: 'reposController as listCtrl'
+                controller: 'reposController as ctrl'
             });
     })
     .controller('reposController', function ($http, reposService) {

@@ -1,5 +1,8 @@
 'use strict';
 
+let links = require('../../../links'),
+    buttons = require('../config/permission-buttons');
+
 module.exports = /*@ngInject*/
     function userdetails() {
         return {
@@ -7,11 +10,30 @@ module.exports = /*@ngInject*/
             scope: {
                 user: '=userdetails'
             },
-            controllerAs: 'userCtrl',
+            controllerAs: 'ctrl',
             bindToController: true,
             controller: /*@ngInject*/
-                function () {
+                function (linkService) {
                     console.log('binding user details controller', this);
+
+                    this.editLink = links.findByRel('edit-repo-permission', this.user.links);
+
+                    let perm = this.user.permission;
+                    if (perm) {
+                        this.permission = perm.permissive;
+                        this.github = perm.github;
+                    }
+
+                    this.buttons = buttons;
+
+                    this.handlePermissionChange = (value) => {
+                        console.log('permission change', value);
+                        this.permission = value;
+                        linkService.exec(this.editLink, {
+                            permission: this.permission
+                        });
+                    };
+
                 }
         };
     };

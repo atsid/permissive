@@ -74,7 +74,8 @@
     "angular-animate": "./app/client/bower_components/angular-animate/angular-animate.min.js",
     "angular-aria": "./app/client/bower_components/angular-aria/angular-aria.min.js",
     "angular-resource": "./app/client/bower_components/angular-resource/angular-resource.min.js",
-    "angular-ui-router": "./app/client/bower_components/angular-ui-router/release/angular-ui-router.min.js"
+    "angular-ui-router": "./app/client/bower_components/angular-ui-router/release/angular-ui-router.min.js",
+    "url-template": "./app/client/bower_components/url-template/lib/url-template.js"
   },
   "browserify-shim": {}
 }

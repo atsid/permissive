@@ -10,4 +10,5 @@ module.exports =
     .directive('userdetails', require('./userdetails/userdetails.js'))
     .directive('repo', require('./repo/repo.js'))
     .directive('repodetails', require('./repodetails/repodetails.js'))
+    .directive('togglebuttons', require('./togglebuttons.js'))
     .directive('navbar', require('./navbar/navbar.js'));

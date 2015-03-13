@@ -1,14 +1,20 @@
 <div class="repo">
     <div class="repo-container">
         <div class="repo-details">
-            <div ng-if="ctrl.repo.name" class="repo-details-name">{{ctrl.repo.name}}</div>
+            <div ng-if="ctrl.repo.name" class="repo-details-name">{{ctrl.repo.name}}
+                <span ng-if="!ctrl.repo.public" class="repo-details-private">private</span>
+            </div>
+
             <div ng-if="ctrl.repo.description" class="repo-details-description">{{ctrl.repo.description}}</div>
         </div>
         <div class="repo-links">
-            <div ng-if="ctrl.repo.links && ctrl.repo.links[0]" class="repo-details-edit-permissions">{{ctrl.repo.links[0].rel}}</div>
-        </div>
-        <div ng-if="!ctrl.repo.public" class="repo-details-private">
-            private
+            <div ng-if="ctrl.editLink" class="repo-details-edit-permissions">
+                <div togglebuttons
+                     options="ctrl.buttons"
+                     value="ctrl.permission"
+                     on-change="ctrl.handlePermissionChange(value)">
+                 </div>
+            </div>
         </div>
     </div>
 </div>

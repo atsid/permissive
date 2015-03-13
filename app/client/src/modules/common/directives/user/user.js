@@ -7,13 +7,13 @@ module.exports = /*@ngInject*/
             scope: {
                 user: '='
             },
-            controllerAs: 'userCtrl',
+            controllerAs: 'ctrl',
             bindToController: true,
             controller: /*@ngInject*/
                 function (reposService) {
                     this.toggled = false;
 
-                    this.userClick = () => {
+                    this.click = () => {
                         console.log('user click ' + this.user.username);
                         this.toggled = !this.toggled;
                         if (this.toggled && !this.repos) {

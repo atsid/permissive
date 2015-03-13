@@ -24,7 +24,7 @@ module.exports = {
     getRepoPermissionsForUser (repos, username) {
         return permUtil.getPermissionMap().then(permissions => {
             let map = {};
-            repos.map(repo => {
+            repos.forEach(repo => {
                 map[repo.id] = permissions[repo.id][username] || permUtil.getDefaultPermissions();
             });
             return map;

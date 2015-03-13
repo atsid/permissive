@@ -4,9 +4,7 @@
     - group: vagrant
 
 /vagrant/node_modules:
-  file.directory:
-    - user: vagrant
-    - group: vagrant
+  file.directory
 
 symmount:
   mount.mounted:

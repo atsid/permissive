@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = /*@ngInject*/
-    function togglebuttons() {
+    () => {
         return {
             templateUrl: 'common/directives/togglebuttons.html',
             scope: {
@@ -16,6 +16,7 @@ module.exports = /*@ngInject*/
                     console.log('binding toggle buttons controller', this);
 
                     //catch the individual click events and repackage them as a change
+                    //TODO: onChange should actually only fire if the value _has_ changed.
                     this.click = (value) => {
                         this.onChange({value: value});
                     };

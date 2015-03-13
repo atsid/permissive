@@ -9,11 +9,14 @@
         </div>
         <div class="repo-links">
             <div ng-if="ctrl.editLink" class="repo-details-edit-permissions">
-                <div togglebuttons
-                     options="ctrl.buttons"
-                     value="ctrl.permission"
-                     on-change="ctrl.handlePermissionChange(value)">
-                 </div>
+                <span togglebuttons
+                      options="ctrl.buttons"
+                      value="ctrl.permission"
+                      on-change="ctrl.handlePermissionChange(value)">
+                </span>
+                <span class="github-permission">
+                    {{ctrl.github}}
+                </span>
             </div>
         </div>
     </div>

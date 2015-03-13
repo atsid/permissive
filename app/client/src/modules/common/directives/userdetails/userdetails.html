@@ -9,11 +9,14 @@
         </div>
         <div class="user-links">
             <div ng-if="ctrl.editLink" class="user-details-edit-permissions">
-                <div togglebuttons
+                <span togglebuttons
                      options="ctrl.buttons"
                      value="ctrl.permission"
                      on-change="ctrl.handlePermissionChange(value)">
-                </div>
+                </span>
+                <span class="github-permission">
+                    {{ctrl.github}}
+                </span>
             </div>
         </div>
     </div>

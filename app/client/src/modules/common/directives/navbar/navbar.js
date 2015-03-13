@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = /*@ngInject*/
-    function navbar() {
+    () => {
         return {
             templateUrl: 'common/directives/navbar/navbar.html',
             scope: {},

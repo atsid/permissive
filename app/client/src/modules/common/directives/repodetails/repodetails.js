@@ -1,9 +1,8 @@
 'use strict';
 
 let links = require('../../../links'),
-    hash = require('../../../hash'),
-    buttons = require('../config/permission-buttons'),
-    buttonHash = hash(buttons, 'value');
+    permissions = require('../../../permissions'),
+    buttonConfig = require('../config/permission-buttons');
 
 module.exports = /*@ngInject*/
     function repodetails() {
@@ -21,21 +20,19 @@ module.exports = /*@ngInject*/
                     this.editLink = links.findByRel('edit-user-permission', this.repo.links);
 
                     //TODO: clone
-                    this.buttons = buttons.map((button) => {
+                    this.buttons = buttonConfig.map((config) => {
                         return {
-                            label: button.label,
-                            value: button.value,
-                            level: button.level
+                            label: config.label,
+                            value: config.value
                         };
                     });
 
                     let perm = this.repo.permission;
 
                     if (perm) {
-                        this.permission = perm.permissive;
-                        this.github = perm.github;
+                        this.permission = permissions.highest([perm.permissive, perm.github]);
                         this.buttons.forEach((button) => {
-                            button.disabled = buttonHash[this.github].level > button.level;
+                            button.disabled = permissions.greaterThan(perm.github, button.value);
                         });
                     }
 

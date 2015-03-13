@@ -32,7 +32,7 @@ module.exports = {
 
     isMember(username) {
         return github.isMember({
-            org: githug.config.org,
+            org: github.config.org,
             username: username
         });
     }

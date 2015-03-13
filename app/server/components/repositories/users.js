@@ -29,8 +29,7 @@ module.exports = {
 
     isMember (username) {
         console.log("isMember(" + username + ")");
-        return userUtil.isMember(username).then(function (data){
-            console.log(data);
+        return userUtil.isMember(username).then(function (data) {
             return "204 No Content" === data.meta.success;
         });
     }

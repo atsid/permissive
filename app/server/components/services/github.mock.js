@@ -16,6 +16,7 @@
  */
 //jscs:disable disallowDanglingUnderscores
 var mask = require('json-mask'),
+    debug = require('debug')('app:services:github-mock'),
     users = {
         'testuser1': {
             login: 'testuser1',
@@ -84,7 +85,7 @@ module.exports = {
     },
 
     getUsers () {
-        console.log('looking up mock users');
+        debug('looking up mock users');
         return new Promise((resolve, reject) => {
 
             let list = Object.keys(users).map((key) => mask(users[key], 'login,avatar_url'));
@@ -95,7 +96,7 @@ module.exports = {
 
     getUser (msg) {
         let username = msg.user;
-        console.log('looking up mock user [' + username + ']');
+        debug('looking up mock user [' + username + ']');
         return new Promise((resolve, reject) => {
 
             let user = users[username];
@@ -109,7 +110,7 @@ module.exports = {
     },
 
     getRepos () {
-        console.log('looking up mock repos');
+        debug('looking up mock repos');
         return new Promise((resolve, reject) => {
 
             let list = Object.keys(repos).map((key) => repos[key]);
@@ -119,7 +120,7 @@ module.exports = {
     },
 
     getTeams () {
-        console.log('looking up mock teams');
+        debug('looking up mock teams');
         return new Promise((resolve, reject) => {
 
             let list = Object.keys(teams).map((key) => mask(teams[key], 'id,name,permission'));
@@ -130,7 +131,7 @@ module.exports = {
 
     getTeamMembers (msg) {
         let id = msg.id;
-        console.log('looking up mock team [' + id + '] members');
+        debug('looking up mock team [' + id + '] members');
         return new Promise((resolve, reject) => {
 
             let team = teams[id];
@@ -146,7 +147,7 @@ module.exports = {
 
     getTeamRepos (msg) {
         let id = msg.id;
-        console.log('looking up mock team [' + id + '] repos');
+        debug('looking up mock team [' + id + '] repos');
         return new Promise((resolve, reject) => {
 
             let team = teams[id];
@@ -163,7 +164,7 @@ module.exports = {
     addTeamMember (msg) {
         let id = msg.id,
             username = msg.user;
-        console.log('adding mock user [' + username + '] to mock team [' + id + ']');
+        debug('adding mock user [' + username + '] to mock team [' + id + ']');
 
         return new Promise((resolve, reject) => {
 
@@ -184,7 +185,7 @@ module.exports = {
     deleteTeamMember (msg) {
         let id = msg.id,
             username = msg.user;
-        console.log('removing mock user [' + username + '] from mock team [' + id + ']');
+        debug('removing mock user [' + username + '] from mock team [' + id + ']');
 
         return new Promise((resolve, reject) => {
 

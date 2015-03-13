@@ -1,6 +1,7 @@
 'use strict';
 
-var teamRepository = require('../components/repositories/teams');
+var teamRepository = require('../components/repositories/teams'),
+    debug = require('debug')('app:middleware:permissions');
 
 /**
  * Middleware to adjust user permission levels on a repo.
@@ -8,8 +9,8 @@ var teamRepository = require('../components/repositories/teams');
 module.exports = {
 
     editRepoPermissionForUser (req, res, next) {
-        console.log('editing user repo permission level [' + req.path + ']');
-        console.log('params:' + JSON.stringify(req.params, null, 2));
+        debug('editing user repo permission level [' + req.path + ']');
+        debug('params:' + JSON.stringify(req.params, null, 2));
 
         // get params
         let params = req.params,

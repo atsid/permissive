@@ -1,6 +1,7 @@
 'use strict';
 
 var provider = require('./provider'),
+    debug = require('debug')('app:repositories:user'),
     convertGithubUser;
 
 convertGithubUser = (user) => {

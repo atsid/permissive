@@ -1,7 +1,5 @@
 'use strict';
 
-require('babel/polyfill');
-
 exports.start = () => {
 
     var express = require('express'),

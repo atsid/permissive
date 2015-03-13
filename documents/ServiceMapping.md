@@ -40,6 +40,7 @@ The following details the node-github methods that will be called by permissive.
 1. Create a mapping of Repo -> User
 1. Get a list of teams in the organization (orgs.getTeams)
 1. For each team (which defines permission)
+ 1. Get a list of repos managed by the team (orgs.getTeamRepos)
  1. Get each team member (orgs.getTeamMembers)
  1. Update mapping to include permission (Repo -> User -> Permission)
 1. Return the mapping for the requested repo
@@ -67,7 +68,7 @@ The following details the node-github methods that will be called by permissive.
 1. Add the user to the team (orgs.addTeamMember)
 
 
-### 4 Remove all repo access for a user
+### 3b Remove repo access for a user
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
 1. Get a list of teams in the organization (orgs.getTeams)
@@ -76,16 +77,30 @@ The following details the node-github methods that will be called by permissive.
  1. If the user is on the team, remove them (orgs.deleteTeamMember)
 
 
-### 5 Get list of repos
+### 4 Get list of repos
 1. Get a list of repos in the organization (repos.getFromOrg)
 
 
-### 6 Get details for a repo
+### 4a Get a list of repos with permission for a specific user
+1. Get a list of members in the organization (orgs.getMembers)
+1. For each member
+ 1. Get the user data (user.getFrom)
+1. Get a list of repos in the organization (repos.getFromOrg)
+1. Create a mapping of Repo -> User
+1. Get a list of teams in the organization (orgs.getTeams)
+1. For each team (which defines permission)
+ 1. Get a list of repos managed by the team (orgs.getTeamRepos)
+ 1. Get each team member (orgs.getTeamMembers)
+ 1. Update mapping to include permission (Repo -> User -> Permission)
+1. Return a mapping for the requested user
+
+
+### 5 Get details for a repo
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
 
 
-### 7 Add user permission for a repo
+### 6 Add user permission for a repo
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
 1. Get a list of teams in the organization (orgs.getTeams)
@@ -93,7 +108,7 @@ The following details the node-github methods that will be called by permissive.
 1. Add the user to the team (orgs.addTeamMember)
 
 
-### 7a Update user permission for a repo
+### 6a Update user permission for a repo
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
 1. Get a list of teams in the organization (orgs.getTeams)
@@ -103,7 +118,7 @@ The following details the node-github methods that will be called by permissive.
 1. Add the user to the team (orgs.addTeamMember)
 
 
-### 8 Remove all user access to a repo
+### 6b Remove user access to a repo
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
 1. Get a list of teams in the organization (orgs.getTeams)
@@ -182,6 +197,16 @@ This method will retrieve a list of all the team members. To get the list, the G
 * node-github method - orgs.getTeamMembers
 
 
+### List Repos by Team
+
+This method will retrieve a list of all the team repos.
+
+* Github API - https://developer.github.com/v3/orgs/teams/#list-team-repos
+* Github URL - GET /teams/:id/repos
+* node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.getTeamRepos
+* node-github method - orgs.getTeamRepos
+
+
 ### Create Team
 
 This method will create a new team. Github requires the authenticated user to be an owner of the org. The current permissive API does not require this functionality, but it will be a needed in the future.
@@ -240,15 +265,3 @@ This method will remove a member from the team. The authenticated user must have
 * Github API - https://developer.github.com/v3/orgs/teams/#remove-team-membership
 * Github URL - DELETE /teams/:id/memberships/:username
 * node-github - https://github.com/mikedeboer/node-github/issues/221
-
-
-
-
-
-## MD Template
-
-### 
-* Github API - 
-* Github URL - 
-* node-github API - 
-* node-github method - 

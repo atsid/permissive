@@ -32,13 +32,5 @@ module.exports = {
             permissions.editRepoPermissionForUser,
             send.noContent
         ]
-    },
-    removeRepoPermission: {
-        method: 'DELETE',
-        path: '/users/:username/repos/:id',
-        middleware: [
-            permissions.removeRepoPermissionForUser,
-            send.noContent
-        ]
     }
 };

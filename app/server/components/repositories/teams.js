@@ -52,28 +52,6 @@ module.exports = {
                 });
             });
         });
-    },
-
-    remove (username, repoId, team) {
-
-        // get permission map
-        return permUtil.getPermissionMap().then(map => {
-
-            let users = map[repoId],
-                current = users[username];
-
-            if (team === 'none' || current.permissive !== team) {
-                return;
-            }
-
-            // need repo name and team id
-            return repoUtil.getGithubRepo(repoId).then(repo => {
-                let prefix = getPrefix(repo);
-                return teamUtil.getGithubTeams().then(teams => {
-                    let oldTeam = getTeam(teams, prefix, current.permissive);
-                    return teamUtil.removeFromGithubTeam(username, oldTeam.id);
-                });
-            });
-        });
     }
+
 };

@@ -17,7 +17,7 @@ exports.start = () => {
             failureCallback: '/auth/failure'
         },
         session: {
-            secret: 'keyboard cat',
+            secret: process.env.SESSION_SECRET || 'keyboard cat',
             resave: false,
             saveUninitialized: true,
             cookie: {

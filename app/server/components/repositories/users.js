@@ -27,8 +27,8 @@ module.exports = {
         });
     },
 
-    isMember (username) {
-        return userUtil.isMember(username).then(function (data) {
+    isOrgMember (username) {
+        return userUtil.isOrgMember(username).then(function (data) {
             return "204 No Content" === data.meta.success;
         });
     }

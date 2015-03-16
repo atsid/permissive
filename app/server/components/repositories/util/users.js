@@ -25,8 +25,8 @@ module.exports = {
         return provider.github.getUsers(args).then(users => users.map(user => convertGithubUser(user)));
     },
 
-    isMember(username) {
-        return provider.github.isMember({
+    isOrgMember(username) {
+        return provider.github.isOrgMember({
             org: provider.github.config.org,
             username: username
         });

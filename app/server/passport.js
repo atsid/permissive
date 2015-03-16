@@ -35,9 +35,15 @@ module.exports = {
             done(null, user);
         });
 
-        app.use(passport.initialize());
+        if (process.env.SERVICE === 'mock') {
+            // TODO ... is there a real di way to do this??
+            console.log('using the mock passport middlware');
+            var mock = require('./mock-passport-middleware');
+            app.use(mock.initialize(mock.mockUser));
+        } else {
+            app.use(passport.initialize());
+        }
         app.use(passport.session());
-
 
         app.get('/auth/authenticated', function (req, res) {
             var authenticated = req.isAuthenicated();

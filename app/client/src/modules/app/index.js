@@ -23,7 +23,7 @@ module.exports =
     .config(function ($urlRouterProvider, $httpProvider) {
         $urlRouterProvider.otherwise('/');
         $httpProvider.interceptors.push('authInterceptor');
-    }).factory('authInterceptor', function ($rootScope, $q, $location) {
+    }).factory('authInterceptor', function ($q, $location) {
         return {
             responseError(response) {
                 if (response.status === 401) {

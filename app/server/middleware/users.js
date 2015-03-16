@@ -55,16 +55,5 @@ module.exports = {
         } else {
             next();
         }
-    },
-
-    readUser (req, res, next) {
-        debug('getting user [' + req.path + ']');
-        debug('params:' + JSON.stringify(req.params, null, 2));
-
-        let username = req.params.username;
-        userRepository.getUser(username).then(user => {
-            req.entity = user;
-            next();
-        }).catch(err => next(err));
     }
 };

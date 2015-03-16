@@ -57,31 +57,9 @@ describe('User model HTTP requests', function () {
             chai.assert.ok(items[0].username);
         });
 
-        it('user has links',  () => {
-            chai.assert.ok(items[0].links.length > 0);
-        });
-
-    });
-
-    describe('pull',  () => {
-
-        let item,
-            statusCode;
-
-        before((done) => {
-            util.get('/users/testuser1').then((result) => {
-                item = JSON.parse(result.body);
-                statusCode = result.statusCode;
-                done();
-            });
-        });
-
-        it('returns a 200',  () => {
-            chai.assert.equal(statusCode, 200);
-        });
-
-        it('returns a user',  () => {
-            chai.assert.ok(item.username);
+        //TODO: use authenticated user to check for links
+        it('user has no links',  () => {
+            chai.assert.isUndefined(items[0].links);
         });
 
     });
@@ -92,23 +70,6 @@ describe('User model HTTP requests', function () {
 
         before((done) => {
             util.put('/users/testuser1/repos/1/permissions/pull').then((result) => {
-                statusCode = result.statusCode;
-                done();
-            });
-        });
-
-        it('returns a 204',  () => {
-            chai.assert.equal(statusCode, 204);
-        });
-
-    });
-
-    describe('removeRepoPermission',  () => {
-
-        let statusCode;
-
-        before((done) => {
-            util.del('/users/testuser1/repos/1').then((result) => {
                 statusCode = result.statusCode;
                 done();
             });

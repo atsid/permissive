@@ -10,10 +10,6 @@ module.exports = {
             let profiles = users.map(user => userUtil.getGithubUser(user.username).then(profile => user.name = profile.name));
             return Bluebird.all(profiles).then(() => users);
         });
-    },
-
-    getUser (username) {
-        return userUtil.getGithubUser(username);
     }
 
 };

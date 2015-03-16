@@ -56,16 +56,5 @@ module.exports = {
         } else {
             next();
         }
-    },
-
-    readRepo (req, res, next) {
-        debug('getting repo [' + req.path + ']');
-        debug('params:' + JSON.stringify(req.params, null, 2));
-
-        let repoId = req.params.id;
-        repoRepository.getRepo(repoId).then(repo => {
-            req.entity = repo;
-            next();
-        }).catch(err => next(err));
     }
 };

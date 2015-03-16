@@ -5,7 +5,6 @@ var provider = require('./provider'),
     convertGithubUser;
 
 convertGithubUser = (user) => {
-    console.log('user', user);
     return {
         username: user.login,
         name: user.name,

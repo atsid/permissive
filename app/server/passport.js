@@ -2,7 +2,8 @@
 
 
 var passport = require('passport'),
-    GitHubStrategy = require('passport-github').Strategy;
+    GitHubStrategy = require('passport-github').Strategy,
+    debug = require('debug')('app:passport');
 
 module.exports = {
     /**
@@ -19,19 +20,18 @@ module.exports = {
                 callbackURL: "http://" + config.server.hostname + ":" + config.server.port + config.github.authCallbackRoute
             },
             function (accessToken, refreshToken, profile, done) {
-                console.log("Authentication success!");
                 done(null, { username: profile.username, displayName: profile.displayName, id: profile.id, token: accessToken });
             }));
 
         passport.serializeUser(function (user, done) {
-            console.log("serialize user");
-            console.log(user);
+            debug("serialize user");
+            debug(user);
             done(null, user);
         });
 
         passport.deserializeUser(function (user, done) {
-            console.log("deserialize user");
-            console.log(user);
+            debug("deserialize user");
+            debug(user);
             done(null, user);
         });
 
@@ -51,15 +51,13 @@ module.exports = {
         app.get(config.github.authCallbackRoute, passport.authenticate('github',
             { failureRedirect: config.github.failureRedirect, session: true }),
             function (req, res) {
-                console.log("authenticated, redirect to /");
                 var authenticated = req.isAuthenticated();
-                console.log("authenticated? " + authenticated);
+                debug("authenticated? " + authenticated);
                 // TODO: redirect to initial request location...
                 res.redirect('/');
             }
         );
         app.get(config.github.failureCallback, function (req, res, next) {
-            console.log("Error authenticating with github...");
             res.send(401);
         });
     }

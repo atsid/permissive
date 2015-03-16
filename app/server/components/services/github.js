@@ -2,8 +2,7 @@
 
 var GitHubApi = require('github'),
     Bluebird = require('bluebird'),
-    username = process.env.GITHUB_USER,
-    password = process.env.GITHUB_PASSWORD,
+    debug = require('debug')('app:services:github'),
     org = process.env.GITHUB_ORG,
     token = process.env.GITHUB_TOKEN,
     github = new GitHubApi({
@@ -21,14 +20,9 @@ if (token) {
         type: "oauth",
         token: token
     });
-    console.log("Github Authentication Method: Token");
+    debug("Github authentication method: Token");
 } else {
-    github.authenticate({
-        type: 'basic',
-        username: username,
-        password: password
-    });
-    console.log("Github Authentication Method: Username and Password");
+    debug("No Github Token found. App will be unable to authenticate.");
 }
 
 /**
@@ -46,5 +40,7 @@ module.exports = {
     getRepos: Bluebird.promisify(github.repos.getFromOrg),
     getTeams: Bluebird.promisify(github.orgs.getTeams),
     getTeamMembers: Bluebird.promisify(github.orgs.getTeamMembers),
-    getTeamRepos: Bluebird.promisify(github.orgs.getTeamRepos)
+    getTeamRepos: Bluebird.promisify(github.orgs.getTeamRepos),
+    addTeamMember: Bluebird.promisify(github.orgs.addTeamMember),
+    deleteTeamMember: Bluebird.promisify(github.orgs.deleteTeamMember)
 };

@@ -13,32 +13,26 @@ This is a draft of the operations available to meet the initial views of the app
         GET /users/:username
         returns User
 
-3. Add/update repo permissions for a user
+3. Add/update/remove repo permissions for a user
 
         PUT /users/:username/repos/:id/permissions/:permission
         returns null, 204
-4. Remove all repo access for a user
 
-        DELETE /users/:username/repos/:id
-        returns null, 204
-5. Get list of repos. If permission_user is specified, the "permission" flag on each repo will be present, reporting the access available for that user.
+4. Get list of repos. If permission_user is specified, the "permission" flag on each repo will be present, reporting the access available for that user.
 
         GET /repos[?permission_user=:username]
         returns Repo[]
-6. Get details for a repo
+5. Get details for a repo
 
         GET /repos/:id
         returns Repo
-7. Add/update user permissions for a repo
+6. Add/update/remove user permissions for a repo
 
         PUT /repos/:id/users/:username/permissions/:permission
         returns null, 204
-8. Remove all user access to a repo
 
-        DELETE /repos/:id/users/:username
-        returns null, 204
 
-Note that 3/7 and 4/8 are effectively aliases to each other, suitable for different views.
+Note that 3/6 are effectively aliases to each other, suitable for different views.
 
 Also note that some PUT operations have no body, as the URL contains sufficient data. See [GitHub documentation](https://developer.github.com/v3/#http-verbs).
 

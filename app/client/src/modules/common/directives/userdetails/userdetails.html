@@ -1,14 +1,23 @@
 <div class="user">
     <div class="user-container">
-        <div ng-if="userCtrl.user.avatar_url" class="user-avatar">
-            <img ng-src="{{userCtrl.user.avatar_url}}">
+        <div ng-if="ctrl.user.avatar_url" class="user-avatar">
+            <img ng-src="{{ctrl.user.avatar_url}}">
         </div>
         <div class="user-details">
-            <div ng-if="userCtrl.user.name" class="user-details-name">{{userCtrl.user.name}}</div>
-            <div ng-if="userCtrl.user.username" class="user-details-username">{{userCtrl.user.username}}</div>
+            <div ng-if="ctrl.user.name" class="user-details-name">{{ctrl.user.name}}</div>
+            <div ng-if="ctrl.user.username" class="user-details-username">{{ctrl.user.username}}</div>
         </div>
         <div class="user-links">
-            <div ng-if="userCtrl.user.links && userCtrl.user.links[0]" class="user-details-edit-permissions">{{userCtrl.user.links[0].rel}}</div>
+            <div ng-if="ctrl.editLink" class="user-details-edit-permissions">
+                <span togglebuttons
+                     options="ctrl.buttons"
+                     value="ctrl.permission"
+                     on-change="ctrl.handlePermissionChange(value)">
+                </span>
+                <span class="github-permission">
+                    {{ctrl.github}}
+                </span>
+            </div>
         </div>
     </div>
 </div>

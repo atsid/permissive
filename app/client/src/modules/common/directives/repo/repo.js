@@ -1,19 +1,19 @@
 'use strict';
 
 module.exports = /*@ngInject*/
-    function repo() {
+    () => {
         return {
             templateUrl: 'common/directives/repo/repo.html',
             scope: {
                 repo: '='
             },
-            controllerAs: 'repoCtrl',
+            controllerAs: 'ctrl',
             bindToController: true,
             controller: /*@ngInject*/
                 function (usersService) {
                     this.toggled = false;
 
-                    this.repoClick = () => {
+                    this.click = () => {
                         console.log('repo click ' + this.repo.name);
                         this.toggled = !this.toggled;
                         if (this.toggled && !this.users) {

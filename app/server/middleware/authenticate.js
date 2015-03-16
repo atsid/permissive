@@ -1,6 +1,6 @@
 'use strict';
 
-var users = require('../components/repositories/users')
+var users = require('../components/repositories/users');
 
 module.exports = {
     isAuthenticated (req, res, next) {

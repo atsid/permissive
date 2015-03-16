@@ -1,7 +1,5 @@
 'use strict';
 
-require('babel/polyfill');
-
 exports.start = () => {
 
     // HACKING IN CONFIG OBJECT HERE
@@ -27,10 +25,10 @@ exports.start = () => {
             }
         }},
         express = require('express'),
+        mountie = require('express-mountie'),
         http = require('http'),
         path = require('path'),
         session = require('express-session'),
-        discovery = require('./discovery'),
         passport = require('./passport'),
         app = express();
 
@@ -41,17 +39,12 @@ exports.start = () => {
     app.set('port', config.server.port);
     app.use(express.static(path.resolve(__dirname, '../../app/client/build')));
 
-    discovery.find(path.join(__dirname, './apps'))
-    .then((apps) => {
-        apps.forEach((subapp) => {
-            app.use(config.server.api_prefix, subapp);
-        });
-        http.createServer(app).listen(config.server.port, () => {
-            console.log('-----------------------------------------------------------------------');
-            console.log('Express server listening on port ' + config.server.port);
-        });
-    })
-    .catch((err) => {
-        console.error("Error starting permissive", err);
+    mountie({
+        parent: app,
+        src: path.join(__dirname, 'apps'),
+        prefix: "/api/v1"
+    });
+    http.createServer(app).listen(app.get('port'), () => {
+        console.log('Express server listening on port ' + app.get('port'));
     });
 };

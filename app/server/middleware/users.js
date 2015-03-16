@@ -1,12 +1,14 @@
 'use strict';
 
-var userRepository = require('../components/repositories/users');
+var permissionRepository = require('../components/repositories/permissions'),
+    userRepository = require('../components/repositories/users'),
+    debug = require('debug')('app:middleware:users');
 
 module.exports = {
 
     listUsers (req, res, next) {
-        console.log('listing users [' + req.path + ']');
-        console.log('query:' + JSON.stringify(req.query, null, 2));
+        debug('listing users [' + req.path + ']');
+        debug('query:' + JSON.stringify(req.query, null, 2));
 
         userRepository.getUsers().then(users => {
             req.entity = users;
@@ -15,13 +17,13 @@ module.exports = {
     },
 
     listUsersPermission (req, res, next) {
-        console.log('looking up repo permissions for users');
+        debug('looking up repo permissions for users');
 
         let repoId = req.query.permission_repo,
             users = req.entity;
 
         if (repoId) {
-            userRepository.getPermissions(repoId, users).then(users => {
+            permissionRepository.setRepoPermissionForUsers(users, repoId).then(users => {
                 req.entity = users;
                 next();
             }).catch(err => next(err));
@@ -31,32 +33,33 @@ module.exports = {
     },
 
     listUsersLinks (req, res, next) {
-        console.log('checking for links on user list');
+        debug('checking for links on user list');
 
         let repoId = req.query.permission_repo,
             users = req.entity,
-            permissions; //TODO: get permissions got logged in uer
+            username = req.session.passport.user.username;
 
-        if (repoId && permissions) {
-            let permission = permissions[repoId],
-                admin = permission.permissive === 'admin' || permission.github === 'admin';
-
-            if (admin) {
-                users.forEach(user => {
-                    user.links = [{
-                        rel: 'edit-repo-permission',
-                        href: 'users/' + user.username + '/repos/' + repoId + '/permissions/{permission}',
-                        method: 'PUT'
-                    }];
-                });
-            }
+        if (repoId) {
+            permissionRepository.getUserPermissionForRepo(username, repoId).then(permission => {
+                if (permission.permissive === 'admin' || permission.github === 'admin') {
+                    users.forEach(user => {
+                        user.links = [{
+                            rel: 'edit-repo-permission',
+                            href: 'users/' + user.username + '/repos/' + repoId + '/permissions/{permission}',
+                            method: 'PUT'
+                        }];
+                    });
+                }
+                next();
+            }).catch(err => next(err));
+        } else {
+            next();
         }
-        next();
     },
 
     readUser (req, res, next) {
-        console.log('getting user [' + req.path + ']');
-        console.log('params:' + JSON.stringify(req.params, null, 2));
+        debug('getting user [' + req.path + ']');
+        debug('params:' + JSON.stringify(req.params, null, 2));
 
         let username = req.params.username;
         userRepository.getUser(username).then(user => {

@@ -1,15 +1,15 @@
 'use strict';
 
 var userUtil = require('./util/users'),
-    permUtil = require('./util/permissions'),
-    Bluebird = require('bluebird');
+    Bluebird = require('bluebird'),
+    permUtil = require('./util/permissions');
 
 module.exports = {
 
     getUsers () {
         return userUtil.getGithubUsers().then(users => {
-            let profiles = users.map(user => userUtil.getGithubUser(user.login).then(profile => user.name = profile.name));
-            return Bluebird.all(profiles).then(() => users.map(user => userUtil.convertGithubUser(user)));
+            let profiles = users.map(user => userUtil.getGithubUser(user.username).then(profile => user.name = profile.name));
+            return Bluebird.all(profiles).then(() => users);
         });
     },
 
@@ -33,4 +33,5 @@ module.exports = {
             return "204 No Content" === data.meta.success;
         });
     }
+
 };

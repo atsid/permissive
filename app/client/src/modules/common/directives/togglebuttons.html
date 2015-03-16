@@ -1,0 +1,8 @@
+<span ng-repeat="o in ctrl.options">
+    <md-button
+            ng-class="{'md-primary': ctrl.value == o.value}"
+            ng-disabled="o.disabled"
+            ng-click="ctrl.click(o.value)">
+        {{o.label}}
+    </md-button>
+</span>

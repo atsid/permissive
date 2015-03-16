@@ -1,18 +1,7 @@
 'use strict';
 
-var svcPath = '../../services/github',
-    mock = process.env.SERVICE === 'mock' ? '.mock' : '',
-    github = require(svcPath + mock),
-    getDefaultRepoArgs,
+var provider = require('./provider'),
     convertGithubRepo;
-
-
-getDefaultRepoArgs = () => {
-    return {
-        org: github.config.org,
-        per_page: 100
-    };
-};
 
 convertGithubRepo = (repo) => {
     return {
@@ -25,18 +14,16 @@ convertGithubRepo = (repo) => {
 
 module.exports = {
 
-    convertGithubRepo: convertGithubRepo,
-
     getGithubRepos () {
-        let args = getDefaultRepoArgs();
-        return github.getRepos(args);
+        let args = provider.getDefaultListArgs();
+        return provider.github.getRepos(args).then(repos => repos.map(repo => convertGithubRepo(repo)));
     },
 
     getGithubRepo (repoId) {
-        let args = getDefaultRepoArgs();
-        return github.getRepos(args).then(repos => {
+        let args = provider.getDefaultItemArgs();
+        return provider.github.getRepos(args).then(repos => {
             let id = parseInt(repoId, 10);
-            return repos.find(repo => repo.id === id);
+            return convertGithubRepo(repos.find(repo => repo.id === id));
         });
     }
 

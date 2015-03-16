@@ -1,8 +1,8 @@
-<div ng-click="repoCtrl.repoClick()">
-    <div repodetails="repoCtrl.repo"></div>
+<div ng-click="ctrl.click()">
+    <div repodetails="ctrl.repo"></div>
 </div>
-<div ng-if="repoCtrl.toggled">
+<div ng-if="ctrl.toggled">
     <div class="repo-users">
-        <div userdetails="u" ng-repeat="u in repoCtrl.users"></div>
+        <div userdetails="u" ng-repeat="u in ctrl.users"></div>
     </div>
 </div>

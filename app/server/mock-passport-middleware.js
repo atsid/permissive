@@ -23,5 +23,5 @@ module.exports = {
     },
 
     // TODO ... PUT Mock users in a seperate file so we can tests users that are
-    mockUser: { username: "TestUser", displayName: "Test User", id: 1 }
+    mockUser: { username: "testuser3", displayName: "Test User 3", id: 1 }
 };

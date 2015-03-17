@@ -13,7 +13,8 @@ module.exports = {
         debug('checking for team existence and creating if necessary');
         debug('params:' + JSON.stringify(req.params, null, 2));
 
-        let repoId = params.id,
+        let params = req.params,
+            repoId = params.id,
             permission = params.permission;
 
         teamRepository.check(repoId, permission).then((exists) => {
@@ -40,9 +41,9 @@ module.exports = {
             repoId = params.id,
             permission = params.permission;
 
-            teamRepository.edit(username, repoId, permission).then(() => {
-                next();
-            }).catch(err => next(err));
+        teamRepository.edit(username, repoId, permission).then(() => {
+            next();
+        }).catch(err => next(err));
 
     }
 

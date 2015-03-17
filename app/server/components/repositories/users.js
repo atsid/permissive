@@ -1,8 +1,7 @@
 'use strict';
 
 var userUtil = require('./util/users'),
-    Bluebird = require('bluebird'),
-    permUtil = require('./util/permissions');
+    Bluebird = require('bluebird');
 
 module.exports = {
 
@@ -14,8 +13,10 @@ module.exports = {
     },
 
     isOrgMember (username) {
-        return userUtil.isOrgMember(username).then(function (data) {
-            return "204 No Content" === data.meta.success;
+        return new Promise((resolve, reject) => {
+            userUtil.isOrgMember(username).then(function (data) {
+                resolve(data.meta.status === '204 No Content');
+            });
         });
     }
 };

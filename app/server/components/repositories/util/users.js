@@ -28,7 +28,7 @@ module.exports = {
     isOrgMember(username) {
         return provider.github.isOrgMember({
             org: provider.github.config.org,
-            username: username
+            user: username
         });
     }
 };

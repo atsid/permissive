@@ -69,6 +69,7 @@ module.exports = {
 
     edit (username, repoId, permission) {
 
+        debug('editing user [' + username + '] permission on team for repo [' + repoId + '] to permission [' + permission + ']');
         // get permission map
         return permUtil.getPermissionMap().then(map => {
 

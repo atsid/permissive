@@ -32,9 +32,19 @@ To run the application:
 
 Then:
 
-    GITHUB_TOKEN=<your token> GITHUB_ORG=<your org> npm start
+    <environment vars> npm start
 
-You need to use an OAuth token to authenticate with the GitHub API.
+The required environment vars are:
+
+* GITHUB_ORG: This is the org name to manage.
+* GITHUB_TOKEN: You need to use an OAuth token to authenticate with the GitHub API. This token must have **owner** permissions against the org, or else team management cannot be performed.
+* GITHUB_CLIENTID: This is the application OAuth ID provided by GitHub when you register the application.
+* GITHUB_CLIENT_KEY: This is the application OAuth secrect key provided by GitHub when you register the application.
+
+If you instead choose to run with mock services that don't interact with the live GitHub API, you can ignore those params and use these instead:
+
+* SERVICE=mock: Setting 'mock' here will toggle the services to swap in a mock impl.
+* GITHUB_USERNAME: Put in one of the mock usernames to simulate interaction as, because their won't be auth (testuser1, testuser2, or testuser3). Default=testuser3.
 
 As you develop, you can pull down the latest dependencies with either `npm install` from within the Vagrant VM or `vagrant provision` from your host.
 

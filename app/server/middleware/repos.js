@@ -33,20 +33,22 @@ module.exports = {
     },
 
     listReposLinks (req, res, next) {
-        debug('checking for links on repo list');
 
         let repos = req.entity,
             user = req.query.permission_user,
             username = req.session.passport.user.username;
 
+        debug('checking for links on repo list for logged in [' + username + '] to edit [' + user + ']');
+
         if (user) {
             permissionRepository.getRepoPermissionsForUser(repos, username).then(permissions => {
                 repos.forEach(repo => {
                     let permission = permissions[repo.id];
+                    debug('got permission for [' + username + '] against repo [' + repo.id + ']', permission);
                     if (permission.permissive === 'admin' || permission.github === 'admin') {
                         repo.links = [{
                             rel: 'edit-user-permission',
-                            href: 'repos/' + repo.id + '/users/' + username + '/permissions/{permission}',
+                            href: 'repos/' + repo.id + '/users/' + user + '/permissions/{permission}',
                             method: 'PUT'
                         }];
                     }

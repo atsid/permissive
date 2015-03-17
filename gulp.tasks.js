@@ -66,7 +66,7 @@ gulp.task('test', () => {
     });
 });
 
-gulp.task('exec-itest', ['start-server'], () => {
+gulp.task('itest', () => {
     return new Bluebird((resolve, reject) => {
         instrumentSource()
             .on('finish', () => {
@@ -77,12 +77,6 @@ gulp.task('exec-itest', ['start-server'], () => {
             });
     });
 });
-
-gulp.task('itest', [
-    'start-server',
-    'exec-itest',
-    'halt-server'
-]);
 
 gulp.task('report-coverage', () => {
     return gulp.src('coverage/**/lcov.info')
@@ -123,10 +117,6 @@ gulp.task('start-server', () => {
                 }
             });
     });
-});
-
-gulp.task('halt-server', ['exec-itest'], () => {
-    devServer.emit('quit');
 });
 
 gulp.task('default', (cb) => {

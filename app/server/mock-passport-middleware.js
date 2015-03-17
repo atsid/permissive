@@ -23,5 +23,5 @@ module.exports = {
     },
 
     // TODO ... PUT Mock users in a seperate file so we can tests users that are
-    mockUser: { username: "TestUser", displayName: "Test User", id: 1 }
+    mockUser: { username: process.env.GITHUB_USERNAME || 'testuser3', displayName: 'Test User', id: 1 }
 };

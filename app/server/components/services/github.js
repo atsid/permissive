@@ -39,6 +39,7 @@ module.exports = {
     getUser: Bluebird.promisify(github.user.getFrom),
     getRepos: Bluebird.promisify(github.repos.getFromOrg),
     getTeams: Bluebird.promisify(github.orgs.getTeams),
+    createTeam: Bluebird.promisify(github.orgs.createTeam),
     getTeamMembers: Bluebird.promisify(github.orgs.getTeamMembers),
     getTeamRepos: Bluebird.promisify(github.orgs.getTeamRepos),
     addTeamMember: Bluebird.promisify(github.orgs.addTeamMember),

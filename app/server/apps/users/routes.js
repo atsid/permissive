@@ -21,6 +21,7 @@ module.exports = {
             path: '/users/:username/repos/:id/permissions/:permission',
             middleware: [
                 auth.isAuthenticated,
+                permissions.createTeamForRepoPermission,
                 permissions.editRepoPermissionForUser,
                 send.noContent
             ]

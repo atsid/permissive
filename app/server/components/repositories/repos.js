@@ -6,10 +6,6 @@ module.exports = {
 
     getRepos () {
         return repoUtil.getGithubRepos();
-    },
-
-    getRepo (repoId) {
-        return repoUtil.getGithubRepo(repoId);
     }
 
 };

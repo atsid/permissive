@@ -13,24 +13,9 @@ module.exports = {
         });
     },
 
-    getUser (username) {
-        return userUtil.getGithubUser(username);
-    },
-
-    getPermissions (repoId, users) {
-        return permUtil.getPermissionMap().then(map => {
-            let userMap = map[repoId];
-            users.forEach(user => {
-                user.permission = userMap[user.username] || permUtil.getDefaultPermissions();
-            });
-            return users;
-        });
-    },
-
     isOrgMember (username) {
         return userUtil.isOrgMember(username).then(function (data) {
             return "204 No Content" === data.meta.success;
         });
     }
-
 };

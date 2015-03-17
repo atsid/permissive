@@ -16,15 +16,6 @@ module.exports = {
                 send.json
             ]
         },
-        read: {
-            method: 'GET',
-            path: '/users/:username',
-            middleware: [
-                auth.isAuthenticated,
-                users.readUser,
-                send.json
-            ]
-        },
         editRepoPermission: {
             method: 'PUT',
             path: '/users/:username/repos/:id/permissions/:permission',

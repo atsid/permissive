@@ -8,6 +8,10 @@ module.exports =
                 url: '/',
                 templateUrl: 'app/main/main.html',
                 controller: 'mainController as ctrl'
+            })
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/main/login.html'
             });
     })
     .controller('mainController', function () {

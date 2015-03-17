@@ -5,7 +5,6 @@ var provider = require('./provider'),
     convertGithubUser;
 
 convertGithubUser = (user) => {
-    console.log('user', user);
     return {
         username: user.login,
         name: user.name,
@@ -24,5 +23,12 @@ module.exports = {
     getGithubUsers() {
         var args = provider.getDefaultListArgs();
         return provider.github.getUsers(args).then(users => users.map(user => convertGithubUser(user)));
+    },
+
+    isOrgMember(username) {
+        return provider.github.isOrgMember({
+            org: provider.github.config.org,
+            username: username
+        });
     }
 };

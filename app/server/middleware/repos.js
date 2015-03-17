@@ -41,7 +41,7 @@ module.exports = {
 
         let repos = req.entity,
             user = req.query.permission_user,
-            username = req.auth.username;
+            username = req.session.passport.user.username;
 
         if (user) {
             permissionRepository.getRepoPermissionsForUser(repos, username).then(permissions => {

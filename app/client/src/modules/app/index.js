@@ -20,6 +20,19 @@ module.exports =
         //load other app modules here, e.g.:
         //require('./account').name
     ])
-    .config(function ($urlRouterProvider) {
+    .config(function ($urlRouterProvider, $httpProvider) {
         $urlRouterProvider.otherwise('/');
+        $httpProvider.interceptors.push('authInterceptor');
+    }).factory('authInterceptor', function ($q, $location) {
+        return {
+            responseError(response) {
+                if (response.status === 401) {
+                    console.log('redirecting to login');
+                    $location.path('/login');
+                    //$cookieStore.remove('token');
+                }
+
+                return $q.reject(response);
+            }
+        };
     });

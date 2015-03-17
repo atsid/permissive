@@ -20,8 +20,22 @@ module.exports =
         //load other app modules here, e.g.:
         //require('./account').name
     ])
-    .config(function ($urlRouterProvider, $mdThemingProvider) {
+    .config(function ($urlRouterProvider, $httpProvider, $mdThemingProvider) {
         $urlRouterProvider.otherwise('/');
+        $httpProvider.interceptors.push('authInterceptor');
+
         $mdThemingProvider.theme('default')
             .primaryPalette('light-blue');
+    }).factory('authInterceptor', function ($q, $location) {
+        return {
+            responseError(response) {
+                if (response.status === 401) {
+                    console.log('redirecting to login');
+                    $location.path('/login');
+                    //$cookieStore.remove('token');
+                }
+
+                return $q.reject(response);
+            }
+        };
     });

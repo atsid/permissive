@@ -1,5 +1,5 @@
 'use strict';
-var auth = require('../../middleware/auth'),
+var auth = require('../../middleware/authenticate'),
     users = require('../../middleware/users'),
     permissions = require('../../middleware/permissions'),
     send = require('../../middleware/send');
@@ -9,7 +9,7 @@ module.exports = {
             method: 'GET',
             path: '/users',
             middleware: [
-                auth.authenticate,
+                auth.isAuthenticated,
                 users.listUsers,
                 users.listUsersPermission,
                 users.listUsersLinks,
@@ -20,7 +20,7 @@ module.exports = {
             method: 'PUT',
             path: '/users/:username/repos/:id/permissions/:permission',
             middleware: [
-                auth.authenticate,
+                auth.isAuthenticated,
                 permissions.editRepoPermissionForUser,
                 send.noContent
             ]

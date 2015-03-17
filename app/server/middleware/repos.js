@@ -10,9 +10,13 @@ module.exports = {
         debug('listing repos [' + req.path + ']');
         debug('query:' + JSON.stringify(req.query, null, 2));
 
+        let username = req.auth.username;
+
         repoRepository.getRepos().then(repos => {
-            req.entity = repos;
-            next();
+            return permissionRepository.filterReposByUserPermission(repos, username).then(filteredRepos => {
+                req.entity = filteredRepos;
+                next();
+            });
         }).catch(err => next(err));
     },
 
@@ -37,7 +41,7 @@ module.exports = {
 
         let repos = req.entity,
             user = req.query.permission_user,
-            username = req.auth.username;
+            username = req.session.passport.user.username;
 
         if (user) {
             permissionRepository.getRepoPermissionsForUser(repos, username).then(permissions => {

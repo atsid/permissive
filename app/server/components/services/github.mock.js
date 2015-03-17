@@ -17,6 +17,7 @@
 //jscs:disable disallowDanglingUnderscores
 var mask = require('json-mask'),
     debug = require('debug')('app:services:github-mock'),
+    org = 'testorg',
     users = {
         'testuser1': {
             login: 'testuser1',
@@ -38,12 +39,14 @@ var mask = require('json-mask'),
         '1': {
             id: 1,
             name: 'Test-Repo-1',
+            full_name: org + '/' + 'Test-Repo-1',
             description: 'A library for managing file io.',
             private: false
         },
         '2': {
             id: 2,
             name: 'Test-Repo-2',
+            full_name: org + '/' + 'Test-Repo-2',
             private: true
         }
     },
@@ -75,13 +78,20 @@ var mask = require('json-mask'),
             permission: 'admin',
             _repos: [1],
             _users: ['testuser3']
+        },
+        '5': {
+            id: 5,
+            name: 'zzz-permissive-repo-Test-Repo-2-admin',
+            permission: 'admin',
+            _repos: [2],
+            _users: ['testuser3']
         }
 };
 
 module.exports = {
 
     config: {
-        org: process.env.GITHUB_ORG
+        org: org
     },
 
     getUsers () {
@@ -126,6 +136,31 @@ module.exports = {
             let list = Object.keys(teams).map((key) => mask(teams[key], 'id,name,permission'));
 
             resolve(list);
+        });
+    },
+
+    createTeam (msg) {
+        debug('creating new mock team ' + msg.name);
+        return new Promise((resolve, reject) => {
+            let repo,
+                id = Math.round(Math.random() * 100000),
+                team = {
+                    id: id,
+                    name: msg.name,
+                    permission: msg.permission,
+                    _users: []
+                };
+
+            //createTeam API method gets a list of repo full names - need to map that to a mock id
+            Object.keys(repos).forEach((key) => {
+                let r = repos[key];
+                if (r.full_name === msg.repo_names[0]) {
+                    repo = r;
+                }
+            });
+            team._repos = [repo.id];
+            teams[id] = team;
+            resolve(team);
         });
     },
 

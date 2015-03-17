@@ -65,7 +65,7 @@ describe('github.mock.js', () => {
     it('getTeams ok', (done) => {
 
         github.getTeams().then((teams) => {
-            chai.assert.equal(teams.length, 4);
+            chai.assert.equal(teams.length, 5);
             let team = teams[0];
             //just confirm they're ok - we can't assert specifically because we don't enforce sorting
             chai.assert.ok(team.id);

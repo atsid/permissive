@@ -20,6 +20,8 @@ module.exports =
         //load other app modules here, e.g.:
         //require('./account').name
     ])
-    .config(function ($urlRouterProvider) {
+    .config(function ($urlRouterProvider, $mdThemingProvider) {
         $urlRouterProvider.otherwise('/');
+        $mdThemingProvider.theme('default')
+            .primaryPalette('light-blue');
     });

@@ -57,9 +57,9 @@ describe('Repo model HTTP requests', function () {
             chai.assert.ok(items[0].id);
         });
 
-        //TODO: use authenticated user to check for links
-        it('repo has no links', () => {
-            chai.assert.isUndefined(items[0].links);
+        //mock user is testuser3, who has admin permission
+        it('repo has links', () => {
+            chai.assert.ok(items[0].links);
         });
 
     });

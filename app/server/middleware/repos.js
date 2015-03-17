@@ -10,7 +10,7 @@ module.exports = {
         debug('listing repos [' + req.path + ']');
         debug('query:' + JSON.stringify(req.query, null, 2));
 
-        let username = req.auth.username;
+        let username = req.session.passport.user.username;
 
         repoRepository.getRepos().then(repos => {
             return permissionRepository.filterReposByUserPermission(repos, username).then(filteredRepos => {

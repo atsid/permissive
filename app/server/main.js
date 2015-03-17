@@ -10,8 +10,9 @@ exports.start = () => {
             hostname: 'localhost'
         },
         github: {
-            clientID: process.env.GITHUB_CLIENTID,
-            clientSecret: process.env.GITHUB_CLIENT_KEY,
+            //TODO: the mock is being injected here via service var. extract this to a centralized place.
+            clientID: process.env.GITHUB_CLIENTID || process.env.SERVICE,
+            clientSecret: process.env.GITHUB_CLIENT_KEY || process.env.SERVICE,
             authRoute: '/auth/github',
             authCallbackRoute: '/auth/github/callback',
             failureCallback: '/auth/failure'

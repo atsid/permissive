@@ -37,10 +37,11 @@ module.exports = {
 
         if (process.env.SERVICE === 'mock') {
             // TODO ... is there a real di way to do this??
-            console.log('using the mock passport middlware');
+            debug('using the mock passport middlware');
             var mock = require('./mock-passport-middleware');
             app.use(mock.initialize(mock.mockUser));
         } else {
+            debug('using the standard passport middlware');
             app.use(passport.initialize());
         }
         app.use(passport.session());

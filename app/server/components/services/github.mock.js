@@ -241,7 +241,7 @@ module.exports = {
     isOrgMember (msg) {
         return new Promise((resolve, reject) => {
             resolve({ meta: {
-                success: "204 No Content"
+                status: '204 No Content'
             }});
         });
     }

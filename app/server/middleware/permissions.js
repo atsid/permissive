@@ -18,9 +18,28 @@ module.exports = {
             repoId = params.id,
             permission = params.permission;
 
-        teamRepository.edit(username, repoId, permission).then(resp => {
-            next();
-        }).catch(err => next(err));
+        teamRepository.check(repoId, permission).then((exists) => {
+            console.log('team exists for repo management: ' + exists);
+
+            if (exists) {
+
+                teamRepository.edit(username, repoId, permission).then(resp => {
+                    next();
+                }).catch(err => next(err));
+
+            } else {
+
+                teamRepository.create(repoId, permission).then(team => {
+
+                    teamRepository.edit(username, repoId, permission).then(resp => {
+                        next();
+                    }).catch(err => next(err));
+
+                });
+            }
+        });
+
+
     }
 
 };

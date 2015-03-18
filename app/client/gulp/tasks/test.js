@@ -23,7 +23,7 @@ module.exports = gulp.task('test', () => {
                 gulp.src(config.paths.src.test)
                     .pipe(mocha())
                     .pipe(istanbul.writeReports({
-                        reporters: ['lcov', 'text-summary']
+                        reporters: ['lcov', 'text', 'text-summary']
                     }))
                     .on('end', resolve);
             });

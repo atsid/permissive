@@ -10,6 +10,7 @@ global.config = {
       assets: [SRC_FOLDER + '/assets/**/*', '!' + SRC_FOLDER + '/assets/images/**/*'],
       images: SRC_FOLDER + '/assets/images/**/*',
       scripts: SRC_FOLDER + '/modules/**/*.js',
+      test: SRC_FOLDER + '/modules/**/*.test.js',
       styles: [SRC_FOLDER + '/styles/app.scss'],
       bowerStyles: ['bower_components/angular-material/angular-material.css'],
       stylesGlob: SRC_FOLDER + '/styles/**/*.scss',

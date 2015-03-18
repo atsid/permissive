@@ -52,6 +52,7 @@ function instrumentSource() {
         }))
         .pipe(istanbul.hookRequire());
 }
+
 gulp.task('test', () => {
     return new Bluebird((resolve, reject) => {
         instrumentSource()

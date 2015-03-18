@@ -20,9 +20,12 @@ module.exports =
         //load other app modules here, e.g.:
         //require('./account').name
     ])
-    .config(function ($urlRouterProvider, $httpProvider) {
+    .config(function ($urlRouterProvider, $httpProvider, $mdThemingProvider) {
         $urlRouterProvider.otherwise('/');
         $httpProvider.interceptors.push('authInterceptor');
+
+        $mdThemingProvider.theme('default')
+            .primaryPalette('light-blue');
     }).factory('authInterceptor', function ($q, $location) {
         return {
             responseError(response) {

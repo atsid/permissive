@@ -10,8 +10,10 @@ module.exports = gulp.task('browserify', function () {
   return browserify({
       entries: [config.paths.src.modules]
     })
-    .transform(browserifyShim)
-    .transform(babelify)
+    .transform(babelify.configure({
+        compact: false,
+        ignore: "bower_components"
+    }))
     .bundle()
     .pipe(source(config.filenames.release.scripts))
     .pipe(gulp.dest(config.paths.dest.release.scripts));

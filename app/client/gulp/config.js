@@ -1,6 +1,6 @@
 global.SRC_FOLDER = 'src';
 global.BUILD_FOLDER = 'build';
-global.RELEASE_FOLDER = 'release';
+global.RELEASE_FOLDER = 'build'; // same as build for now
 global.TMP_FOLDER = 'tmp';
 
 global.config = {

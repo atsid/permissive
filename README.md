@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/atsid/permissive.svg?branch=master)](https://travis-ci.org/atsid/permissive)
-[![Coverage Status](https://coveralls.io/repos/atsid/permissive/badge.svg?branch=master)](https://coveralls.io/r/atsid/permissive?branch=master)
+[![Test Coverage](https://codeclimate.com/github/atsid/permissive/badges/coverage.svg)](https://codeclimate.com/github/atsid/permissive)
 [![Code Climate](https://codeclimate.com/github/atsid/permissive/badges/gpa.svg)](https://codeclimate.com/github/atsid/permissive)
 [![Dependency Status](https://david-dm.org/atsid/permissive.svg)](https://david-dm.org/atsid/permissive)
 

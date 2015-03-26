@@ -29,6 +29,7 @@
     "browserify": "^9.0.3",
     "browserify-shim": "^3.6.0",
     "chai": "^2.1.0",
+    "codeclimate-test-reporter": "0.0.4",
     "connect": "^2.24.2",
     "event-stream": "^3.3.0",
     "gulp": "^3.8.11",
@@ -39,7 +40,6 @@
     "gulp-chug": "^0.4.2",
     "gulp-cli": "^0.1.5",
     "gulp-concat": "^2.5.2",
-    "gulp-coveralls": "^0.1.3",
     "gulp-csso": "^0.2.9",
     "gulp-header": "^1.2.2",
     "gulp-if": "^1.2.1",
@@ -57,6 +57,7 @@
     "gulp-replace": "^0.4.0",
     "gulp-rimraf": "^0.1.1",
     "gulp-sass": "^1.3.3",
+    "gulp-semver-tasks": "^0.1.0",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-uglify": "^0.3.0",
     "gulp-util": "^3.0.4",
@@ -71,7 +72,7 @@
     "yargs": "^1.2.2"
   },
   "scripts": {
-    "test": "./node_modules/.bin/gulp",
+    "test": "gulp && CODECLIMATE_REPO_TOKEN=1e0a16890d45f61a661a33d8c93cbea1f40ef5e1bfbd1fc3f885dcca693ba4fe codeclimate < coverage/lcov.info",
     "start": "node app.js",
     "postinstall": "cd app/client && bower install"
   },

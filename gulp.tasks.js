@@ -9,7 +9,6 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     Bluebird = require('bluebird'),
     istanbul = require('gulp-istanbul'),
-    coveralls = require('gulp-coveralls'),
     isparta = require('isparta'),
 
     /**
@@ -78,11 +77,6 @@ gulp.task('itest', () => {
     });
 });
 
-gulp.task('report-coverage', () => {
-    return gulp.src('coverage/**/lcov.info')
-        .pipe(coveralls());
-});
-
 /**
  * App-Server Startup (for test)
  */
@@ -123,6 +117,5 @@ gulp.task('default', (cb) => {
     runSequence(
         'static-checks',
         'test',
-        'report-coverage',
         cb);
 });

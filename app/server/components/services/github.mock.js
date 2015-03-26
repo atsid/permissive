@@ -65,7 +65,7 @@ var mask = require('json-mask'),
             _repos: [1],
             _users: ['testuser1']
         },
-        '3':{
+        '3': {
             id: 3,
             name: 'zzz-permissive-repo-Test-Repo-1-push',
             permission: 'push',
@@ -86,7 +86,7 @@ var mask = require('json-mask'),
             _repos: [2],
             _users: ['testuser3']
         }
-};
+    };
 
 module.exports = {
 
@@ -240,9 +240,11 @@ module.exports = {
 
     isOrgMember (msg) {
         return new Promise((resolve, reject) => {
-            resolve({ meta: {
-                status: '204 No Content'
-            }});
+            resolve({
+                meta: {
+                    status: '204 No Content'
+                }
+            });
         });
     }
 };

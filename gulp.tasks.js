@@ -51,6 +51,7 @@ function instrumentSource() {
         }))
         .pipe(istanbul.hookRequire());
 }
+
 gulp.task('test', () => {
     return new Bluebird((resolve, reject) => {
         instrumentSource()
@@ -58,7 +59,7 @@ gulp.task('test', () => {
                 gulp.src(SERVER_TEST_SRC)
                     .pipe(mocha())
                     .pipe(istanbul.writeReports({
-                        reporters: ['lcov', 'text-summary']
+                        reporters: ['lcov', 'text', 'text-summary']
                     }))
                     .on('end', resolve);
             });
@@ -71,7 +72,9 @@ gulp.task('itest', () => {
             .on('finish', () => {
                 gulp.src(SERVER_IT_SRC)
                     .pipe(mocha())
-                    .pipe(istanbul.writeReports())
+                    .pipe(istanbul.writeReports({
+                        reporters: ['lcov', 'text', 'text-summary']
+                    }))
                     .on('end', resolve);
             });
     });

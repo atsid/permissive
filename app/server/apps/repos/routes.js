@@ -5,23 +5,21 @@ var auth = require('../../middleware/authenticate'),
     permissions = require('../../middleware/permissions');
 
 module.exports = {
+    pre: {
+        all: [auth.isAuthenticated]
+    },
     routes: {
-        list: {
-            method: 'GET',
-            path: '/repos',
-            middleware: [
-                auth.isAuthenticated,
+        '/repos': {
+            get: [
                 repos.listRepos,
                 repos.listReposPermission,
                 repos.listReposLinks,
                 send.json
             ]
         },
-        editUserPermission: {
-            method: 'PUT',
-            path: '/repos/:id/users/:username/permissions/:permission',
-            middleware: [
-                auth.isAuthenticated,
+
+        '/repos/:id/users/:username/permissions/:permission': {
+            put: [
                 permissions.createTeamForRepoPermission,
                 permissions.editRepoPermissionForUser,
                 send.noContent

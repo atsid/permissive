@@ -1,6 +1,9 @@
 # Dockerfile Project nodejs base image
 # http://dockerfile.github.io/#/nodejs-bower-gulp
-FROM dockerfile/nodejs-bower-gulp
+FROM neo9polska/nodejs-bower-gulp
+
+RUN apt-get update
+RUN apt-get -y install git
 
 RUN useradd -ms /bin/bash node
 COPY . /home/node/app
@@ -11,13 +14,7 @@ ENV HOME /home/node
 
 WORKDIR /home/node/app
 
-RUN npm install && \
-    gulp && \
-    cd app/client && \
-    gulp --release && \
-    cd /home/node/app && \
-    rm -rf node_modules && \
-    npm install --production
+RUN npm install -dd && gulp && cd app/client && gulp --release && cd /home/node/app && rm -rf node_modules && npm install --production
 
 CMD ["npm", "start"]
 

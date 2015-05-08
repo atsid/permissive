@@ -3,7 +3,8 @@
 
 var passport = require('passport'),
     GitHubStrategy = require('passport-github').Strategy,
-    debug = require('debug')('app:passport');
+    debug = require('debug')('app:passport'),
+    conf = require('./config');
 
 module.exports = {
     /**
@@ -35,7 +36,7 @@ module.exports = {
             done(null, user);
         });
 
-        if (process.env.SERVICE === 'mock') {
+        if (conf.get('service') === 'mock') {
             // TODO ... is there a real di way to do this??
             debug('using the mock passport middlware');
             var mock = require('./mock-passport-middleware');

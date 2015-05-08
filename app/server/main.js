@@ -1,24 +1,25 @@
 'use strict';
 
+var conf = require('./config');
+
 exports.start = () => {
 
     // HACKING IN CONFIG OBJECT HERE
     var config = {
         server: {
-            port: '3000',
+            port: conf.get('server.port'),
             api_prefix: '/api/v1',
-            hostname: 'localhost'
+            hostname: conf.get('server.hostname')
         },
         github: {
-            //TODO: the mock is being injected here via service var. extract this to a centralized place.
-            clientID: process.env.GITHUB_CLIENTID || process.env.SERVICE,
-            clientSecret: process.env.GITHUB_CLIENT_KEY || process.env.SERVICE,
+            clientID: conf.get('github.clientID'),
+            clientSecret: conf.get('github.clientKey'),
             authRoute: '/auth/github',
             authCallbackRoute: '/auth/github/callback',
             failureCallback: '/auth/failure'
         },
         session: {
-            secret: process.env.SESSION_SECRET || 'keyboard cat',
+            secret: conf.get('session.secret'),
             resave: false,
             saveUninitialized: true,
             cookie: {

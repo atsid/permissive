@@ -1,11 +1,11 @@
 'use strict';
 
-var conf = require('./config');
+let conf = require('./config');
 
 exports.start = () => {
 
     // HACKING IN CONFIG OBJECT HERE
-    var config = {
+    let config = {
         server: {
             port: conf.get('server.port'),
             api_prefix: '/api/v1',
@@ -44,7 +44,7 @@ exports.start = () => {
     mountie({
         parent: app,
         src: path.join(__dirname, 'apps'),
-        prefix: "/api/v1"
+        prefix: config.server.api_prefix
     });
     http.createServer(app).listen(app.get('port'), () => {
         console.log('Express server listening on port ' + app.get('port'));

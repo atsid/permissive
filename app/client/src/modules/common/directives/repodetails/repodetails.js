@@ -20,6 +20,11 @@ module.exports = /*@ngInject*/
                     this.editLink = links.findByRel(this.repo.links, 'edit-user-permission');
                     this.buttons = angular.copy(buttonConfig);
 
+                    //buttons display but are not clickable if the link isn't there
+                    if (!this.editLink) {
+                        this.buttons.forEach((btn) => btn.disabled = true);
+                    }
+
                     let perm = this.repo.permission;
 
                     if (perm) {

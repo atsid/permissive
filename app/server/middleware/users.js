@@ -2,7 +2,8 @@
 
 var permissionRepository = require('../components/repositories/permissions'),
     userRepository = require('../components/repositories/users'),
-    debug = require('debug')('app:middleware:users');
+    debug = require('debug')('app:middleware:users'),
+    conf = require('../config');
 
 module.exports = {
 
@@ -45,7 +46,7 @@ module.exports = {
                     users.forEach(user => {
                         user.links = [{
                             rel: 'edit-repo-permission',
-                            href: 'api/v1/users/' + user.username + '/repos/' + repoId + '/permissions/{permission}',
+                            href: conf.get('api.root') + conf.get('api.version') + '/users/' + user.username + '/repos/' + repoId + '/permissions/{permission}',
                             method: 'PUT'
                         }];
                     });

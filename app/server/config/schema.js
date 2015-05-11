@@ -69,7 +69,7 @@ module.exports = {
         }
     },
 
-    //settings for oauth app
+    //settings for oauth app (we're using passport)
     oauth: {
         provider: {
             doc: 'OAuth provider to use. We only support GitHub right now.',
@@ -107,7 +107,7 @@ module.exports = {
         }
     },
 
-    //session properties (only use for the auth connection).
+    //session properties (only use these for the auth connection).
     //see here for docs: https://github.com/expressjs/session
     session: {
         secret: {

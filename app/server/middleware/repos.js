@@ -52,7 +52,7 @@ module.exports = {
                     if (permission.permissive === 'admin' || permission.github === 'admin') {
                         repo.links = [{
                             rel: 'edit-user-permission',
-                            href: 'repos/' + repo.id + '/users/' + user + '/permissions/{permission}',
+                            href: 'api/v1/repos/' + repo.id + '/users/' + user + '/permissions/{permission}',
                             method: 'PUT'
                         }];
                     }

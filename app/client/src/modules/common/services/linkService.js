@@ -23,7 +23,7 @@ module.exports = /*@ngInject*/
                 let method = (link.method || 'get').toLowerCase(),
                     href = link.href,
                     template = templates.parse(href),
-                    url = 'api/v1/' + template.expand(params);
+                    url = template.expand(params);
 
                 $http[method](url);
             }

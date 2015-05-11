@@ -14,11 +14,11 @@ module.exports = {
      * @param app the app that will use the githug authentication
      * @param config configuration from the app using the authenticator
      */
-    setup: function (app, config) {
+    setup: function (app) {
         passport.use(new GitHubStrategy({
-                clientID: config.github.clientID,
-                clientSecret: config.github.clientSecret,
-                callbackURL: "http://" + config.server.hostname + ":" + config.server.port + config.github.authCallbackRoute
+                clientID: conf.get('oauth.clientID'),
+                clientSecret: conf.get('oauth.clientKey'),
+                callbackURL: conf.get('server.protocol') + conf.get('server.hostname') + ':' + conf.get('server.port') + conf.get('oauth.authCallbackRoute')
             },
             function (accessToken, refreshToken, profile, done) {
                 done(null, { username: profile.username, displayName: profile.displayName, id: profile.id, token: accessToken });
@@ -42,12 +42,12 @@ module.exports = {
             var mock = require('./mock-passport-middleware');
             app.use(mock.initialize(mock.mockUser));
         } else {
-            debug('using the standard passport middlware');
+            debug('using the standard passport middleware');
             app.use(passport.initialize());
         }
         app.use(passport.session());
 
-        app.get('/auth/authenticated', function (req, res) {
+        app.get(conf.get('oauth.authenticatedRoute'), function (req, res) {
             var authenticated = req.isAuthenicated();
             if (authenticated) {
                 res.send(200);
@@ -55,9 +55,9 @@ module.exports = {
                 res.send(401);
             }
         });
-        app.get(config.github.authRoute, passport.authenticate('github'));
-        app.get(config.github.authCallbackRoute, passport.authenticate('github',
-            { failureRedirect: config.github.failureRedirect, session: true }),
+        app.get(conf.get('oauth.authRoute'), passport.authenticate('github'));
+        app.get(conf.get('oauth.authCallbackRoute'), passport.authenticate('github',
+            { failureRedirect: conf.get('oauth.failureRedirect'), session: true }),
             function (req, res) {
                 var authenticated = req.isAuthenticated();
                 debug("authenticated? " + authenticated);
@@ -65,7 +65,7 @@ module.exports = {
                 res.redirect('/');
             }
         );
-        app.get(config.github.failureCallback, function (req, res, next) {
+        app.get(conf.get('oauth.failureCallback'), function (req, res, next) {
             res.send(401);
         });
     }

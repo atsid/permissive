@@ -13,8 +13,20 @@ module.exports = {
         env: 'ENV'
     },
 
+    api: {
+        //TODO: it would be nice to split these into root + version, but convict doesn't support functions that supply values
+        prefix: {
+            doc: 'Prefix for accessing API that includes root + version.',
+            default: '/api/v1'
+        }
+    },
+
     //basic server properties.
     server: {
+        protocol: {
+            doc: 'Standard protocol to use for prefixing routes.',
+            default: 'http://'
+        },
         port: {
             doc: 'The port to bind.',
             format: 'port',
@@ -50,6 +62,19 @@ module.exports = {
             default: '',
             env: 'GITHUB_TOKEN'
         },
+        username: {
+            doc: 'Hard-coded username for use with mock service, for testing permissions.',
+            default: 'testuser3',
+            env: 'GITHUB_USERNAME'
+        }
+    },
+
+    //settings for oauth app
+    oauth: {
+        provider: {
+            doc: 'OAuth provider to use. We only support GitHub right now.',
+            default: 'github'
+        },
         clientID: {
             doc: 'OAuth client ID for application.',
             default: 'none',
@@ -60,19 +85,46 @@ module.exports = {
             default: 'none',
             env: 'GITHUB_CLIENT_KEY'
         },
-        username: {
-            doc: 'Hard-coded username for use with mock service, for testing permissions.',
-            default: 'testuser3',
-            env: 'GITHUB_USERNAME'
+        authRoute: {
+            doc: 'Local application route for OAuth provider to check auth.',
+            default: '/auth/github'
+        },
+        authCallbackRoute: {
+            doc: 'Local application route for successful auth to signal at.',
+            default: '/auth/github/callback'
+        },
+        authenticatedRoute: {
+            doc: 'Local application route to check if user has been authenticated.',
+            default: '/auth/authenticated'
+        },
+        failureCallback: {
+            doc: 'Local application route for failed auth to signal at.',
+            default: '/auth/failure'
+        },
+        failureRedirect: {
+            doc: 'Local application route to redirect failed login.',
+            default: '/'
         }
     },
 
-    //session properties for the auth connection.
+    //session properties (only use for the auth connection).
+    //see here for docs: https://github.com/expressjs/session
     session: {
         secret: {
             doc: 'Secret key for the app session.',
             default: 'keyboard cat',
             env: 'SESSION_SECRET'
+        },
+        resave: {
+            default: false
+        },
+        saveUninitialized: {
+            default: true
+        },
+        cookie: {
+            secure: {
+                default: false
+            }
         }
     },
 

@@ -9,7 +9,7 @@ module.exports = {
     //specifies the runtime environment. a file in this folder named <env>.json needs to exist.
     env: {
         doc: 'Environment the app is running in, for selection of pre-defined config files.',
-        default: 'local',
+        default: '',
         env: 'ENV'
     },
 

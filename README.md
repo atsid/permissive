@@ -44,9 +44,17 @@ The required environment vars are:
 If you instead choose to run with mock services that don't interact with the live GitHub API, you can ignore those params and use these instead:
 
 * SERVICE=mock: Setting 'mock' here will toggle the services to swap in a mock impl.
-* GITHUB_USERNAME: Put in one of the mock usernames to simulate interaction as, because their won't be auth (testuser1, testuser2, or testuser3). Default=testuser3.
+* GITHUB_USERNAME: Put in one of the mock usernames to simulate interaction as, because there won't be live auth (testuser1, testuser2, or testuser3). Default=testuser3.
 
 As you develop, you can pull down the latest dependencies with either `npm install` from within the Vagrant VM or `vagrant provision` from your host.
+
+### Configuration
+
+The environment variables mentioned above can also be supplied in json files. Currently, they must reside in the app/server/config folder.
+There is a 'mock.json' file there now that makes it easy to start the app with the mock data (`ENV=mock npm start`).
+Note that you can add any environment files you'd like in the config folder and then use the **ENV** environment variable to toggle it on.
+However, there is a special env name: **local** that has been added to gitignore. So if you create a `local.json` file in the config folder,
+you can use it to store dev settings without worrying about them getting checked into git.
 
 ###Angular UI
 

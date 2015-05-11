@@ -2,13 +2,12 @@
 
 var cluster = require('cluster'),
     debug = require('debug')('app:clustering'),
-    clusteringEnabled = process.env.ENABLE_CLUSTERING,
+    conf = require('./server/config'),
+    clusteringEnabled = conf.get('server.enableClustering'),
     startMaster = () => {
-        let workerLimit = process.env.WORKER_LIMIT,
-            cpuCount = require('os').cpus().length,
-            workerCount = workerLimit ? workerLimit : cpuCount;
-        debug("Spawning " + workerCount + " workers");
-        for (let i = 0; i < workerCount; i += 1) {
+        let workerLimit = conf.get('server.workerLimit');
+        debug("Spawning " + workerLimit + " workers");
+        for (let i = 0; i < workerLimit; i += 1) {
             cluster.fork();
         }
         cluster.on('exit', (worker, code, signal) => {

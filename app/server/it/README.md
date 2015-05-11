@@ -1,6 +1,4 @@
-The tests in this folder are integration tests that require the app to be running at localhost.
+The tests in this folder are integration tests that require the app to be running at a reachable location as designated in the config.
 
-We'll make this configurable in the future, but for now make sure the app is running at localhost:3000 and that you have GitHub credentials so it will work.
-
-A mock service will be added shortly so that the GitHub API is not getting hit all the time.
-
+They will use whatever URLs are generated from the config - I'd recommend running against an app instance that is using the mock services.
+This way the GitHub API will not be hit repeatedly and credentials will not be needed.

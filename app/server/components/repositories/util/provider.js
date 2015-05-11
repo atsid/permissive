@@ -1,7 +1,8 @@
 'use strict';
 
-var svcPath = '../../services/github',
-    mock = process.env.SERVICE === 'mock' ? '.mock' : '',
+var conf = require('../../../config'),
+    svcPath = '../../services/github',
+    mock = conf.get('service') === 'mock' ? '.mock' : '',
     github = require(svcPath + mock);
 
 module.exports = {

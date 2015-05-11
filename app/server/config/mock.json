@@ -1,0 +1,6 @@
+{
+    "service": "mock",
+    "github": {
+        "org": "octocat"
+    }
+}

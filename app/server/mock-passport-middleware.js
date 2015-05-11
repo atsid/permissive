@@ -1,5 +1,6 @@
 'use strict';
 
+var conf = require('./config');
 //jscs:disable disallowDanglingUnderscores
 module.exports = {
     initialize(mockUser) {
@@ -23,5 +24,5 @@ module.exports = {
     },
 
     // TODO ... PUT Mock users in a seperate file so we can tests users that are
-    mockUser: { username: process.env.GITHUB_USERNAME || 'testuser3', displayName: 'Test User', id: 1 }
+    mockUser: { username: conf.get('github.username'), displayName: 'Test User', id: 1 }
 };

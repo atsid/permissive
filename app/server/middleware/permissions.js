@@ -18,7 +18,7 @@ module.exports = {
             permission = params.permission;
 
         teamRepository.check(repoId, permission).then((exists) => {
-            console.log('team exists for repo management?: ' + exists);
+            debug('team exists for repo management?: ' + exists);
 
             if (!exists) {
                 teamRepository.create(repoId, permission).then(() => {

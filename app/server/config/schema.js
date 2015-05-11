@@ -14,10 +14,13 @@ module.exports = {
     },
 
     api: {
-        //TODO: it would be nice to split these into root + version, but convict doesn't support functions that supply values
-        prefix: {
-            doc: 'Prefix for accessing API that includes root + version.',
-            default: '/api/v1'
+        root: {
+            doc: 'Root path under host/port for  RESTful API.',
+            default: '/api/'
+        },
+        version: {
+            doc: 'Version to use for RESTful API routes.',
+            default: 'v1'
         }
     },
 
@@ -25,7 +28,7 @@ module.exports = {
     server: {
         protocol: {
             doc: 'Standard protocol to use for prefixing routes.',
-            default: 'http://'
+            default: 'http'
         },
         port: {
             doc: 'The port to bind.',

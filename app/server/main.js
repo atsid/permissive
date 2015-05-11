@@ -6,9 +6,9 @@ exports.start = () => {
 
     let express = require('express'),
         mountie = require('express-mountie'),
+        session = require('express-session'),
         http = require('http'),
         path = require('path'),
-        session = require('express-session'),
         passport = require('./passport'),
         app = express();
 
@@ -21,7 +21,7 @@ exports.start = () => {
     mountie({
         parent: app,
         src: path.join(__dirname, 'apps'),
-        prefix: conf.get('api.prefix')
+        prefix: conf.get('api.root') + conf.get('api.version')
     });
 
     app.use(express.static(path.resolve(__dirname, '../../app/client/build')));
@@ -29,4 +29,5 @@ exports.start = () => {
     http.createServer(app).listen(app.get('port'), () => {
         console.log('Express server listening on port ' + app.get('port'));
     });
+
 };

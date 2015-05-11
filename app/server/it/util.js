@@ -5,13 +5,14 @@
  */
 var request = require('request'),
     Bluebird = require('bluebird'),
-    root = 'http://localhost:3000/api/v1', //TODO: read from config
+    conf = require('../config'),
+    root = conf.get('server.protocol') + '://' + conf.get('server.hostname') + ':' + conf.get('server.port') + conf.get('api.root') + conf.get('api.version'),
     methods = ['get', 'put', 'post', 'del'];
 
 Bluebird.promisifyAll(request);
 
 /**
- * Wraps up a request, using localhost and the configured app port.
+ * Wraps up a request, using configured API URL root.
  * Uses a promisified request and returns a promise, to simplify usage.
  * @param path - relative path of request (not including host:port).
  * @returns {Promise}

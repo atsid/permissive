@@ -7,7 +7,7 @@ exports.start = () => {
         server: {
             port: '3000',
             api_prefix: '/api/v1',
-            hostname: 'localhost'
+            hostname: process.env.HOSTNAME
         },
         github: {
             //TODO: the mock is being injected here via service var. extract this to a centralized place.

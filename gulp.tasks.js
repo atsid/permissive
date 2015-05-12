@@ -15,10 +15,9 @@ var gulp = require('gulp'),
      * Build Constants
      */
     APP_SRC = ['app/**/*.js', 'app/*.js', '!app/client/**'],
-    SERVER_SRC = ['app/server/**/*.js'],
+    SERVER_SRC = ['app/server/**/*.js', '!app/server/**/*.test.js', '!app/server/it/**'],
     ALL_SRC = APP_SRC.concat(['*.js']),
     SERVER_TEST_SRC = ['app/**/*.test.js', '!app/server/it/**'],
-    SERVER_SRC_NO_IT = SERVER_SRC.concat(['!app/server/it/**']),
     SERVER_IT_SRC = ['app/server/it/**/*.test*.js'],
     devServer = null;
 
@@ -55,7 +54,7 @@ function instrumentSource(src) {
 
 gulp.task('test', () => {
     return new Bluebird((resolve, reject) => {
-        instrumentSource(SERVER_SRC_NO_IT)
+        instrumentSource(SERVER_SRC)
             .on('finish', () => {
                 gulp.src(SERVER_TEST_SRC)
                     .pipe(mocha())

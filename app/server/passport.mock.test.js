@@ -1,6 +1,6 @@
 'use strict';
 
-var passport = require('./passport.mock'),
+let passport = require('./passport.mock'),
     expect = require('chai').expect,
     conf = require('./config');
 

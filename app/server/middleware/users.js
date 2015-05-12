@@ -46,8 +46,7 @@ module.exports = {
                     users.forEach(user => {
                         let editLink = new Link({
                             rel: 'edit-repo-permission',
-                            app: 'users',
-                            method: 'editPermission',
+                            appMethod: 'users.editPermission',
                             params: {
                                 id: repoId,
                                 username: user.username

@@ -53,8 +53,7 @@ module.exports = {
                     if (permission.permissive === 'admin' || permission.github === 'admin') {
                         let editLink = new Link({
                             rel: 'edit-user-permission',
-                            app: 'repos',
-                            method: 'editPermission',
+                            appMethod: 'repos.editPermission',
                             params: {
                                 id: repo.id,
                                 username: user

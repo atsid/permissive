@@ -9,8 +9,7 @@ describe('Link.test.js', () => {
 
         let editLink = new Link({
             rel: 'edit-repo-permission',
-            app: 'users',
-            method: 'editPermission',
+            appMethod: 'users.editPermission',
             params: {
                 id: 89,
                 username: 'octocat'

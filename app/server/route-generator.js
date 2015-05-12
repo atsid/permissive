@@ -1,7 +1,7 @@
 'use strict';
 /**
- * Generates express-jefferson route configs from a names.js and middlewares.js
- * config file, suitable for placements in the 'routes' config block.
+ * Generates express-jefferson route configs from a methods.js and middlewares.js
+ * config file pair, suitable for placement in the 'routes' config block.
  *
  * This function will marry an independent name hash with a middleware hash to create a jefferson-compatible 'routes' config block.
  * The return value is therefore a map of the form:
@@ -27,21 +27,21 @@
  * }
  *
  *
- * @param names - map of business method name to HTTP config (method, path template).
+ * @param methods - map of business method name to HTTP config (method, path template).
  * @param middlewares - map of business method name to middleware arrays.
  */
-module.exports =  (names, middlewares) => {
+module.exports =  (methods, middlewares) => {
 
     let routes = {};
 
-    Object.keys(names).forEach((name) => {
+    Object.keys(methods).forEach((key) => {
 
-        let naming = names[name],
-            middles = middlewares[name],
+        let method = methods[key],
+            middles = middlewares[key],
             conf = {};
 
-        conf[naming.method] = middles;
-        routes[naming.path] = conf;
+        conf[method.method] = middles;
+        routes[method.path] = conf;
     });
 
     return routes;

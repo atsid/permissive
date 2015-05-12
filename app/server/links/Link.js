@@ -11,8 +11,9 @@ class Link {
     constructor(opts) {
 
         //TODO: this really needs to be retrievable from an injectable source like a factory
-        let methods = require('../apps/' + opts.app + '/names'),
-            method = methods[opts.method];
+        let parts = opts.appMethod.split('.'),
+            methods = require('../apps/' + parts[0] + '/methods'),
+            method = methods[parts[1]];
 
         this.rel = opts.rel;
         this.method = method.method.toUpperCase(); //TODO: support default [get]

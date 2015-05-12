@@ -17,6 +17,9 @@ Common use cases we will address initially:
 
 Permissive will provide a user interface for simple management of these use cases, and also provides a RESTful service API so that the functionality is available for other tooling with an organization.
 
+## Using Docker... If you are going to use docker please see the DockerReadme.md instead of the below comments.
+
+
 ## Getting Started
 
 We use [Vagrant](http://vagrantup.com) to manage our local development environments. To get started, just launch:

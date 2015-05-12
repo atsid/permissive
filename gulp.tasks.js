@@ -15,10 +15,11 @@ var gulp = require('gulp'),
      * Build Constants
      */
     APP_SRC = ['app/**/*.js', 'app/*.js', '!app/client/**'],
-    SERVER_SRC = 'app/server/**/*.js',
+    SERVER_SRC = ['app/server/**/*.js'],
     ALL_SRC = APP_SRC.concat(['*.js']),
-    SERVER_TEST_SRC = ['app/**/*.test.js'],
-    SERVER_IT_SRC = 'app/server/it/**/*.test*.js',
+    SERVER_TEST_SRC = ['app/**/*.test.js', '!app/server/it/**'],
+    SERVER_SRC_NO_IT = SERVER_SRC.concat(['!app/server/it/**']),
+    SERVER_IT_SRC = ['app/server/it/**/*.test*.js'],
     devServer = null;
 
 /**
@@ -43,8 +44,8 @@ gulp.task('static-checks', [
 /**
  * Testing Tasks
  */
-function instrumentSource() {
-    return gulp.src(SERVER_SRC)
+function instrumentSource(src) {
+    return gulp.src(src)
         .pipe(istanbul({
             instrumenter: isparta.Instrumenter,
             includeUntested: true
@@ -54,7 +55,7 @@ function instrumentSource() {
 
 gulp.task('test', () => {
     return new Bluebird((resolve, reject) => {
-        instrumentSource()
+        instrumentSource(SERVER_SRC_NO_IT)
             .on('finish', () => {
                 gulp.src(SERVER_TEST_SRC)
                     .pipe(mocha())
@@ -68,7 +69,7 @@ gulp.task('test', () => {
 
 gulp.task('itest', () => {
     return new Bluebird((resolve, reject) => {
-        instrumentSource()
+        instrumentSource(SERVER_SRC)
             .on('finish', () => {
                 gulp.src(SERVER_IT_SRC)
                     .pipe(mocha())

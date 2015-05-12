@@ -2,7 +2,7 @@
 
 let chai = require('chai');
 
-describe('config.test.js', () => {
+describe('config.js', () => {
 
     //clear out the conf module so we can manipulate the environment to bootstrap
     beforeEach(() => {

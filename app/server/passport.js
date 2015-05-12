@@ -42,7 +42,7 @@ module.exports = () => {
         // TODO ... is there a real di way to do this??
         debug('using the mock passport middlware');
         let mock = require('./passport.mock');
-        app.use(mock.initialize(mock.mockUser));
+        app.use(mock.initialize());
     } else {
         debug('using the standard passport middleware');
         app.use(passport.initialize());

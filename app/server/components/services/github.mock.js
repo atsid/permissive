@@ -12,7 +12,7 @@
  * Masking is used at each mock method to limit to the fields that are available for a given API method.
  * For example, the user list API method includes login and avatar_url, but does not include the name.
  *
- * Note also that we are storing some mappings here that aren't GitHub APi properties, and have prefixed those with '_'.
+ * Note also that we are storing some mappings here that aren't GitHub API properties, and have prefixed those with '_'.
  */
 //jscs:disable disallowDanglingUnderscores
 var mask = require('json-mask'),
@@ -93,6 +93,11 @@ module.exports = {
     config: {
         org: org
     },
+
+    //provide direct access to the data maps by other mock components
+    users: users,
+
+    repos: repos,
 
     getUsers () {
         debug('looking up mock users');

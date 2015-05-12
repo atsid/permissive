@@ -3,7 +3,7 @@
 var permissionRepository = require('../components/repositories/permissions'),
     userRepository = require('../components/repositories/users'),
     debug = require('debug')('app:middleware:users'),
-    conf = require('../config');
+    Link = require('../links/Link');
 
 module.exports = {
 
@@ -44,11 +44,16 @@ module.exports = {
             permissionRepository.getUserPermissionForRepo(username, repoId).then(permission => {
                 if (permission.permissive === 'admin' || permission.github === 'admin') {
                     users.forEach(user => {
-                        user.links = [{
+                        let editLink = new Link({
                             rel: 'edit-repo-permission',
-                            href: conf.get('api.root') + conf.get('api.version') + '/users/' + user.username + '/repos/' + repoId + '/permissions/{permission}',
-                            method: 'PUT'
-                        }];
+                            app: 'users',
+                            method: 'editPermission',
+                            params: {
+                                id: repoId,
+                                username: user.username
+                            }
+                        });
+                        user.links = [editLink];
                     });
                 }
                 next();

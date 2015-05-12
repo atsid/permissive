@@ -17,8 +17,13 @@ module.exports = /*@ngInject*/
                 function (linkService) {
                     console.log('binding repo details controller', this);
 
-                    this.editLink = links.findByRel('edit-user-permission', this.repo.links);
+                    this.editLink = links.findByRel(this.repo.links, 'edit-user-permission');
                     this.buttons = angular.copy(buttonConfig);
+
+                    //buttons display but are not clickable if the link isn't there
+                    if (!this.editLink) {
+                        this.buttons.forEach((btn) => btn.disabled = true);
+                    }
 
                     let perm = this.repo.permission;
 

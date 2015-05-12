@@ -9,10 +9,10 @@ module.exports = {
 
     /**
      * Finds a link that matches a specified rel.
-     * @param rel
      * @param links
+     * @param rel
      */
-    findByRel (rel, links) {
+    findByRel (links, rel) {
         //TODO: es6 polyfill for 'find'
         let link;
         if (links) {

@@ -9,7 +9,6 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     Bluebird = require('bluebird'),
     istanbul = require('gulp-istanbul'),
-    coveralls = require('gulp-coveralls'),
     isparta = require('isparta'),
 
     /**
@@ -18,7 +17,7 @@ var gulp = require('gulp'),
     APP_SRC = ['app/**/*.js', 'app/*.js', '!app/client/**'],
     SERVER_SRC = 'app/server/**/*.js',
     ALL_SRC = APP_SRC.concat(['*.js']),
-    SERVER_TEST_SRC = 'app/server/test/**/Test*.js',
+    SERVER_TEST_SRC = ['app/server/test/**/Test*.js', 'app/**/*.test.js'],
     SERVER_IT_SRC = 'app/server/it/**/Test*.js',
     devServer = null;
 
@@ -52,6 +51,7 @@ function instrumentSource() {
         }))
         .pipe(istanbul.hookRequire());
 }
+
 gulp.task('test', () => {
     return new Bluebird((resolve, reject) => {
         instrumentSource()
@@ -59,7 +59,7 @@ gulp.task('test', () => {
                 gulp.src(SERVER_TEST_SRC)
                     .pipe(mocha())
                     .pipe(istanbul.writeReports({
-                        reporters: ['lcov', 'text-summary']
+                        reporters: ['lcov', 'text', 'text-summary']
                     }))
                     .on('end', resolve);
             });
@@ -72,15 +72,12 @@ gulp.task('itest', () => {
             .on('finish', () => {
                 gulp.src(SERVER_IT_SRC)
                     .pipe(mocha())
-                    .pipe(istanbul.writeReports())
+                    .pipe(istanbul.writeReports({
+                        reporters: ['lcov', 'text', 'text-summary']
+                    }))
                     .on('end', resolve);
             });
     });
-});
-
-gulp.task('report-coverage', () => {
-    return gulp.src('coverage/**/lcov.info')
-        .pipe(coveralls());
 });
 
 /**
@@ -123,6 +120,5 @@ gulp.task('default', (cb) => {
     runSequence(
         'static-checks',
         'test',
-        'report-coverage',
         cb);
 });

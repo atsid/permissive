@@ -8,7 +8,7 @@
             <div ng-if="ctrl.repo.description" class="repo-details-description">{{ctrl.repo.description}}</div>
         </div>
         <div class="repo-links">
-            <div ng-if="ctrl.editLink" class="repo-details-edit-permissions">
+            <div ng-if="ctrl.permission" class="repo-details-edit-permissions">
                 <span togglebuttons
                       options="ctrl.buttons"
                       value="ctrl.permission"

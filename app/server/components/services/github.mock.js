@@ -240,9 +240,11 @@ module.exports = {
 
     isOrgMember (msg) {
         return new Promise((resolve, reject) => {
-            resolve({ meta: {
-                status: '204 No Content'
-            }});
+            resolve({
+                meta: {
+                    status: '204 No Content'
+                }
+            });
         });
     }
 };

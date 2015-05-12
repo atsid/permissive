@@ -38,3 +38,5 @@ node_modules
 
 # Vagrant runtime data
 .vagrant/
+
+app/server/config/local.json

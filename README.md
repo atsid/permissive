@@ -71,3 +71,11 @@ Open a new cmd tab, then:
     ../../node_modules/.bin/gulp
     
 That'll start a watcher that compiles the client and serves it up.
+
+
+### A common failure when the git-hub configuration values are wrong
+
+When setting the configuration for the github token, and org it is important to be careful and make sure they are correct. If the event that they are not the often
+times the request fails somewhat silently. There should be some logging added to address this, but if these values are wrong the first call after authentication
+to the github api will result in a NOT_FOUND error with a link to the api docs. If you get this error it is best to first double check that the
+token and org are properly set.

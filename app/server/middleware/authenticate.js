@@ -9,7 +9,7 @@ module.exports = {
         let authenticated = req.isAuthenticated();
 
         function f401() {
-            res.send(401);
+            res.sendStatus(401);
         }
 
         debug('session is authenticated: ' + authenticated);

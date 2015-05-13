@@ -1,11 +1,21 @@
 'use strict';
 
-var conf = require('./config');
+let conf = require('./config'),
+    github = require('./components/services/github.mock'),
+    mockUser = github.users[conf.get('github.username')];
+
+//our users always have a username, which is mapped from github's 'login' field
+mockUser.username = mockUser.login;
+
 //jscs:disable disallowDanglingUnderscores
 module.exports = {
-    initialize(mockUser) {
-        return function (req, res, next) {
-            var passport = {};
+
+    initialize () {
+
+        return (req, res, next) => {
+
+            let passport = {};
+
             passport._key = 'passport';
             passport._userProperty = 'user';
             passport.serializeUser = (user, req, done) => {
@@ -21,8 +31,7 @@ module.exports = {
 
             next();
         };
-    },
 
-    // TODO ... PUT Mock users in a seperate file so we can tests users that are
-    mockUser: { username: conf.get('github.username'), displayName: 'Test User', id: 1 }
+    }
+
 };

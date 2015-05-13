@@ -8,52 +8,54 @@ let expect = require('chai').expect,
 
 describe('authenticate.js', () => {
 
-    it('not authenticated returns 401', (done) => {
+    describe('isAuthenticated', () => {
 
-        let req = {
-            isAuthenticated: () => {
-                return false;
-            }
-        },
-        res = {
-            sendStatus: (status) => {
-                expect(status).to.equal(401);
-                done();
-            }
-        };
+        it('not authenticated returns 401', (done) => {
 
-        authenticate.isAuthenticated(req, res);
-
-    });
-
-    it('authenticated but not org member returns 401', (done) => {
-
-        let req = {
-                isAuthenticated: () => {
-                    return true;
+            let req = {
+                    isAuthenticated: () => {
+                        return false;
+                    }
                 },
-                session: {
-                    passport: {
-                        user: {
-                            username: 'non-existent-user'
+                res = {
+                    sendStatus: (status) => {
+                        expect(status).to.equal(401);
+                        done();
+                    }
+                };
+
+            authenticate.isAuthenticated(req, res);
+
+        });
+
+        it('authenticated but not org member returns 401', (done) => {
+
+            let req = {
+                    isAuthenticated: () => {
+                        return true;
+                    },
+                    session: {
+                        passport: {
+                            user: {
+                                username: 'non-existent-user'
+                            }
                         }
                     }
-                }
-            },
-            res = {
-                sendStatus: (status) => {
-                    expect(status).to.equal(401);
-                    done();
-                }
-            };
+                },
+                res = {
+                    sendStatus: (status) => {
+                        expect(status).to.equal(401);
+                        done();
+                    }
+                };
 
-        authenticate.isAuthenticated(req, res);
+            authenticate.isAuthenticated(req, res);
 
-    });
+        });
 
-    it('authenticated org member continues request with [next]', (done) => {
+        it('authenticated org member continues request with [next]', (done) => {
 
-        let req = {
+            let req = {
                 isAuthenticated: () => {
                     return true;
                 },
@@ -66,8 +68,10 @@ describe('authenticate.js', () => {
                 }
             };
 
-        authenticate.isAuthenticated(req, {}, () => {
-            done();
+            authenticate.isAuthenticated(req, {}, () => {
+                done();
+            });
+
         });
 
     });

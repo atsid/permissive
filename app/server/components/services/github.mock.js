@@ -99,6 +99,8 @@ module.exports = {
 
     repos: repos,
 
+    teams: teams,
+
     getUsers () {
         debug('looking up mock users');
         return new Promise((resolve, reject) => {

@@ -5,52 +5,20 @@ conf.set('service', 'mock');
 
 let expect = require('chai').expect,
     github = require('../components/services/github.mock'),
-    repos = require('./repos');
+    users = require('./users');
 
 //jscs:disable disallowDanglingUnderscores
-describe('repos.js', () => {
+describe('users.js', () => {
 
-    describe('listRepos', () => {
+    describe('listUsers', () => {
 
-        it('private repos without user "pull" access are not listed', (done) => {
+        it('all users will be listed', (done) => {
 
-            let req = {
-                session: {
-                    passport: {
-                        user: {
-                            username: 'testuser2'
-                        }
-                    }
-                }
-            };
+            let req = {};
 
-            //testuser2 in the mock data does not have any visibility to the private repo
-            repos.listRepos(req, {}, () => {
+            users.listUsers(req, {}, () => {
                 let entity = req.entity;
-                expect(entity.length).to.equal(1);
-                expect(entity[0].permission).to.be.undefined;
-                done();
-            });
-
-        });
-
-        it('private repos with user "pull" access are listed', (done) => {
-
-            let req = {
-                session: {
-                    passport: {
-                        user: {
-                            username: 'testuser1'
-                        }
-                    }
-                }
-            };
-
-            //testuser1 in the mock data can see the private repo
-            repos.listRepos(req, {}, () => {
-                let entity = req.entity;
-                expect(entity.length).to.equal(2);
-                expect(entity[0].permission).to.be.undefined;
+                expect(entity.length).to.equal(3);
                 done();
             });
 
@@ -58,18 +26,18 @@ describe('repos.js', () => {
 
     });
 
-    describe('listReposPermission', () => {
+    describe('listUsersPermission', () => {
 
-        it('missing "permission_user" query param results in passthrough', (done) => {
+        it('missing "permission_repo" query param results in passthrough', (done) => {
 
             let req = {
                 query: {},
                 entity: [{
-                    id: 1
+                    username: 'testuser1'
                 }]
             };
 
-            repos.listReposPermission(req, {}, () => {
+            users.listUsersPermission(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
                 expect(entity[0].permission).to.be.undefined;
@@ -78,20 +46,20 @@ describe('repos.js', () => {
 
         });
 
-        it('"permission_user" query param adds "permission" flag to repos', (done) => {
+        it('"permission_repo" query param adds "permission" flag to users', (done) => {
 
             let req = {
                 query: {
-                    permission_user: "testuser1"
+                    permission_repo: 1
                 },
                 entity: [{
-                    id: 1
+                    username: 'testuser1'
                 }]
             };
 
             //testuser1 is in the Contributors group with 'push' for repo 1,
             //but mock permissive team only exists for push
-            repos.listReposPermission(req, {}, () => {
+            users.listUsersPermission(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
                 expect(entity[0].permission.github).to.equal('push');
@@ -103,9 +71,9 @@ describe('repos.js', () => {
 
     });
 
-    describe('listReposLinks', () => {
+    describe('listUsersLinks', () => {
 
-        it('missing "permission_user" query param results in passthrough', (done) => {
+        it('missing "permission_repo" query param results in passthrough', (done) => {
 
             let req = {
                 query: {},
@@ -117,11 +85,11 @@ describe('repos.js', () => {
                     }
                 },
                 entity: [{
-                    id: 1
+                    username: 'testuser1'
                 }]
             };
 
-            repos.listReposLinks(req, {}, () => {
+            users.listUsersLinks(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
                 expect(entity[0].links).to.be.undefined;
@@ -130,11 +98,11 @@ describe('repos.js', () => {
 
         });
 
-        it('if logged-in user does not have "admin" permission on repo, "edit-user-permission" link is not present', (done) => {
+        it('if logged-in user does not have "admin" permission on repo, "edit-repo-permission" link is not present', (done) => {
 
             let req = {
                 query: {
-                    permission_user: 'testuser1'
+                    permission_repo: 1
                 },
                 session: {
                     passport: {
@@ -144,11 +112,11 @@ describe('repos.js', () => {
                     }
                 },
                 entity: [{
-                    id: 1
+                    username: 'testuser1'
                 }]
             };
 
-            repos.listReposLinks(req, {}, () => {
+            users.listUsersLinks(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
                 expect(entity[0].links).to.be.undefined;
@@ -157,11 +125,11 @@ describe('repos.js', () => {
 
         });
 
-        it('if logged-in user has "admin" permission on repo, "edit-user-permission" link is present', (done) => {
+        it('if logged-in user has "admin" permission on repo, "edit-repo-permission" link is present', (done) => {
 
             let req = {
                 query: {
-                    permission_user: 'testuser3'
+                    permission_repo: 1
                 },
                 session: {
                     passport: {
@@ -171,15 +139,15 @@ describe('repos.js', () => {
                     }
                 },
                 entity: [{
-                    id: 1
+                    username: 'testuser1'
                 }]
             };
 
-            repos.listReposLinks(req, {}, () => {
+            users.listUsersLinks(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
                 expect(entity[0].links.length).to.equal(1);
-                expect(entity[0].links[0].rel).to.equal('edit-user-permission');
+                expect(entity[0].links[0].rel).to.equal('edit-repo-permission');
                 done();
             });
 

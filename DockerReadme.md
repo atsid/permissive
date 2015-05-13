@@ -1,6 +1,6 @@
-## Configuring the docker environment.
+# Configuring the docker environment.
 
-## For Linux you can install docker directly, but for mac and windows a linux vm is required to host the docker containers.
+### For Linux you can install docker directly, but for mac and windows a linux vm is required to host the docker containers.
 
 Installation instructions for mac and windows can be found;
 
@@ -12,10 +12,10 @@ and here
 
 https://docs.docker.com/installation/windows/
 
-## Building the docker container. (This assumes boot2docker is running and working as per the instructions above if you are
+### Building the docker container. (This assumes boot2docker is running and working as per the instructions above if you are
 on mac or windows.)
 
- # background
+#### background
 Docker requires a container to be built in order for it to run our code. Our current scenario downloads a base image
 that is listed in the Dockerfile. That image contains installations of node, gulp and bower. Once that images is
 downloaded it then runs apt-get to install updates to the packages so we are using the latest versions. (This may not be
@@ -26,11 +26,14 @@ process using npm install and gulp, and when that is done the process is complet
 
 Note: This seems to have issues on slower network connections, and can take a few minutes to happen.
 
- # build
-run the following command from a
-docker build -t="atsid/permissive" .
+#### building
+###### Note: Make sure the working directory is cleaned of the node_modules or there could be build errors because docker will copy the path supplied to the build command into the container, which will include node_modules if it has not been removed.
 
-## Setting up the environment variables.
+run the build command to create the docker container. The -t flag sets a tag for the container created, and the first argument to build tells it what path to look for the Dockerfile and files to copy into the container. When running a docker build from within the permisive directory run the following command.
+
+`docker build -t="atsid/permissive" .`
+
+#### Setting up the environment variables.
 
 At this time the permissive configuration values will be set with an environment file when running from docker. In order
 to do this a file with the following environment variables is needed.
@@ -41,30 +44,34 @@ GITHUB_CLIENTID=<github app client id, required for github authentication.>
 GITHUB_CLIENT_KEY=<github app client secret, required for githb authentication.>
 HOSTNAME=<host name of the app, this must match the host named in the githup client app.>
 
-## Running the docker container
+#### Running the docker container
 
 enter the following command to run the container in the background. (no logging will show up on the console this way.)
-docker run -d -p <host port>:<container port> --env-file <path> atsid/permissive
+
+`docker run -d -p <host port>:<container port> --env-file <path> atsid/permissive`
 
 enter this command if you would prefer to see logging on the console.
-docker run -p <host port>:<container port> --env-file <path> atsid/permissive
 
-Break this down
+`docker run -p <host port>:<container port> --env-file <path> atsid/permissive`
+
+###### Break this down
 
 docker run instructs docker to start an image.
-the -d flag set's it to run in the background.
-the -p flag and the arguments set it so the host will allow the ports to pass through to the ports the app has exposed. permissive
-uses port 3000, and that is what is exposed in our Dockerfile used for build so for our purposes it would be -p 3000:3000
-in order to expose port 3000 on the docker container host and the docker container itself.
-the --env-file <path> takes the path of the environment variables file.
-atsid/permissive is the docker container to run.
 
-## Checking the status of the container and stopping it.
-docker ps; this command will show a list of running containers along with information about port mapping if applicable.
+the -d flag set's it to run in the background.
+
+the -p flag and the arguments set it so the host will allow the ports to pass through to the ports the app has exposed. permissive uses port 3000, and that is what is exposed in our Dockerfile used for build so for our purposes it would be -p 3000:3000 in order to expose port 3000 on the docker container host and the docker container itself.
+
+the --env-file <path> takes the path of the environment variables file.
+
+atsid/permissive is the tag for the docker container we want to run.
+
+#### Checking the status of the container and stopping it.
+`docker ps` this command will show a list of running containers along with information about port mapping if applicable.
 docker kill <container id>; This will stop the container from running. (in some cases this may not be the preferred way
 to stop the container, but for our service it is fine.)
 
-## boot2docker information (if running mac / windows)
-boot2docker ip; displays the ip address of the docker host vm. This is important, as this will be the ip address that
+#### boot2docker information (if running mac / windows)
+`boot2docker ip` displays the ip address of the docker host vm. This is important, as this will be the ip address that
 needs to be visited in order to see permissive running instead of localhost.
 

@@ -39,10 +39,14 @@ Then:
 
 The required environment vars are:
 
+
 * GITHUB_ORG: This is the org name to manage.
 * GITHUB_TOKEN: You need to use an OAuth token to authenticate with the GitHub API. This token must have **owner** permissions against the org, or else team management cannot be performed.
 * GITHUB_CLIENTID: This is the application OAuth ID provided by GitHub when you register the application.
 * GITHUB_CLIENT_KEY: This is the application OAuth secrect key provided by GitHub when you register the application.
+
+###### If you don't have a githup oauth app see the following instructions.
+https://help.github.com/enterprise/2.0/admin/guides/user-management/using-github-oauth/
 
 If you instead choose to run with mock services that don't interact with the live GitHub API, you can ignore those params and use these instead:
 

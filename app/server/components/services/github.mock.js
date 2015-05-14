@@ -21,18 +21,23 @@ var mask = require('json-mask'),
     users = {
         'testuser1': {
             login: 'testuser1',
-            name: 'Test User 1',
+            name: 'TJ',
             avatar_url: 'https://avatars0.githubusercontent.com/u/25254?v=3&s=400'
         },
         'testuser2': {
             login: 'testuser2',
-            name: 'Test User 2',
+            name: 'DHH',
             avatar_url: 'https://avatars1.githubusercontent.com/u/2741?v=3&s=400'
         },
         'testuser3': {
             login: 'testuser3',
-            name: 'Test User 3',
+            name: 'Wanstrath',
             avatar_url: 'https://avatars0.githubusercontent.com/u/2?v=3&s=400'
+        },
+        'testuser4': {
+            login: 'testuser4',
+            name: 'Linus',
+            avatar_url: 'https://avatars3.githubusercontent.com/u/1024025?v=3&s=400'
         }
     },
     repos = {

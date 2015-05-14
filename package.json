@@ -22,7 +22,8 @@
     "json-mask": "0.3.4",
     "passport": "^0.2.1",
     "passport-github": "^0.1.5",
-    "convict": "0.7.0"
+    "convict": "0.7.0",
+    "clone": "1.0.2"
   },
   "devDependencies": {
     "babelify": "^5.0.4",

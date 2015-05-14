@@ -15,7 +15,7 @@ describe('github.mock.js', () => {
     it('getUsers ok', (done) => {
 
         github.getUsers().then((users) => {
-            chai.assert.equal(users.length, 3);
+            chai.assert.equal(users.length, 4);
             let user = users[0];
             chai.assert.ok(user.avatar_url);
             chai.assert.isUndefined(user.name);
@@ -28,7 +28,7 @@ describe('github.mock.js', () => {
 
         github.getUser({user: 'testuser1'}).then((user) => {
             chai.assert.equal(user.login, 'testuser1');
-            chai.assert.equal(user.name, 'Test User 1');
+            chai.assert.equal(user.name, 'TJ');
             chai.assert.ok(user.avatar_url);
             done();
         });

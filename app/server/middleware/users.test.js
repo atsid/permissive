@@ -4,6 +4,7 @@ let conf = require('../config');
 conf.set('service', 'mock');
 
 let expect = require('chai').expect,
+    chai = require('chai'),
     github = require('../components/services/github.mock'),
     users = require('./users');
 
@@ -18,7 +19,7 @@ describe('users.js', () => {
 
             users.listUsers(req, {}, () => {
                 let entity = req.entity;
-                expect(entity.length).to.equal(3);
+                expect(entity.length).to.equal(4);
                 done();
             });
 
@@ -64,6 +65,28 @@ describe('users.js', () => {
                 expect(entity.length).to.equal(1);
                 expect(entity[0].permission.github).to.equal('push');
                 expect(entity[0].permission.permissive).to.equal('pull');
+                done();
+            });
+
+        });
+
+        it('users with no permission default to "pull" for public repositories', (done) => {
+
+            let req = {
+                query: {
+                    permission_repo: 1
+                },
+                entity: [{
+                    username: 'testuser4'
+                }]
+            };
+
+            //testuser4 has no permissions in the mocks, but repo 1 is public
+            users.listUsersPermission(req, {}, () => {
+                let entity = req.entity;
+                expect(entity.length).to.equal(1);
+                expect(entity[0].permission.github).to.equal('pull');
+                expect(entity[0].permission.permissive).to.equal('none');
                 done();
             });
 

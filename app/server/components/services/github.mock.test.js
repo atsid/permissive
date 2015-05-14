@@ -1,7 +1,7 @@
 'use strict';
 
 var chai = require('chai'),
-    github = require('../../../components/services/github.mock');
+    github = require('./github.mock');
 
 /**
  * Some simple tests to make sure we're mocking out the API repo correctly.

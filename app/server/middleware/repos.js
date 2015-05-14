@@ -2,7 +2,8 @@
 
 var permissionRepository = require('../components/repositories/permissions'),
     repoRepository = require('../components/repositories/repos'),
-    debug = require('debug')('app:middleware:repos');
+    debug = require('debug')('app:middleware:repos'),
+    Link = require('../links/Link');
 
 module.exports = {
 
@@ -50,11 +51,15 @@ module.exports = {
                     let permission = permissions[repo.id];
                     debug('got permission for [' + username + '] against repo [' + repo.id + ']', permission);
                     if (permission.permissive === 'admin' || permission.github === 'admin') {
-                        repo.links = [{
+                        let editLink = new Link({
                             rel: 'edit-user-permission',
-                            href: 'repos/' + repo.id + '/users/' + user + '/permissions/{permission}',
-                            method: 'PUT'
-                        }];
+                            appMethod: 'repos.editPermission',
+                            params: {
+                                id: repo.id,
+                                username: user
+                            }
+                        });
+                        repo.links = [editLink];
                     }
                 });
                 next();

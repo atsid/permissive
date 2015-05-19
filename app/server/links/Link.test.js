@@ -17,7 +17,7 @@ describe('Link.test.js', () => {
         });
 
         expect(editLink.rel).to.equal('edit-repo-permission');
-        expect(editLink.href).to.equal('/api/v1/users/octocat/repos/89/permissions/{permission}');
+        expect(editLink.href).to.equal('api/v1/users/octocat/repos/89/permissions/{permission}');
         expect(editLink.method).to.equal('PUT');
 
     });

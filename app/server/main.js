@@ -21,7 +21,7 @@ exports.start = () => {
     mountie({
         parent: app,
         src: path.join(__dirname, 'apps'),
-        prefix: conf.get('api.root') + conf.get('api.version')
+        prefix: '/' + conf.get('api.root') + conf.get('api.version')
     });
 
     app.use(express.static(path.resolve(__dirname, '../../app/client/build')));

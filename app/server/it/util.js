@@ -6,7 +6,7 @@
 var request = require('request'),
     Bluebird = require('bluebird'),
     conf = require('../config'),
-    root = conf.get('server.protocol') + '://' + conf.get('server.hostname') + ':' + conf.get('server.port') + conf.get('api.root') + conf.get('api.version'),
+    root = conf.get('server.protocol') + '://' + conf.get('server.hostname') + ':' + conf.get('server.port') + '/' + conf.get('api.root') + conf.get('api.version'),
     methods = ['get', 'put', 'post', 'del'];
 
 Bluebird.promisifyAll(request);

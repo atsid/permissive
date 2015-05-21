@@ -16,7 +16,7 @@ module.exports = {
     api: {
         root: {
             doc: 'Root path under host/port for  RESTful API.',
-            default: '/api/'
+            default: 'api/'
         },
         version: {
             doc: 'Version to use for RESTful API routes.',

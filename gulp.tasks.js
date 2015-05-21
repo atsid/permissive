@@ -17,7 +17,7 @@ var gulp = require('gulp'),
     APP_SRC = ['app/**/*.js', 'app/*.js', '!app/client/**'],
     SERVER_SRC = ['app/server/**/*.js', '!app/server/**/*.test.js', '!app/server/it/**'],
     ALL_SRC = APP_SRC.concat(['*.js']),
-    SERVER_TEST_SRC = ['app/**/*.test.js', '!app/server/it/**'],
+    SERVER_TEST_SRC = ['app/server/**/*.test.js', '!app/server/it/**'],
     SERVER_IT_SRC = ['app/server/it/**/*.test*.js'],
     devServer = null;
 

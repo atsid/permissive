@@ -82,7 +82,7 @@ describe('repos.js', () => {
 
             let req = {
                 query: {
-                    permission_user: "testuser1"
+                    permission_user: 'testuser1'
                 },
                 entity: [{
                     id: 1
@@ -96,6 +96,28 @@ describe('repos.js', () => {
                 expect(entity.length).to.equal(1);
                 expect(entity[0].permission.github).to.equal('push');
                 expect(entity[0].permission.permissive).to.equal('pull');
+                done();
+            });
+
+        });
+
+        it('users with no permission default to "pull" for public repositories', (done) => {
+
+            let req = {
+                query: {
+                    permission_user: 'testuser4'
+                },
+                entity: [{
+                    id: 1
+                }]
+            };
+
+            //testuser4 has no permissions in the mocks, but repo 1 is public
+            repos.listReposPermission(req, {}, () => {
+                let entity = req.entity;
+                expect(entity.length).to.equal(1);
+                expect(entity[0].permission.github).to.equal('pull');
+                expect(entity[0].permission.permissive).to.equal('none');
                 done();
             });
 

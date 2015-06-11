@@ -25,3 +25,5 @@ npm config set cache $WORKSPACE/.npm
 npm install -g  npm@2.1.4
 npm install
 npm test
+
+zip -r ../permissive.zip .

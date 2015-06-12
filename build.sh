@@ -23,7 +23,7 @@ npm config set cache $WORKSPACE/.npm
 
 #Update away from problematic npm ver (1.4.x)
 npm install -g  npm@2.1.4
-npm install gulp --allow-root
+npm install -g gulp
 npm install bower --allow-root
 npm install
 

@@ -23,7 +23,23 @@ npm config set cache $WORKSPACE/.npm
 
 #Update away from problematic npm ver (1.4.x)
 npm install -g  npm@2.1.4
+npm install gulp --allow-root
+npm install bower --allow-root
 npm install
+
+export PATH=node_modules/gulp/bin/:$PATH
+export PATH=node_modules/bower/bin/:$PATH
+bower update # make sure packages are up to date.
+
 npm test
 
+npm install --production
+cd app/client && gulp --release
+cd ../../
+cp -R ./package ./target
+cp package.json app.js ./target
+cp -R ./node_modules ./target
+cp -R ./app ./target/app
+
+cd ./target
 zip -r ../permissive.zip .

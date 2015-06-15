@@ -108,6 +108,17 @@ module.exports = {
         failureRedirect: {
             doc: 'Local application route to redirect failed login.',
             default: '/'
+        },
+        callbackProtocol: {
+            doc: 'Standard protocol to use for prefixing routes when using a proxy.',
+            default: 'http',
+            env: 'CALLBACK_PROTOCOL'
+        },
+        callbackPort: {
+            doc: 'The proxy port to bind for oauth callbacks.',
+            format: 'port',
+            default: 3000,
+            env: 'CALLBACK_PORT'
         }
     },
 

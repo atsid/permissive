@@ -28,7 +28,8 @@ module.exports = {
     server: {
         protocol: {
             doc: 'Standard protocol to use for prefixing routes.',
-            default: 'http'
+            default: 'http',
+            env: 'PROTOCOL'
         },
         port: {
             doc: 'The port to bind.',

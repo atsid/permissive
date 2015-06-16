@@ -84,3 +84,6 @@ enter this command if you would prefer to see logging on the console.
 `docker ps` this command will show a list of running containers along with information about port mapping if applicable.
 docker kill <container id>; This will stop the container from running. (in some cases this may not be the preferred way
 to stop the container, but for our service it is fine.)
+
+#### Note that there is a separate Dockerfile in the package directory used for the build and deployment to AWS. 
+The Dockerfile at the project root can be used for development and troubleshooting.

@@ -17,9 +17,9 @@ module.exports = () => {
     passport.use(new GitHubStrategy({
             clientID: conf.get('oauth.clientID'),
             clientSecret: conf.get('oauth.clientKey'),
-            callbackURL: conf.get('server.protocol') + '://' +
+            callbackURL: conf.get('oauth.callbackProtocol') + '://' +
                 conf.get('server.hostname') + ':' +
-                conf.get('server.port') +
+                conf.get('oauth.callbackPort') +
                 conf.get('oauth.authCallbackRoute')
         },
         function (accessToken, refreshToken, profile, done) {

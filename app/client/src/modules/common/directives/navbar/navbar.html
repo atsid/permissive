@@ -1,7 +1,14 @@
 <nav class="navbar">
-    <ul>
-        <li ng-repeat="item in ctrl.menu">
-            <a ui-sref-active="active" ui-sref="{{item.sref}}" >{{item.title}}</a>
-        </li>
-    </ul>
+    <div class="nav">
+        <ul>
+            <li ng-repeat="item in ctrl.menu">
+                <a ui-sref-active="active" ui-sref="{{item.sref}}" >{{item.title}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="nav-user">
+        <img alt="avatar" ng-src="{{ctrl.user.avatar_url}}">
+        <span>{{ctrl.user.name}}</span>
+        <span>{{ctrl.user.username}}</span>
+    </div>
 </nav>

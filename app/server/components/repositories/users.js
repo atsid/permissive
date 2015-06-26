@@ -5,6 +5,14 @@ var userUtil = require('./util/users'),
 
 module.exports = {
 
+    getUser (username) {
+        return new Promise((resolve, reject) => {
+           userUtil.getGithubUser(username).then((user) => {
+                resolve(user);
+            });
+        });
+    },
+
     getUsers () {
         return userUtil.getGithubUsers().then(users => {
             let profiles = users.map(user => userUtil.getGithubUser(user.username).then(profile => user.name = profile.name));

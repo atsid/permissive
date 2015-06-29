@@ -45,4 +45,19 @@ body, html {
   .typeahead {
     margin-left: 20px;
   }
+  .loading-dialog {
+    position: relative;
+  }
+}
+
+.loading-dialog {
+  margin: 0 auto;
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  img {
+    display: block;
+    margin: 0 auto;
+  }
 }

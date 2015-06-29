@@ -1,4 +1,7 @@
-<div class="users">
+<div class="typeahead">
+    <input type="text" placeholder="Filter by name" ng-model="nameFilter" />
+</div>
+<div class="users" class="list-container">
     <h4 ng-if="!ctrl.users.length" style="text-align: center;">Fetching users...</h4>
-    <div user="u" ng-repeat="u in ctrl.users"></div>
+    <div user="u" ng-repeat="u in ctrl.users | filter:nameFilter"></div>
 </div>

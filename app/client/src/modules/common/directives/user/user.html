@@ -1,8 +1,11 @@
 <div ng-click="ctrl.click()">
     <div userdetails="ctrl.user"></div>
 </div>
-<div ng-if="ctrl.toggled">
+<div ng-if="ctrl.toggled" class="list-container">
+    <div class="typeahead">
+        <input type="text" placeholder="Filter by name" ng-model="nameFilter" />
+    </div>
     <div class="user-repos">
-        <div repodetails="r" ng-repeat="r in ctrl.repos | orderBy:'name'"></div>
+        <div repodetails="r" ng-repeat="r in ctrl.repos | filter:nameFilter | orderBy:'name'"></div>
     </div>
 </div>

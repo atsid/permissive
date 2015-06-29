@@ -33,3 +33,16 @@ body, html {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.typeahead {
+  max-width: 600px;
+  margin: 10px auto;
+  input {
+    padding-left: 5px;
+  }
+}
+.list-container {
+  .typeahead {
+    margin-left: 20px;
+  }
+}

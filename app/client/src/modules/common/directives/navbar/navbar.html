@@ -6,9 +6,9 @@
             </li>
         </ul>
     </div>
-    <div class="nav-user">
+    <div class="nav-user" ng-if="ctrl.user.name || ctr.user.username">
         <img alt="avatar" ng-src="{{ctrl.user.avatar_url}}">
-        <span>{{ctrl.user.name}}</span>
-        <span>{{ctrl.user.username}}</span>
+        <span>{{ctrl.user.name || ctrl.user.username}}</span>
+        <a href="/logout">logout</a>
     </div>
 </nav>

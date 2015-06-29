@@ -21,7 +21,7 @@ describe('identity.js', () => {
                         }
                     }
                 };
-            identity.getUser(req, {}, () => {
+            identity.getIdentity(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.username).to.equal('testuser1');
                 done();

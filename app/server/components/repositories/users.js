@@ -7,7 +7,7 @@ module.exports = {
 
     getUser (username) {
         return new Promise((resolve, reject) => {
-           userUtil.getGithubUser(username).then((user) => {
+            userUtil.getGithubUser(username).then((user) => {
                 resolve(user);
             });
         });

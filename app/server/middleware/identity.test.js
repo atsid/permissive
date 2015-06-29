@@ -19,7 +19,7 @@ describe('identity.js', () => {
                                 username: 'testuser1'
                             }
                         }
-                    };
+                    }
                 };
             identity.getUser(req, {}, () => {
                 let entity = req.entity;

@@ -19,7 +19,7 @@ module.exports = /*@ngInject*/
                         title: 'Repos',
                         sref: 'repos'
                     }];
-                    this.user = identityService.query();
+                    this.user = identityService.get();
                 }
         };
     };

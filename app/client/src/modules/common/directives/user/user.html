@@ -7,6 +7,6 @@
         <input type="text" placeholder="Filter by name" ng-model="nameFilter" />
     </div>
     <div class="user-repos">
-        <div repodetails="r" ng-repeat="r in ctrl.repos | filter:nameFilter | orderBy:'name'"></div>
+        <div repodetails="r" repouser="ctrl.user" ng-repeat="r in ctrl.repos | filter:nameFilter | orderBy:'name'"></div>
     </div>
 </div>

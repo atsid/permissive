@@ -9,12 +9,13 @@ module.exports = /*@ngInject*/
         return {
             templateUrl: 'common/directives/repodetails/repodetails.html',
             scope: {
-                repo: '=repodetails'
+                repo: '=repodetails',
+                user: '=repouser'
             },
             controllerAs: 'ctrl',
             bindToController: true,
             controller: /*@ngInject*/
-                function (linkService) {
+                function (linkService, identityService, $mdDialog) {
                     console.log('binding repo details controller', this);
 
                     this.editLink = links.findByRel(this.repo.links, 'edit-user-permission');
@@ -34,6 +35,32 @@ module.exports = /*@ngInject*/
 
                     this.handlePermissionChange = (value) => {
                         console.log('permission change', value);
+                        if (!this.identity) {
+                            this.identity = identityService.get(() => {
+                                this.validateChange(value);
+                            });
+                        } else {
+                            this.validateChange(value);
+                        }
+                    };
+
+                    this.validateChange = (value) => {
+                        // confirmation for users trying to remove their own admin perms
+                        if (this.identity.username === this.user.username && this.permission === 'admin') {
+                            let confirm = $mdDialog.confirm()
+                                .title('Warning!')
+                                .content('Are you sure you want to remove your own admin permissions from this repo?')
+                                .cancel('Cancel')
+                                .ok('Confirm');
+                            $mdDialog.show(confirm).then(() => {
+                                this.executeChange(value);
+                            });
+                        } else {
+                            this.executeChange(value);
+                        }
+                    };
+
+                    this.executeChange = (value) => {
                         this.permission = value;
                         linkService.exec(this.editLink, {
                             permission: this.permission

@@ -1,7 +1,14 @@
 <nav class="navbar">
-    <ul>
-        <li ng-repeat="item in ctrl.menu">
-            <a ui-sref-active="active" ui-sref="{{item.sref}}" >{{item.title}}</a>
-        </li>
-    </ul>
+    <div class="nav">
+        <ul>
+            <li ng-repeat="item in ctrl.menu">
+                <a ui-sref-active="active" ui-sref="{{item.sref}}" >{{item.title}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="nav-user" ng-if="ctrl.user.name || ctr.user.username">
+        <img alt="avatar" ng-src="{{ctrl.user.avatar_url}}">
+        <span>{{ctrl.user.name || ctrl.user.username}}</span>
+        <a href="/logout">logout</a>
+    </div>
 </nav>

@@ -76,6 +76,11 @@ module.exports = () => {
         res.send(401);
     });
 
+    app.get('/logout', function (req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
     return app;
 
 };

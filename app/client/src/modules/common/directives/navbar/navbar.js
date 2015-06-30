@@ -8,7 +8,7 @@ module.exports = /*@ngInject*/
             replace: true,
             controllerAs: 'ctrl',
             controller: /*@ngInject*/
-                function () {
+                function (identityService) {
                     this.menu = [{
                         title: 'Home',
                         sref: 'main'
@@ -19,6 +19,7 @@ module.exports = /*@ngInject*/
                         title: 'Repos',
                         sref: 'repos'
                     }];
+                    this.user = identityService.query();
                 }
         };
     };

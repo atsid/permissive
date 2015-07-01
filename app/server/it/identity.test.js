@@ -12,7 +12,7 @@ describe('Identity model HTTP requests', function () {
             statusCode;
 
         before((done) => {
-           util.get('/identity').then((result) => {
+            util.get('/identity').then((result) => {
                 user = JSON.parse(result.body);
                 statusCode = result.statusCode;
                 done();

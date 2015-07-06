@@ -78,11 +78,21 @@ describe('permissions.js', () => {
 
         });
 
+        it('user is removed from users list for existing repo when permission is revoked', (done) => {
 
+            //team 5
+            let req = {
+                params: {
+                    id: 2,
+                    username: 'testuser3',
+                    permission: 'none'
+                }
+            };
+
+            permissions.editRepoPermissionForUser(req, {}, () => {
+                expect(github.teams['5']._users.length).to.equal(0);
+                done();
+            });
+        });
     });
-
-
-
-
-
 });

@@ -50,7 +50,6 @@ describe('permissions.js', () => {
             });
 
         });
-
     });
 
     describe('editRepoPermissionForUser', () => {
@@ -91,6 +90,24 @@ describe('permissions.js', () => {
 
             permissions.editRepoPermissionForUser(req, {}, () => {
                 expect(github.teams['5']._users.length).to.equal(0);
+                done();
+            });
+        });
+
+        it('user is removed from old team and added to new team when permissions are modified', (done) => {
+
+            //team 3
+            let req = {
+                params: {
+                    id: 1,
+                    username: 'testuser2',
+                    permission: 'pull'
+                }
+            };
+
+            permissions.editRepoPermissionForUser(req, {}, () => {
+                expect(github.teams['3']._users.length).to.equal(0);
+                expect(github.teams['2']._users.length).to.equal(2);
                 done();
             });
         });

@@ -80,10 +80,10 @@ describe('github.mock.js', () => {
 
     it('getTeamMembers ok', (done) => {
 
-        github.getTeamMembers({id: 3}).then((teamMembers) => {
+        github.getTeamMembers({id: 4}).then((teamMembers) => {
             chai.assert.equal(teamMembers.length, 1);
             let member = teamMembers[0];
-            chai.assert.equal(member.login, 'testuser2');
+            chai.assert.equal(member.login, 'testuser3');
             chai.assert.ok(member.avatar_url);
             chai.assert.isUndefined(member.name);
             done();

@@ -9,4 +9,5 @@ module.exports =
     .factory('identityService', require('./identityService'))
     .factory('usersService', require('./usersService'))
     .factory('reposService', require('./reposService'))
+    .factory('organizationService', require('./organizationService'))
     .factory('linkService', require('./linkService'));

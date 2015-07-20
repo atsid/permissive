@@ -34,7 +34,8 @@ module.exports = {
         return permUtil.getPermissionMap().then(permissions => {
             let map = {};
             repos.forEach(repo => {
-                map[repo.id] = permissions[repo.id] ? permissions[repo.id][username] : permUtil.getDefaultPermissions();
+                let defaults = permUtil.getDefaultPermissions();
+                map[repo.id] = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
             });
             return map;
         });
@@ -46,7 +47,8 @@ module.exports = {
     setUserPermissionForRepos (repos, username) {
         return permUtil.getPermissionMap().then(permissions => {
             repos.forEach(repo => {
-                repo.permission = permissions[repo.id] ? permissions[repo.id][username] : permUtil.getDefaultPermissions();
+                let defaults = permUtil.getDefaultPermissions();
+                repo.permission = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
             });
             return repos;
         });
@@ -55,7 +57,8 @@ module.exports = {
     filterReposByUserPermission (repos, username) {
         return permUtil.getPermissionMap().then(permissions => {
             return repos.filter(repo => {
-                let permission = permissions[repo.id] ? permissions[repo.id][username] : permUtil.getDefaultPermissions();
+                let defaults = permUtil.getDefaultPermissions();
+                let permission = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
                 return !(permission.github === 'none' && permission.permissive === 'none');
             });
         });

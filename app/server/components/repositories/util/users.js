@@ -1,6 +1,7 @@
 'use strict';
 
 var provider = require('./provider'),
+    Bluebird = require('bluebird'),
     debug = require('debug')('app:repositories:user'),
     convertGithubUser;
 
@@ -23,6 +24,13 @@ module.exports = {
     getGithubUsers() {
         var args = provider.getDefaultListArgs();
         return provider.github.getUsers(args).then(users => users.map(user => convertGithubUser(user)));
+    },
+
+    getGithubProfiles() {
+        return this.getGithubUsers().then(users => {
+            let profiles = users.map(user => this.getGithubUser(user.username).then(profile => user.name = profile.name));
+            return Bluebird.all(profiles).then(() => users);
+        });
     },
 
     isOrgMember(username) {

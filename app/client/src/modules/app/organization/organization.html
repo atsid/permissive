@@ -1,2 +1,20 @@
-<div loading-dialog="ctrl.organization.users"></div>
-<h4 ng-if="!ctrl.organization.users" style="text-align: center;">Fetching organization...</h4>
+<div loading-dialog="ctrl.users"></div>
+<div class="repos list-container" ng-if="!ctrl.users">
+    <h4 style="text-align: center;">Fetching organization...</h4>
+</div>
+<div class="organization" ng-show="ctrl.users">
+    <table>
+        <thead>
+            <tr>
+                <th><div><span>User</span></div></th>
+                <th ng-repeat="(key, value) in ctrl.organization"><div><span>{{ value.repo.name }}</span></div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in ctrl.users">
+                <td class="username">{{ user.username }}</td>
+                <td ng-repeat="(key, value) in ctrl.organization">{{ ctrl.getPermissions(value.users[user.username]) }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

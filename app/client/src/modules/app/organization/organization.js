@@ -12,5 +12,21 @@ module.exports =
     })
     .controller('organizationController', function ($http, organizationService) {
         console.log('getting organization');
-        this.organization = organizationService.query();
+        organizationService.query().$promise.then(org => {
+            this.users = org.users;
+            delete org.users;
+            this.organization = org;
+        });
+
+        this.getPermissions = (perms) => {
+            if (!perms) {
+                return 'NA';
+            }
+            let map = {
+                pull: 'P--',
+                push: 'PP-',
+                admin: 'PPA'
+            };
+            return map[perms.github];
+        };
     });

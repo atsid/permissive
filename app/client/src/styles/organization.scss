@@ -1,0 +1,32 @@
+.organization {
+  margin: 30px;
+  table {
+    th {
+      height: 140px;
+      white-space: nowrap;
+    }
+    th > div {
+      transform:
+        translate(25px, 51px)
+        rotate(315deg);
+      width: 30px;
+    }
+    th > div > span {
+      padding: 5px 10px;
+    }
+    tbody {
+      td {
+        padding: 10px 0;
+      }
+      .username {
+        font-weight: bold;
+      }
+    }
+    td:nth-child(odd) {
+      background: #fff;
+    }
+    th:nth-child(odd) > div > span {
+      background: #fff;
+    }
+  }
+}

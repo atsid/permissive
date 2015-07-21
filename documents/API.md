@@ -23,6 +23,16 @@ This is a draft of the operations available to meet the initial views of the app
 
         PUT /repos/:id/users/:username/permissions/:permission
         returns null, 204
+        
+5. Get identity of authenticated user
+  
+        GET /identity
+        returns Identity{}
+        
+6. Get organization structure
+        
+        GET /organization
+        returns Organization{}
 
 
 Note that 2/4 are effectively aliases to each other, suitable for different views.
@@ -60,6 +70,15 @@ Indicates multiple permissions because the permissive-managed levels can be over
         permissive: string, //permissive-managed highest permission level found for a user on the repo pull, push, admin).
         github: string //github-managed (non zzz-permissive teams) highest permission level found for a user on the repo (pull, push, admin).
     }
+    
+###Organization
+Details of the organization's repos and users
+A data structure that combines the organizations repos, users and their associated permissions.
+
+    {
+        id: integer, //formal repo id, assigned by GitHub upon creation and maps to the basic details for a repo and its associated users with their associated permissions
+        users: User //representation of the organization's Github users
+    }
 
 ##Views
 The first iteration of the draft will support two views (by-user and by-repo). Therefore, the list of operations above is limited to what will initially be required. These views will be defined in greater detail in a separate document, but the following descriptions are presented in order to understand services workflow required.
@@ -75,3 +94,6 @@ The first iteration of the draft will support two views (by-user and by-repo). T
 * expanding a repo retrieves the list of users with access (1 with permission_repo={selected repo})
 * toggle button will be present on each user with None|Read|Write|Admin (1)
 * clicking toggle button for a set of repos and then "save" will send changes one-at-a-time (7 or 8 for each repo)
+
+###By-organization
+* matrix of organization repos and users along with associated user permissions per repo

@@ -26,12 +26,7 @@ module.exports =
         });
 
         this.sortOrg = (a, b) => {
-            if(a.repo.name.toLowerCase() > b.repo.name.toLowerCase()) {
-                return 1;
-            } else if (a.repo.name.toLowerCase() < b.repo.name.toLowerCase()) {
-                return -1;
-            }
-            return 0;
+            return a.repo.name.localeCompare(b.repo.name);
         };
 
         this.getPermissions = (perms) => {

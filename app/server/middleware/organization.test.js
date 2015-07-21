@@ -4,8 +4,6 @@ let conf = require('../config');
 conf.set('service', 'mock');
 
 let expect = require('chai').expect,
-    chai = require('chai'),
-    github = require('../components/services/github.mock'),
     organization = require('./organization');
 
 //jscs:disable disallowDanglingUnderscores

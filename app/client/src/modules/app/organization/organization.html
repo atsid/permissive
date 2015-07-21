@@ -1,0 +1,22 @@
+<div loading-dialog="ctrl.users"></div>
+<div class="repos list-container" ng-if="!ctrl.users">
+    <h4 style="text-align: center;">Fetching organization...</h4>
+</div>
+<div class="organization" ng-show="ctrl.users">
+    <table>
+        <thead>
+            <tr>
+                <th><div><span>User</span></div></th>
+                <th ng-repeat="item in ctrl.organization"><div><span>{{ item.repo.name }}</span></div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in ctrl.users">
+                <td class="username">{{ user.username }}</td>
+                <td ng-repeat="item in ctrl.organization" title="{{ item.repo.name + ', ' + user.username }}", ng-class='item.users[user.username].github'>
+                    {{ ctrl.getPermissions(item.users[user.username]) }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

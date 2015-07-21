@@ -18,6 +18,9 @@ module.exports = /*@ngInject*/
                     }, {
                         title: 'Repos',
                         sref: 'repos'
+                    }, {
+                        title: 'Org',
+                        sref: 'organization'
                     }];
                     this.user = identityService.get();
                 }

@@ -7,13 +7,15 @@
         <thead>
             <tr>
                 <th><div><span>User</span></div></th>
-                <th ng-repeat="(key, value) in ctrl.organization"><div><span>{{ value.repo.name }}</span></div></th>
+                <th ng-repeat="item in ctrl.organization"><div><span>{{ item.repo.name }}</span></div></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="user in ctrl.users">
                 <td class="username">{{ user.username }}</td>
-                <td ng-repeat="(key, value) in ctrl.organization">{{ ctrl.getPermissions(value.users[user.username]) }}</td>
+                <td ng-repeat="item in ctrl.organization" title="{{ item.repo.name + ', ' + user.username }}", ng-class='item.users[user.username].github'>
+                    {{ ctrl.getPermissions(item.users[user.username]) }}
+                </td>
             </tr>
         </tbody>
     </table>

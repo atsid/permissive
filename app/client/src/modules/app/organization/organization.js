@@ -15,17 +15,34 @@ module.exports =
         organizationService.query().$promise.then(org => {
             this.users = org.users;
             delete org.users;
-            this.organization = org;
+            let organization = [];
+            angular.forEach(org, (org, key) => {
+                if (key.indexOf('$') !== 0) {
+                    organization.push(org);
+                }
+            });
+
+            this.organization = organization.sort(this.sortOrg);
         });
+
+        this.sortOrg = (a, b) => {
+            if(a.repo.name.toLowerCase() > b.repo.name.toLowerCase()) {
+                return 1;
+            } else if (a.repo.name.toLowerCase() < b.repo.name.toLowerCase()) {
+                return -1;
+            }
+            return 0;
+        };
 
         this.getPermissions = (perms) => {
             if (!perms) {
-                return 'NA';
+                return '-';
             }
             let map = {
-                pull: 'P--',
-                push: 'PP-',
-                admin: 'PPA'
+                pull: 'R',
+                push: 'W',
+                admin: 'A',
+                none: '-'
             };
             return map[perms.github];
         };

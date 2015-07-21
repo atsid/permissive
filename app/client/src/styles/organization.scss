@@ -1,14 +1,17 @@
 .organization {
   margin: 30px;
   table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    thead {
+      border: none;
+    }
     th {
       height: 140px;
       white-space: nowrap;
     }
     th > div {
-      transform:
-        translate(25px, 51px)
-        rotate(315deg);
+      transform: translate(5px, 51px) rotate(315deg);
       width: 30px;
     }
     th > div > span {
@@ -16,15 +19,28 @@
     }
     tbody {
       td {
-        padding: 10px 0;
+        padding: 10px 5px;
+        text-align: center;
       }
       .username {
         font-weight: bold;
       }
+      .pull {
+        background-color: rgba(0, 128, 0, .5);
+      }
+      .push {
+        background-color: rgba(255, 255, 0, .5);
+      }
+      .admin {
+        background-color: rgba(255, 0, 0, .5);
+      }
     }
-    td:nth-child(odd) {
-      background: #fff;
+    tr:nth-child(odd) {
+      background-color: rgba(255, 255, 255, .75);
     }
+//    td:nth-child(odd) {
+//      background: #fff;
+//    }
     th:nth-child(odd) > div > span {
       background: #fff;
     }

@@ -23,7 +23,12 @@
         text-align: center;
       }
       .username {
-        font-weight: bold;
+        div {
+          font-weight: bold;
+        }
+        span {
+          font-size: smaller;
+        }
       }
       .pull {
         background-color: rgba(0, 128, 0, .5);

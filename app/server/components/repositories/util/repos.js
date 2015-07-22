@@ -28,7 +28,7 @@ getPermissions = (permissions) => {
     let permission = 'pull';
     if (permissions.admin) {
         permission = 'admin';
-    } else if(permissions.push) {
+    } else if (permissions.push) {
         permission = 'push';
     }
     return permission;
@@ -49,7 +49,10 @@ module.exports = {
                     user: provider.github.config.org,
                     repo: repo.name
                 }).then(collaborators => {
-                    repo.collaborators = collaborators.map(collab => convertGithubCollaborator(collab));
+                    repo.collaborators = collaborators.reduce((collabs, collab) => {
+                        collabs[collab.login] = convertGithubCollaborator(collab);
+                        return collabs;
+                    }, {});
                 }));
                 Bluebird.all(profiles).then(() => resolve(repos.map(repo => convertGithubRepo(repo))));
             });

@@ -13,8 +13,7 @@ var GitHubApi = require('github'),
         host: 'api.github.com',
         timeout: 10000,
         headers: {
-            'user-agent': 'permissive',
-            Accept: 'application/vnd.github.ironman-preview+json'
+            'user-agent': 'permissive'
         }
     });
 
@@ -29,7 +28,7 @@ if (token) {
 }
 
 if (acceptHeader) {
-    github.headers.Accept = acceptHeader;
+    github.config.headers.Accept = acceptHeader;
 }
 
 /**

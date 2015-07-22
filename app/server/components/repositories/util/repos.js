@@ -1,7 +1,10 @@
 'use strict';
 
 var provider = require('./provider'),
-    convertGithubRepo;
+    Bluebird = require('bluebird'),
+    convertGithubRepo,
+    convertGithubCollaborator,
+    getPermissions;
 
 convertGithubRepo = (repo) => {
     return {
@@ -9,8 +12,26 @@ convertGithubRepo = (repo) => {
         'name': repo.name,
         'full_name': repo.full_name,
         'description': repo.description,
-        'public': !repo.private
+        'public': !repo.private,
+        'collaborators': repo.collaborators
     };
+};
+
+convertGithubCollaborator = (collaborator) => {
+    return {
+        username: collaborator.login,
+        permissions: getPermissions(collaborator.permissions)
+    };
+};
+
+getPermissions = (permissions) => {
+    let permission = 'pull';
+    if (permissions.admin) {
+        permission = 'admin';
+    } else if(permissions.push) {
+        permission = 'push';
+    }
+    return permission;
 };
 
 module.exports = {
@@ -18,6 +39,21 @@ module.exports = {
     getGithubRepos () {
         let args = provider.getDefaultListArgs();
         return provider.github.getRepos(args).then(repos => repos.map(repo => convertGithubRepo(repo)));
+    },
+
+    getGithubReposWithCollaborators() {
+        let args = provider.getDefaultListArgs();
+        return new Promise((resolve, reject) => {
+            provider.github.getRepos(args).then((repos) => {
+                let profiles = repos.map(repo => provider.github.getCollaborators({
+                    user: provider.github.config.org,
+                    repo: repo.name
+                }).then(collaborators => {
+                    repo.collaborators = collaborators.map(collab => convertGithubCollaborator(collab));
+                }));
+                Bluebird.all(profiles).then(() => resolve(repos.map(repo => convertGithubRepo(repo))));
+            });
+        });
     },
 
     getRepoById(repoId) {

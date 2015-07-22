@@ -6,13 +6,15 @@ var GitHubApi = require('github'),
     conf = require('../../config'),
     org = conf.get('github.org'),
     token = conf.get('github.token'),
+    acceptHeader = conf.get('github.acceptHeader'),
     github = new GitHubApi({
         version: '3.0.0',
         protocol: 'https',
         host: 'api.github.com',
         timeout: 10000,
         headers: {
-            'user-agent': 'permissive'
+            'user-agent': 'permissive',
+            Accept: 'application/vnd.github.ironman-preview+json'
         }
     });
 
@@ -24,6 +26,10 @@ if (token) {
     debug('Github authentication method: Token');
 } else {
     debug('No Github Token found. App will be unable to authenticate.');
+}
+
+if (acceptHeader) {
+    github.headers.Accept = acceptHeader;
 }
 
 /**
@@ -39,6 +45,7 @@ module.exports = {
     getUsers: Bluebird.promisify(github.orgs.getMembers),
     getUser: Bluebird.promisify(github.user.getFrom),
     getRepos: Bluebird.promisify(github.repos.getFromOrg),
+    getCollaborators: Bluebird.promisify(github.repos.getCollaborators),
     getTeams: Bluebird.promisify(github.orgs.getTeams),
     createTeam: Bluebird.promisify(github.orgs.createTeam),
     getTeamMembers: Bluebird.promisify(github.orgs.getTeamMembers),

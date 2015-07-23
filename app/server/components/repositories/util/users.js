@@ -26,10 +26,24 @@ module.exports = {
         return provider.github.getUsers(args).then(users => users.map(user => convertGithubUser(user)));
     },
 
-    getGithubProfiles() {
-        return this.getGithubUsers().then(users => {
-            let profiles = users.map(user => this.getGithubUser(user.username).then(profile => user.name = profile.name));
-            return Bluebird.all(profiles).then(() => users);
+    getGithubOwners() {
+        var args = provider.getDefaultListArgs();
+        args.role = 'admin';
+        return provider.github.getUsers(args).then(users => {
+            let profiles = users.map(user => this.getGithubUser(user.login).then(profile => {
+                profile.owner = true;
+                return profile;
+            }));
+            return Bluebird.all(profiles).then((users) => users);
+        });
+    },
+
+    getGithubMembers() {
+        var args = provider.getDefaultListArgs();
+        args.role = 'member';
+        return provider.github.getUsers(args).then(users => {
+            let profiles = users.map(user => this.getGithubUser(user.login).then(profile => profile));
+            return Bluebird.all(profiles).then((users) => users);
         });
     },
 

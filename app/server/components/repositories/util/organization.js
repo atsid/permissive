@@ -12,7 +12,8 @@ module.exports = {
         let orgMap = {};
 
         return new Promise((resolve, reject) => {
-            Bluebird.join(userUtil.getGithubProfiles(), repoUtil.getGithubReposWithCollaborators(), (users, repos) => {
+            Bluebird.join(userUtil.getGithubMembers(), userUtil.getGithubOwners(), repoUtil.getGithubReposWithCollaborators(), (members, owners, repos) => {
+                let users = members.concat(owners);
                 orgMap.users = users.reduce((users, user) => {
                     users[user.username] = user;
                     return users;

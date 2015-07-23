@@ -13,8 +13,8 @@
         <tbody>
             <tr ng-repeat="user in ctrl.users">
                 <td class="username"><div>{{ user.username }}</div><span>{{ user.name }}</span></td>
-                <td ng-repeat="item in ctrl.repos" title="{{ item.name + ', ' + user.username }}", ng-class='item.collaborators[user.username] ? item.collaborators[user.username].permissions : "pull"'>
-                    {{ ctrl.getPermissions(item.collaborators[user.username]) }}
+                <td ng-repeat="item in ctrl.repos" title="{{ item.name + ', ' + user.username }}", ng-class='user.owner ? "owner" : (item.collaborators[user.username] ? item.collaborators[user.username].permissions : "")'>
+                    {{ ctrl.getPermissions(user, item.collaborators[user.username]) }}
                 </td>
             </tr>
         </tbody>

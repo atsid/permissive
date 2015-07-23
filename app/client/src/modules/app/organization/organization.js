@@ -23,11 +23,17 @@ module.exports =
             return a.name.localeCompare(b.name);
         };
 
-        this.getPermissions = (user) => {
-            return {
-                pull: 'R',
-                push: 'W',
-                admin: 'A'
-            }[user ? user.permissions : 'pull'];
+        this.getPermissions = (user, collaborator) => {
+            let perm = '';
+            if (user.owner) {
+                perm = 'O';
+            } else if (collaborator && collaborator.permissions) {
+                perm = {
+                    pull: 'R',
+                    push: 'W',
+                    admin: 'A'
+                }[collaborator.permissions];
+            }
+            return perm;
         };
     });

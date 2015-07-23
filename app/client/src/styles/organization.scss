@@ -39,6 +39,9 @@
       .admin {
         background-color: rgba(255, 0, 0, .5);
       }
+      .owner {
+        background-color: rgba(0, 0, 255, .5);
+      }
     }
     tr:nth-child(odd) {
       background-color: rgba(255, 255, 255, .75);

@@ -22,23 +22,40 @@ var mask = require('json-mask'),
         'testuser1': {
             login: 'testuser1',
             name: 'TJ',
-            avatar_url: 'https://avatars0.githubusercontent.com/u/25254?v=3&s=400'
+            avatar_url: 'https://avatars0.githubusercontent.com/u/25254?v=3&s=400',
+            permissions: {
+                admin: true,
+                push: true
+            }
         },
         'testuser2': {
             login: 'testuser2',
             name: 'DHH',
-            avatar_url: 'https://avatars1.githubusercontent.com/u/2741?v=3&s=400'
+            avatar_url: 'https://avatars1.githubusercontent.com/u/2741?v=3&s=400',
+            permissions: {
+                push: true
+            }
         },
         'testuser3': {
             login: 'testuser3',
             name: 'Wanstrath',
-            avatar_url: 'https://avatars0.githubusercontent.com/u/2?v=3&s=400'
+            avatar_url: 'https://avatars0.githubusercontent.com/u/2?v=3&s=400',
+            permissions: {
+                push: true
+            }
         },
         'testuser4': {
             login: 'testuser4',
             name: 'Linus',
-            avatar_url: 'https://avatars3.githubusercontent.com/u/1024025?v=3&s=400'
+            avatar_url: 'https://avatars3.githubusercontent.com/u/1024025?v=3&s=400',
+            permissions: {
+                pull: true
+            }
         }
+    },
+    collaborators = {
+        'Test-Repo-1': [users['testuser3'], users['testuser4']],
+        'Test-Repo-2': [users['testuser1'], users['testuser2']]
     },
     repos = {
         '1': {
@@ -137,6 +154,14 @@ module.exports = {
 
             let list = Object.keys(repos).map((key) => repos[key]);
 
+            resolve(list);
+        });
+    },
+
+    getCollaborators (msg) {
+        debug('looking up mock collaborators');
+        return new Promise((resolve, reject) => {
+            let list = collaborators[msg.repo];
             resolve(list);
         });
     },

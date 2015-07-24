@@ -54,8 +54,8 @@ var mask = require('json-mask'),
         }
     },
     collaborators = {
-        'Test-Repo-1': [users['testuser3'], users['testuser4']],
-        'Test-Repo-2': [users['testuser1'], users['testuser2']]
+        'Test-Repo-1': [users.testuser3, users.testuser4],
+        'Test-Repo-2': [users.testuser1, users.testuser2]
     },
     repos = {
         '1': {

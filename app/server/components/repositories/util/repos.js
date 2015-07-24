@@ -36,6 +36,28 @@ module.exports = {
 
         });
 
+    },
+
+    isCollaborator(repo, username) {
+        let args = provider.getDefaultItemArgs();
+        args.repo = repo;
+        args.username = username;
+        provider.github.getCollaborator(args);
+    },
+
+    removeCollaborator(repo, username) {
+        let args = provider.getDefaultItemArgs();
+        args.repo = repo;
+        args.username = username;
+        provider.github.removeCollaborator(args);
+    },
+
+    addCollaborator(repo, username, permission) {
+        let args = provider.getDefaultItemArgs();
+        args.repo = repo;
+        args.username = username;
+        args.permission = permission;
+        provider.github.addCollaborator(args);
     }
 
 };

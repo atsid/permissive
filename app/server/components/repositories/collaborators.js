@@ -2,7 +2,7 @@
 
 var teamUtil = require('./util/teams'),
 	repoUtil = require('./util/repos'),
-    userUtil = require('./util/user'),
+    userUtil = require('./util/users'),
     Bluebird = require('bluebird');
 
 module.exports = {

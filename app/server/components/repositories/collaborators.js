@@ -31,16 +31,19 @@ module.exports = {
     },
 
     addCollaboratorsFromTeam(teamId) {
-        Bluebird.join(teamUtil.getGithubTeam(teamId), teamUtil.getGithubTeamRepos(teamId), teamUtil.getGithubTeamMembers(teamId)).then((team, repos, users) => {
-            // for each repo on the team add each user as a collaborator with this team's permissions
-            let permission = team.permission,
-                collabs = [];
-            repos.forEach((repo) => {
-                users.forEach((user) => {
-                    collabs.push(repoUtil.addCollaborator(repo.name, user.username, permission));
+        return new Promise((resolve, reject) => {
+            Bluebird.join(teamUtil.getGithubTeam(teamId), teamUtil.getGithubTeamRepos(teamId), teamUtil.getGithubTeamMembers(teamId), (team, repos, users) => {
+                // for each repo on the team add each user as a collaborator with this team's permissions
+                let permission = team.permission,
+                    collabs = [];
+                repos.forEach((repo) => {
+                    users.forEach((user) => {
+                        console.log('Adding Collaborator: ' + repo.name + ' ' + user.login + ' ' + permission);
+                        collabs.push(repoUtil.addCollaborator(repo.name, user.username, permission));
+                    });
                 });
+                resolve(Bluebird.all(collabs));
             });
-            return Bluebird.all(collabs);
         });
     }
 };

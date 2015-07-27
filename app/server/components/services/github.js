@@ -42,6 +42,7 @@ module.exports = {
     isCollaborator: Bluebird.promisify(github.repos.getCollaborator),
     addCollaborator: Bluebird.promisify(github.repos.addCollaborator),
     removeCollaborator: Bluebird.promisify(github.repos.removeCollaborator),
+    getTeam: Bluebird.promisify(github.orgs.getTeam),
     getTeams: Bluebird.promisify(github.orgs.getTeams),
     createTeam: Bluebird.promisify(github.orgs.createTeam),
     getTeamMembers: Bluebird.promisify(github.orgs.getTeamMembers),

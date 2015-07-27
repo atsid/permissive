@@ -18,11 +18,8 @@ module.exports =
             this.teams = teams;
         });
 
-        this.getLink = (team) => {
-            return links.findByRel(team.links, 'convert-team');
-        };
-
-        this.convertTeam = (link) => {
+        this.convertTeam = (team) => {
+            let link = links.findByRel(team.links, 'convert-team');
             linkService.exec(link);
         };
     });

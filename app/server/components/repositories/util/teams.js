@@ -13,6 +13,12 @@ module.exports = {
         return provider.github.getTeams(args);
     },
 
+    getGithubTeam (teamId) {
+        let args = provider.getDefaultItemArgs();
+        args.id = teamId;
+        return provider.github.getTeam(args);
+    },
+
     getGithubTeamMembers (teamId) {
         let args = provider.getDefaultListArgs();
         args.id = teamId;

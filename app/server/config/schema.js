@@ -70,6 +70,11 @@ module.exports = {
             doc: 'Hard-coded username for use with mock service, for testing permissions.',
             default: 'testuser3',
             env: 'GITHUB_USERNAME'
+        },
+        acceptHeader: {
+            doc: 'Accept header to use for Github API requests. Allows the use of preview features.',
+            default: '',
+            env: 'GITHUB_ACCEPT_HEADER'
         }
     },
 

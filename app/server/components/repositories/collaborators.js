@@ -30,6 +30,10 @@ module.exports = {
         });
     },
 
+    removeCollaboratorFromRepo(repo, user) {
+        return repoUtil.removeCollaborator(repo, user);
+    },
+
     addCollaboratorsFromTeam(teamId) {
         return new Promise((resolve, reject) => {
             Bluebird.join(teamUtil.getGithubTeam(teamId), teamUtil.getGithubTeamRepos(teamId), teamUtil.getGithubTeamMembers(teamId), (team, repos, users) => {
@@ -39,7 +43,7 @@ module.exports = {
                 repos.forEach((repo) => {
                     users.forEach((user) => {
                         console.log('Adding Collaborator: ' + repo.name + ' ' + user.login + ' ' + permission);
-                        collabs.push(repoUtil.addCollaborator(repo.name, user.username, permission));
+                        collabs.push(repoUtil.addCollaborator(repo.name, user.login, permission));
                     });
                 });
                 resolve(Bluebird.all(collabs));

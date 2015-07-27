@@ -6,15 +6,15 @@
     <table>
         <thead>
             <tr>
-                <th><div><span>User</span></div></th>
-                <th ng-repeat="item in ctrl.organization"><div><span>{{ item.repo.name }}</span></div></th>
+                <th></th>
+                <th ng-repeat="item in ctrl.repos"><div><span>{{ item.name }}</span></div></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="user in ctrl.users">
-                <td class="username">{{ user.username }}</td>
-                <td ng-repeat="item in ctrl.organization" title="{{ item.repo.name + ', ' + user.username }}", ng-class='item.users[user.username].github'>
-                    {{ ctrl.getPermissions(item.users[user.username]) }}
+                <td class="username"><div>{{ user.username }}</div><span>{{ user.name }}</span></td>
+                <td ng-repeat="item in ctrl.repos" title="{{ item.name + ', ' + user.username }}", ng-class='user.owner ? "owner" : (item.collaborators[user.username] ? item.collaborators[user.username].permissions : "")'>
+                    {{ ctrl.getPermissions(user, item.collaborators[user.username]) }}
                 </td>
             </tr>
         </tbody>

@@ -13,7 +13,7 @@ describe('organization.js', () => {
             let req = {};
             organization.getOrganization(req, {}, () => {
                 let entity = req.entity;
-                expect(entity[1].repo.name).to.equal('Test-Repo-1');
+                expect(entity.repos[0].name).to.equal('Test-Repo-1');
                 done();
             });
         });

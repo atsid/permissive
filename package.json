@@ -18,7 +18,7 @@
     "express-jefferson": "^2.0.0",
     "express-mountie": "^3.0.0",
     "express-session": "^1.10.3",
-    "github": "^0.2.3",
+    "github": "https://github.com/rizzom5000/node-github",
     "json-mask": "0.3.4",
     "passport": "^0.2.1",
     "passport-github": "^0.1.5",

@@ -23,7 +23,12 @@
         text-align: center;
       }
       .username {
-        font-weight: bold;
+        div {
+          font-weight: bold;
+        }
+        span {
+          font-size: smaller;
+        }
       }
       .pull {
         background-color: rgba(0, 128, 0, .5);
@@ -33,6 +38,9 @@
       }
       .admin {
         background-color: rgba(255, 0, 0, .5);
+      }
+      .owner {
+        background-color: rgba(0, 0, 255, .5);
       }
     }
     tr:nth-child(odd) {

@@ -1,33 +1,25 @@
 'use strict';
 
-var permUtil = require('./permissions'),
-    repoUtil = require('./repos'),
+var repoUtil = require('./repos'),
     userUtil = require('./users'),
-    Bluebird = require('bluebird'),
-    clone = require('clone');
+    Bluebird = require('bluebird');
 
 /**
  * Returns all organization repos with an associated user list and corresponding user permissions.
  */
 module.exports = {
     getOrganization () {
-        let orgMap = {},
-            defaults = permUtil.getDefaultPermissions();
+        let orgMap = {};
 
         return new Promise((resolve, reject) => {
-            Bluebird.join(permUtil.getPermissionMap(), userUtil.getGithubProfiles(), repoUtil.getGithubRepos(), (permissions, users, repos) => {
+            Bluebird.join(userUtil.getGithubMembers(), userUtil.getGithubOwners(), repoUtil.getGithubReposWithCollaborators(), (members, owners, repos) => {
+                let users = members.concat(owners);
                 orgMap.users = users.reduce((users, user) => {
                     users[user.username] = user;
                     return users;
                 }, {});
-                repos.forEach(repo => {
-                    var perms = permissions[repo.id];
-                    orgMap[repo.id] = {
-                        repo: repo,
-                        users: perms
-                    };
-                    resolve(orgMap);
-                });
+                orgMap.repos = repos;
+                resolve(orgMap);
             });
         });
     }

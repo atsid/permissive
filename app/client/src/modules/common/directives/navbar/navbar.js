@@ -19,6 +19,9 @@ module.exports = /*@ngInject*/
                         title: 'Repos',
                         sref: 'repos'
                     }, {
+                        title: 'Teams',
+                        sref: 'teams'
+                    }, {
                         title: 'Org',
                         sref: 'organization'
                     }];

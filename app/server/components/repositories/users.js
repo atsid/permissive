@@ -20,6 +20,10 @@ module.exports = {
         });
     },
 
+    getOwners () {
+        return userUtil.getGithubOwners();
+    },
+
     isOrgMember (username) {
         return new Promise((resolve, reject) => {
             userUtil.isOrgMember(username).then(function (data) {

@@ -16,6 +16,7 @@ module.exports =
         require('./main/main').name,
         require('./users/users').name,
         require('./repos/repos').name,
+        require('./teams/teams').name,
         require('./organization/organization').name
 
         //load other app modules here, e.g.:

@@ -53,6 +53,14 @@ var mask = require('json-mask'),
             }
         }
     },
+    owners = {
+        'testuser3': {
+            login: 'testuser3',
+            name: 'Wanstrath',
+            avatar_url: 'https://avatars0.githubusercontent.com/u/2?v=3&s=400',
+            owner: true
+        }
+    },
     collaborators = {
         'Test-Repo-1': [users.testuser3, users.testuser4],
         'Test-Repo-2': [users.testuser1, users.testuser2]
@@ -119,17 +127,23 @@ module.exports = {
     //provide direct access to the data maps by other mock components
     users: users,
 
+    owners: owners,
+
     repos: repos,
 
     teams: teams,
 
-    getUsers () {
+    getUsers (msg) {
         debug('looking up mock users');
         return new Promise((resolve, reject) => {
-
-            let list = Object.keys(users).map((key) => mask(users[key], 'login,avatar_url'));
-
-            resolve(list);
+            var list;
+            if (msg && msg.role === 'admin') {
+                list = Object.keys(owners).map((key) => mask(owners[key], 'login,avatar_url,owner'));
+                resolve(list);
+            } else {
+                list = Object.keys(users).map((key) => mask(users[key], 'login,avatar_url'));
+                resolve(list);
+            }
         });
     },
 

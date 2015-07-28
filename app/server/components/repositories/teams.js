@@ -2,10 +2,14 @@
 
 var permUtil = require('./util/permissions'),
     repoUtil = require('./util/repos'),
+    userUtil = require('./util/users'),
     teamUtil = require('./util/teams'),
     debug = require('debug')('app:repositories:teams'),
+    Bluebird = require('bluebird'),
     getPrefix,
-    getTeam;
+    getTeam,
+    convertGithubRepo,
+    convertGithubUser;
 
 getPrefix = (repo) => {
     return 'zzz-permissive-repo-' + repo.name + '-';
@@ -16,8 +20,36 @@ getTeam = (teams, prefix, permission) => {
     return teams.find(team => team.name === name);
 };
 
+// TODO: move these into the utility module if merging
+convertGithubRepo = (repo) => {
+    return {
+        'id': repo.id,
+        'name': repo.name,
+        'full_name': repo.full_name,
+        'description': repo.description,
+        'public': !repo.private
+    };
+};
+
+convertGithubUser = (user) => {
+    return {
+        username: user.login,
+        name: user.name,
+        avatar_url: user.avatar_url
+    };
+};
+
 module.exports = {
 
+    getTeams () {
+        return new Promise((resolve, reject) => {
+            teamUtil.getGithubTeams().then((teams) => {
+                let teamRepos = teams.map((team) => teamUtil.getGithubTeamRepos(team.id).then((repos) => team.repos = repos.map((repo) => convertGithubRepo(repo))));
+                let teamUsers = teams.map((team) => teamUtil.getGithubTeamMembers(team.id).then((users) => team.users = users.map((user) => convertGithubUser(user))));
+                Bluebird.all(teamRepos, teamUsers).then(() => resolve(teams));
+            });
+        });
+    },
 
     //checks if a permissive team exists to manage a given repo at specified permission
     check (repoId, permission) {

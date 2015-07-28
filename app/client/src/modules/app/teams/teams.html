@@ -1,0 +1,17 @@
+<div class="list-container" style="margin-left: 30px;">
+    <h4 ng-if="!ctrl.teams.length" style="text-align: center;">Fetching teams...</h4>
+    <div ng-repeat="t in ctrl.teams | filter:nameFilter">
+		<div style="font-weight:bold; margin:40px 0 20px 0;">
+            <span>{{ t.name }}, </span><span>{{ t.permission }}</span>
+            <button ng-if="t.links" ng-click="ctrl.convertTeam(t)">Convert Team</button>
+        </div>
+		<div style="margin:20px 0 5px 40px; font-weight:bold;">Repos</div>
+		<div style="margin:0 0 0 40px" ng-repeat="r in t.repos">
+			<span>{{ r.name }}</span>
+		</div>
+		<div style="margin:20px 0 5px 40px; font-weight:bold;">Users</div>
+		<div style="margin:0 0 0 40px" ng-repeat="u in t.users">
+			<span>{{ u.username }}</span>
+		</div>
+	</div>
+</div>

@@ -2,6 +2,7 @@
 [![Test Coverage](https://codeclimate.com/github/atsid/permissive/badges/coverage.svg)](https://codeclimate.com/github/atsid/permissive)
 [![Code Climate](https://codeclimate.com/github/atsid/permissive/badges/gpa.svg)](https://codeclimate.com/github/atsid/permissive)
 [![Dependency Status](https://david-dm.org/atsid/permissive.svg)](https://david-dm.org/atsid/permissive)
+[![Dev Dependency Status](https://david-dm.org/atsid/permissive/dev-status.svg)](https://david-dm.org/atsid/permissive)
 
 # permissive
 Permissions management console and services

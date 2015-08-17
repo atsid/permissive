@@ -1,96 +1,26 @@
 'use strict';
 
-var teamUtil = require('./teams'),
+var repoUtil = require('./repos'),
     userUtil = require('./users'),
-    Bluebird = require('bluebird'),
-    clone = require('clone'),
-    permissionLevels = {
-        admin: 3,
-        push: 2,
-        pull: 1,
-        none: 0
-    },
-    isPermissiveManaged,
-    getDefaultPermissions;
+    Bluebird = require('bluebird');
 
-isPermissiveManaged = (team, repo) => {
-    let name = team.name,
-        prefix = 'zzz-permissive-repo-' + repo.name + '-';
-
-    return (name.indexOf(prefix) === 0);
-};
-
-getDefaultPermissions = () => {
-    return {
-        github: 'none',
-        permissive: 'none'
-    };
-};
-
+/**
+ * Returns all organization repos with an associated user list and corresponding user permissions.
+ */
 module.exports = {
-
-    getDefaultPermissions: getDefaultPermissions,
-
     getPermissionMap () {
-        let repositoryMap = {};
+        let orgMap = {};
 
-        return userUtil.getGithubUsers().then(users => {
-
-            let allUsers = {},
-                publicAllUsers = {};
-            users.forEach(user => {
-                allUsers[user.username] = getDefaultPermissions();
-                publicAllUsers[user.username] = getDefaultPermissions();
-                publicAllUsers[user.username].github = 'pull';
+        return new Promise((resolve, reject) => {
+            Bluebird.join(userUtil.getGithubMembers(), userUtil.getGithubOwners(), repoUtil.getGithubReposWithCollaborators(), (members, owners, repos) => {
+                let users = members.concat(owners);
+                orgMap.users = users.reduce((users, user) => {
+                    users[user.username] = user;
+                    return users;
+                }, {});
+                orgMap.repos = repos;
+                resolve(orgMap);
             });
-
-            return teamUtil.getGithubTeams().then(teams => {
-
-                let rosters = [];
-                teams.forEach(team => {
-
-                    rosters.push(teamUtil.getGithubTeamMembers(team.id).then(roster => {
-
-                        let teamPermission = team.permission;
-                        return teamUtil.getGithubTeamRepos(team.id).then(repos => {
-
-                            repos.forEach(repo => {
-
-                                let repoId = repo.id,
-                                    permissiveManaged = isPermissiveManaged(team, repo),
-                                    userMap = repositoryMap[repoId];
-
-                                if (!userMap) {
-                                    userMap = repositoryMap[repoId] = (repo.private === false) ? clone(publicAllUsers) : clone(allUsers);
-                                }
-
-                                roster.forEach(member => {
-
-                                    let username = member.login,
-                                        permission = userMap[username],
-                                        current;
-
-                                    if (permissiveManaged) {
-                                        current = permission.permissive;
-                                        if (permissionLevels[teamPermission] > permissionLevels[current]) {
-                                            permission.permissive = teamPermission;
-                                        }
-                                    } else {
-                                        current = permission.github;
-                                        if (permissionLevels[teamPermission] > permissionLevels[current]) {
-                                            permission.github = teamPermission;
-                                        }
-                                    }
-                                });
-                            });
-                        });
-                    }));
-                });
-
-                return Bluebird.all(rosters).then(() => repositoryMap);
-            });
-
         });
-
     }
 };

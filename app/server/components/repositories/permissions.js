@@ -5,6 +5,13 @@ var permUtil = require('./util/permissions');
 module.exports = {
 
     /**
+     * Gets the Org permissions map
+     */
+    getOrganization () {
+        return permUtil.getPermissionMap();
+    },
+
+    /**
      * Gets the Repo Permission for the User
      */
     getUserPermissionForRepo (username, repoId) {

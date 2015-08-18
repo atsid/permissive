@@ -7,9 +7,5 @@ module.exports = {
         teams.listTeams,
         teams.listTeamsLinks,
         send.json
-    ],
-    convertTeam: [
-        teams.convertTeam,
-        send.noContent
     ]
 };

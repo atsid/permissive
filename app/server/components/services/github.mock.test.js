@@ -62,6 +62,28 @@ describe('github.mock.js', () => {
 
     });
 
+    it('getCollaborators ok', (done) => {
+
+        github.getCollaborators({repo: 'Test-Repo-1'}).then((users) => {
+            chai.assert.equal(users.length, 2);
+            chai.assert.equal(users[0].name, 'Wanstrath');
+            done();
+        });
+
+    });
+
+    it('getCollaborators fail', (done) => {
+
+        github.getCollaborators({repo: 'norepo'}).then(() => {
+            chai.assert.fail();
+            done();
+        }).catch((err) => {
+            chai.assert.ok(err);
+            done();
+        });
+
+    });
+
     it('getTeams ok', (done) => {
 
         github.getTeams().then((teams) => {
@@ -128,48 +150,4 @@ describe('github.mock.js', () => {
         });
 
     });
-
-    it('addTeamMember ok', (done) => {
-
-        github.addTeamMember({user: 'testuser2', id: 1}).then(() => {
-            github.getTeamMembers({id: 1}).then(teamMembers => {
-                chai.assert.equal(teamMembers.length, 2);
-                done();
-            });
-        });
-    });
-
-    it('addTeamMember fail - no such team', (done) => {
-
-        github.addTeamMember({user: 'testuser2', id: 99}).then(() => {
-            chai.assert.fail();
-            done();
-        }).catch((err) => {
-            chai.assert.ok(err);
-            done();
-        });
-    });
-
-    it('deleteTeamMember ok', (done) => {
-
-        github.deleteTeamMember({user: 'testuser1', id: 1}).then(() => {
-            github.getTeamMembers({id: 1}).then(teamMembers => {
-                chai.assert.equal(teamMembers.length, 1);
-                done();
-            });
-        });
-    });
-
-    it('deleteTeamMember fail - no such team', (done) => {
-
-        github.deleteTeamMember({user: 'testuser1', id: 99}).then(() => {
-            chai.assert.fail();
-            done();
-        }).catch((err) => {
-            chai.assert.ok(err);
-            done();
-        });
-    });
-
-
 });

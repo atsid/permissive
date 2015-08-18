@@ -11,7 +11,6 @@ module.exports = {
         send.json
     ],
     editPermission: [
-        permissions.createTeamForRepoPermission,
         permissions.editRepoPermissionForUser,
         send.noContent
     ]

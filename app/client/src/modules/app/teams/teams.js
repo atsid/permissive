@@ -17,9 +17,4 @@ module.exports =
         teamsService.query().$promise.then((teams) => {
             this.teams = teams;
         });
-
-        this.convertTeam = (team) => {
-            let link = links.findByRel(team.links, 'convert-team');
-            linkService.exec(link);
-        };
     });

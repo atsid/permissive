@@ -106,7 +106,7 @@ module.exports = {
         return permUtil.getPermissionMap().then(map => {
 
             let users = map[repoId],
-                current = users[username] || permUtil.getDefaultPermissions();
+                current = users[username] || permUtil.getDefaultPermission();
 
             // user already on the team
             if (current.permissive === permission) {

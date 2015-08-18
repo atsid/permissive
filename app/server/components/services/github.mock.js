@@ -190,31 +190,6 @@ module.exports = {
         });
     },
 
-    createTeam (msg) {
-        debug('creating new mock team ' + msg.name);
-        return new Promise((resolve, reject) => {
-            let repo,
-                id = Math.round(Math.random() * 100000),
-                team = {
-                    id: id,
-                    name: msg.name,
-                    permission: msg.permission,
-                    _users: []
-                };
-
-            //createTeam API method gets a list of repo full names - need to map that to a mock id
-            Object.keys(repos).forEach((key) => {
-                let r = repos[key];
-                if (r.full_name === msg.repo_names[0]) {
-                    repo = r;
-                }
-            });
-            team._repos = [repo.id];
-            teams[id] = team;
-            resolve(team);
-        });
-    },
-
     getTeamMembers (msg) {
         let id = msg.id;
         debug('looking up mock team [' + id + '] members');
@@ -241,48 +216,6 @@ module.exports = {
             if (team) {
                 let teamRepos = team._repos.map((id) => repos[id]);
                 resolve(teamRepos);
-            } else {
-                reject(new Error('No mock team: ' + id));
-            }
-        });
-    },
-
-    addTeamMember (msg) {
-        let id = msg.id,
-            username = msg.user;
-        debug('adding mock user [' + username + '] to mock team [' + id + ']');
-
-        return new Promise((resolve, reject) => {
-
-            let team = teams[id];
-
-            if (team) {
-                let found = team._users.indexOf(username);
-                if (found === -1) {
-                    team._users.push(username);
-                }
-                resolve();
-            } else {
-                reject(new Error('No mock team: ' + id));
-            }
-        });
-    },
-
-    deleteTeamMember (msg) {
-        let id = msg.id,
-            username = msg.user;
-        debug('removing mock user [' + username + '] from mock team [' + id + ']');
-
-        return new Promise((resolve, reject) => {
-
-            let team = teams[id];
-
-            if (team) {
-                let found = team._users.indexOf(username);
-                if (found > -1) {
-                    team._users = team._users.filter(user => user !== username);
-                }
-                resolve();
             } else {
                 reject(new Error('No mock team: ' + id));
             }

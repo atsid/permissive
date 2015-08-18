@@ -1,6 +1,8 @@
 'use strict';
 
-var permUtil = require('./util/permissions');
+var permUtil = require('./util/permissions'),
+    repoUtil = require('./util/repos'),
+    Bluebird = require('bluebird');
 
 module.exports = {
 
@@ -15,60 +17,67 @@ module.exports = {
      * Gets the Repo Permission for the User
      */
     getUserPermissionForRepo (username, repoId) {
-        return permUtil.getPermissionMap().then(permissions => {
-            let repo = permissions[repoId];
-            return repo[username] || permUtil.getDefaultPermissions();
+        return repoUtil.getRepoCollaborators(repoId).then(collaborators => {
+            console.log(collaborators);
+            let collaborator = collaborators[username];
+            return collaborator ? collaborator.permission : permUtil.getDefaultPermission();
         });
     },
 
     /**
-     * Sets the Permission for a specific Repo on each User in the list
+     * Gets the Permission for a specific Repo on each User in the list
      */
-    setRepoPermissionForUsers (users, repoId) {
-        return permUtil.getPermissionMap().then(permissions => {
-            let repo = permissions[repoId];
+    getRepoPermissionForUsers (users, repoId) {
+        return new Promise((resolve, reject) => {
+            let perms = [];
             users.forEach(user => {
-                user.permission = repo[user.username] || permUtil.getDefaultPermissions();
+                perms.push(
+                    this.getUserPermissionForRepo(user.username, repoId).then((permission) => {
+                        user.permission = permission;
+                    })
+                );
             });
-            return users;
+            Bluebird.all(perms).then(() => {
+                resolve(users);
+            });
         });
     },
 
     /**
-     * Gets a list of Permissions by Repo for the User,
+     * Gets the repos and associated permissions for a user.
      */
-    getRepoPermissionsForUser (repos, username) {
-        return permUtil.getPermissionMap().then(permissions => {
-            let map = {};
+    getReposPermissionsForUser (repos, username) {
+        return new Promise((resolve, reject) => {
+            let map = {}, perms = [];
             repos.forEach(repo => {
-                let defaults = permUtil.getDefaultPermissions();
-                map[repo.id] = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
+                perms.push(
+                    this.getUserPermissionForRepo(username, repo.id).then((permission) => {
+                        map[repo.id] = permission;
+                    })
+                );
             });
-            return map;
+            Bluebird.all(perms).then(() => {
+                resolve(map);
+            });
         });
     },
 
     /**
-     * Sets the Permission for a specific User on each Repo in the list
+     * Gets the Permission for a specific User on each Repo in the list
      */
-    setUserPermissionForRepos (repos, username) {
-        return permUtil.getPermissionMap().then(permissions => {
+    getUserPermissionForRepos (repos, username) {
+        return new Promise((resolve, reject) => {
+            let perms = [];
             repos.forEach(repo => {
-                let defaults = permUtil.getDefaultPermissions();
-                repo.permission = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
+                perms.push(
+                    this.getUserPermissionForRepo(username, repo.id).then(permission => {
+                        repo.permission = permission;
+                    })
+                );
             });
-            return repos;
-        });
-    },
-
-    filterReposByUserPermission (repos, username) {
-        return permUtil.getPermissionMap().then(permissions => {
-            return repos.filter(repo => {
-                let defaults = permUtil.getDefaultPermissions();
-                let permission = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
-                return !(permission.github === 'none' && permission.permissive === 'none');
+            Bluebird.all(perms).then(() => {
+                resolve(repos);
             });
         });
     }
-
 };

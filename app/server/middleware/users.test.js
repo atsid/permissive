@@ -54,17 +54,14 @@ describe('users.js', () => {
                     permission_repo: 1
                 },
                 entity: [{
-                    username: 'testuser1'
+                    username: 'testuser3'
                 }]
             };
 
-            //testuser1 is in the Contributors group with 'push' for repo 1,
-            //but mock permissive team only exists for push
             users.listUsersPermission(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
-                expect(entity[0].permission.github).to.equal('push');
-                expect(entity[0].permission.permissive).to.equal('pull');
+                expect(entity[0].permission).to.equal('push');
                 done();
             });
 
@@ -85,8 +82,7 @@ describe('users.js', () => {
             users.listUsersPermission(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
-                expect(entity[0].permission.github).to.equal('pull');
-                expect(entity[0].permission.permissive).to.equal('none');
+                expect(entity[0].permission).to.equal('pull');
                 done();
             });
 
@@ -152,12 +148,12 @@ describe('users.js', () => {
 
             let req = {
                 query: {
-                    permission_repo: 1
+                    permission_repo: 2
                 },
                 session: {
                     passport: {
                         user: {
-                            username: 'testuser3'
+                            username: 'testuser1'
                         }
                     }
                 },

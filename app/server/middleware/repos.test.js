@@ -12,29 +12,7 @@ describe('repos.js', () => {
 
     describe('listRepos', () => {
 
-        it('private repos without user "pull" access are not listed', (done) => {
-
-            let req = {
-                session: {
-                    passport: {
-                        user: {
-                            username: 'testuser2'
-                        }
-                    }
-                }
-            };
-
-            //testuser2 in the mock data does not have any visibility to the private repo
-            repos.listRepos(req, {}, () => {
-                let entity = req.entity;
-                expect(entity.length).to.equal(1);
-                expect(entity[0].permission).to.be.undefined;
-                done();
-            });
-
-        });
-
-        it('private repos with user "pull" access are listed', (done) => {
+        it('private repos are listed', (done) => {
 
             let req = {
                 session: {
@@ -82,20 +60,18 @@ describe('repos.js', () => {
 
             let req = {
                 query: {
-                    permission_user: 'testuser1'
+                    permission_user: 'testuser3'
                 },
                 entity: [{
                     id: 1
                 }]
             };
 
-            //testuser1 is in the Contributors group with 'push' for repo 1,
-            //but mock permissive team only exists for push
+            //mock permissive team only exists for push
             repos.listReposPermission(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
-                expect(entity[0].permission.github).to.equal('push');
-                expect(entity[0].permission.permissive).to.equal('pull');
+                expect(entity[0].permission).to.equal('push');
                 done();
             });
 
@@ -112,12 +88,11 @@ describe('repos.js', () => {
                 }]
             };
 
-            //testuser4 has no permissions in the mocks, but repo 1 is public
+            //testuser4 has no permissions in the mocks
             repos.listReposPermission(req, {}, () => {
                 let entity = req.entity;
                 expect(entity.length).to.equal(1);
-                expect(entity[0].permission.github).to.equal('pull');
-                expect(entity[0].permission.permissive).to.equal('none');
+                expect(entity[0].permission).to.equal('pull');
                 done();
             });
 
@@ -183,17 +158,17 @@ describe('repos.js', () => {
 
             let req = {
                 query: {
-                    permission_user: 'testuser3'
+                    permission_user: 'testuser1'
                 },
                 session: {
                     passport: {
                         user: {
-                            username: 'testuser3'
+                            username: 'testuser1'
                         }
                     }
                 },
                 entity: [{
-                    id: 1
+                    id: 2
                 }]
             };
 

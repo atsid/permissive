@@ -14,10 +14,8 @@ module.exports = {
         let username = req.session.passport.user.username;
 
         repoRepository.getRepos().then(repos => {
-            return permissionRepository.filterReposByUserPermission(repos, username).then(filteredRepos => {
-                req.entity = filteredRepos;
-                next();
-            });
+            req.entity = repos;
+            next();
         }).catch(err => next(err));
     },
 
@@ -28,7 +26,7 @@ module.exports = {
             repos = req.entity;
 
         if (username) {
-            permissionRepository.setUserPermissionForRepos(repos, username).then(repos => {
+            permissionRepository.getUserPermissionForRepos(repos, username).then(repos => {
                 req.entity = repos;
                 next();
             }).catch(err => next(err));
@@ -46,11 +44,12 @@ module.exports = {
         debug('checking for links on repo list for logged in [' + username + '] to edit [' + user + ']');
 
         if (user) {
-            permissionRepository.getRepoPermissionsForUser(repos, username).then(permissions => {
+            permissionRepository.getReposPermissionsForUser(repos, username).then(permissions => {
                 repos.forEach(repo => {
                     let permission = permissions[repo.id];
                     debug('got permission for [' + username + '] against repo [' + repo.id + ']', permission);
-                    if (permission.permissive === 'admin' || permission.github === 'admin') {
+                    console.log(username + ' ' + permission)
+                    if (permission === 'admin') {
                         let editLink = new Link({
                             rel: 'edit-user-permission',
                             appMethod: 'repos.editPermission',

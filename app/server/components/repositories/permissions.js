@@ -18,7 +18,6 @@ module.exports = {
      */
     getUserPermissionForRepo (username, repoId) {
         return repoUtil.getRepoCollaborators(repoId).then(collaborators => {
-            console.log(collaborators);
             let collaborator = collaborators[username];
             return collaborator ? collaborator.permission : permUtil.getDefaultPermission();
         });
@@ -79,5 +78,15 @@ module.exports = {
                 resolve(repos);
             });
         });
+    },
+
+    /**
+     * Add remove or update a user's permission for a repo
+     */
+    editUserPermissionForRepo(username, repoId, permission) {
+        if (permission === 'none') {
+            return permUtil.removeRepoCollaborator(repoId, username);
+        }
+        return permUtil.addRepoCollaborator(repoId, username, permission);
     }
 };

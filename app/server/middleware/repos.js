@@ -48,7 +48,6 @@ module.exports = {
                 repos.forEach(repo => {
                     let permission = permissions[repo.id];
                     debug('got permission for [' + username + '] against repo [' + repo.id + ']', permission);
-                    console.log(username + ' ' + permission)
                     if (permission === 'admin') {
                         let editLink = new Link({
                             rel: 'edit-user-permission',

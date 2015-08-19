@@ -5,7 +5,6 @@ var teams = require('../../middleware/teams'),
 module.exports = {
     listTeams: [
         teams.listTeams,
-        teams.listTeamsLinks,
         send.json
     ]
 };

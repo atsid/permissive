@@ -13,5 +13,18 @@ module.exports = {
             req.entity = org;
             next();
         }).catch(err => next(err));
+    },
+
+    editRepoPermissionForUser (req, res, next) {
+        debug('editing user repo permission level [' + req.path + ']');
+        debug('params:' + JSON.stringify(req.params, null, 2));
+
+        let params = req.params,
+            username = params.username,
+            repoId = params.id,
+            permission = params.permission;
+        permissionRepository.editUserPermissionForRepo(username, repoId, permission).then(() => {
+            next();
+        }).catch(err => next(err));
     }
 };

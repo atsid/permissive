@@ -93,28 +93,34 @@ module.exports = {
         });
     },
 
-    isRepoCollaborator(repo, username) {
-        let args = provider.getDefaultItemArgs();
-        args.user = provider.github.config.org;
-        args.repo = repo;
-        args.collabuser = username;
-        return provider.github.isCollaborator(args);
+    isRepoCollaborator(repoId, username) {
+        return this.getRepoById(repoId).then((repo) => {
+            let args = provider.getDefaultItemArgs();
+            args.user = provider.github.config.org;
+            args.repo = repo.name;
+            args.collabuser = username;
+            return provider.github.isCollaborator(args);
+        });
     },
 
-    addRepoCollaborator(repo, username, permission) {
-        let args = provider.getDefaultItemArgs();
-        args.user = provider.github.config.org;
-        args.repo = repo;
-        args.collabuser = username;
-        args.permission = permission;
-        return provider.github.addCollaborator(args);
+    addRepoCollaborator(repoId, username, permission) {
+        return this.getRepoById(repoId).then((repo) => {
+            let args = provider.getDefaultItemArgs();
+            args.user = provider.github.config.org;
+            args.repo = repo.name;
+            args.collabuser = username;
+            args.permission = permission;
+            return provider.github.addCollaborator(args);
+        });
     },
 
-    removeRepoCollaborator(repo, username) {
-        let args = provider.getDefaultItemArgs();
-        args.user = provider.github.config.org;
-        args.repo = repo;
-        args.collabuser = username;
-        return provider.github.removeCollaborator(args);
+    removeRepoCollaborator(repoId, username) {
+        return this.getRepoById(repoId).then((repo) => {
+            let args = provider.getDefaultItemArgs();
+            args.user = provider.github.config.org;
+            args.repo = repo.name;
+            args.collabuser = username;
+            return provider.github.removeCollaborator(args);
+        });
     }
 };

@@ -182,22 +182,24 @@ module.exports = {
 
     addCollaborator (msg) {
         debug('adding mock collaborator');
+        let collabs = collaborators[msg.repo];
         return new Promise((resolve) => {
-            collaborators[msg.repo].push(users[msg.username]);
-            resolve(collaborators[msg.repo]);
+            collabs.push(users[msg.username]);
+            resolve(collabs);
         });
     },
 
     removeCollaborator (msg) {
         debug('removing mock collaborator');
+        let collabs = collaborators[msg.repo];
         return new Promise((resolve) => {
-            var idx = collaborators[msg.repo].map((c) => {
+            var idx = collabs.map((c) => {
                 return c.login;
             }).indexOf(msg.username);
             if (idx > -1) {
-                collaborators[msg.repo].splice(idx, 1);
+                collabs.splice(idx, 1);
             }
-            resolve(collaborators[msg.repo]);
+            resolve(collabs);
         });
     },
 

@@ -93,27 +93,27 @@ module.exports = {
         });
     },
 
-    isRepoCollaborator(repoId, username) {
+    isRepoCollaborator(repo, username) {
         let args = provider.getDefaultItemArgs();
         args.user = provider.github.config.org;
-        args.repo = repoId;
+        args.repo = repo;
         args.collabuser = username;
         return provider.github.isCollaborator(args);
     },
 
-    addRepoCollaborator(repoId, username, permission) {
+    addRepoCollaborator(repo, username, permission) {
         let args = provider.getDefaultItemArgs();
         args.user = provider.github.config.org;
-        args.repo = repoId;
+        args.repo = repo;
         args.collabuser = username;
         args.permission = permission;
         return provider.github.addCollaborator(args);
     },
 
-    removeRepoCollaborator(repoId, username) {
+    removeRepoCollaborator(repo, username) {
         let args = provider.getDefaultItemArgs();
         args.user = provider.github.config.org;
-        args.repo = repoId;
+        args.repo = repo;
         args.collabuser = username;
         return provider.github.removeCollaborator(args);
     }

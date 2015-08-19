@@ -180,6 +180,27 @@ module.exports = {
         });
     },
 
+    addCollaborator (msg) {
+        debug('adding mock collaborator');
+        return new Promise((resolve) => {
+            collaborators[msg.repo].push(users[msg.username]);
+            resolve(collaborators[msg.repo]);
+        });
+    },
+
+    removeCollaborator (msg) {
+        debug('removing mock collaborator');
+        return new Promise((resolve) => {
+            var idx = collaborators[msg.repo].map((c) => {
+                return c.login;
+            }).indexOf(msg.username);
+            if (idx > -1) {
+                collaborators[msg.repo].splice(idx, 1);
+            }
+            resolve(collaborators[msg.repo]);
+        });
+    },
+
     getTeams () {
         debug('looking up mock teams');
         return new Promise((resolve, reject) => {

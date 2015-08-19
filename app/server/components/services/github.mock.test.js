@@ -84,6 +84,27 @@ describe('github.mock.js', () => {
 
     });
 
+    it('addCollaborator success', (done) => {
+        github.addCollaborator({
+            repo: 'Test-Repo-1',
+            username: 'testuser1'
+        }).then((collaborators) => {
+            chai.assert.equal(collaborators.length, 3);
+            chai.assert.equal(collaborators[2].name, 'TJ');
+            done();
+        });
+    });
+
+    it('removeCollaborator success', (done) => {
+        github.removeCollaborator({
+            repo: 'Test-Repo-1',
+            username: 'testuser1'
+        }).then((collaborators) => {
+            chai.assert.equal(collaborators.length, 2);
+            done();
+        });
+    });
+
     it('getTeams ok', (done) => {
 
         github.getTeams().then((teams) => {

@@ -85,8 +85,8 @@ module.exports = {
      */
     editUserPermissionForRepo(username, repoId, permission) {
         if (permission === 'none') {
-            return permUtil.removeRepoCollaborator(repoId, username);
+            return repoUtil.removeRepoCollaborator(repoId, username);
         }
-        return permUtil.addRepoCollaborator(repoId, username, permission);
+        return repoUtil.addRepoCollaborator(repoId, username, permission);
     }
 };

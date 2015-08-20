@@ -1,0 +1,13 @@
+<div class="team">
+    <div class="team-container">
+        <div class="team-details">
+            <div ng-if="ctrl.team.name" class="team-details-name">{{ctrl.team.name}}</div>
+            <div ng-if="ctrl.team.description" class="team-details-description">{{ctrl.team.description}}</div>
+        </div>
+        <div class="team-details-permission">
+            <span class="github-permission">
+                {{ctrl.team.permission}}
+            </span>
+        </div>
+    </div>
+</div>

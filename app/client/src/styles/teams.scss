@@ -1,0 +1,16 @@
+.teams {
+  background: #fff;
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.team-repos {
+  background: #f9f9f9;
+
+  .repo:hover {
+    box-shadow: none;
+    cursor: default;
+  }
+}

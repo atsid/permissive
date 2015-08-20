@@ -1,0 +1,14 @@
+<div ng-click="ctrl.click()">
+    <div teamdetails="ctrl.team"></div>
+</div>
+<div ng-if="ctrl.toggled" class="list-container">
+    <div class="team-users">
+        <div ng-repeat="u in ctrl.users" class="user-avatar"><img src="{{ u.avatar_url }}" title="{{ u.username }}"></div>
+    </div>
+    <div class="typeahead">
+        <input type="text" placeholder="Filter by name" ng-model="nameFilter" />
+    </div>
+    <div class="team-repos">
+        <div repodetails="r" ng-repeat="r in ctrl.repos | filter:nameFilter"></div>
+    </div>
+</div>

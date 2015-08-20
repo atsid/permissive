@@ -84,6 +84,7 @@ var mask = require('json-mask'),
         '1': {
             id: 1,
             name: 'Contributors',
+            description: '',
             permission: 'push',
             _repos: [1, 2],
             _users: ['testuser1']
@@ -91,6 +92,7 @@ var mask = require('json-mask'),
         '2': {
             id: 2,
             name: 'zzz-permissive-repo-Test-Repo-1-pull',
+            description: 'zzz-permissive-repo-Test-Repo-1-pull',
             permission: 'pull',
             _repos: [1],
             _users: ['testuser1']
@@ -98,6 +100,7 @@ var mask = require('json-mask'),
         '3': {
             id: 3,
             name: 'zzz-permissive-repo-Test-Repo-1-push',
+            description: 'zzz-permissive-repo-Test-Repo-1-push',
             permission: 'push',
             _repos: [1],
             _users: ['testuser2']
@@ -105,6 +108,7 @@ var mask = require('json-mask'),
         '4': {
             id: 4,
             name: 'zzz-permissive-repo-Test-Repo-1-admin',
+            description: 'zzz-permissive-repo-Test-Repo-1-admin',
             permission: 'admin',
             _repos: [1],
             _users: ['testuser3']
@@ -112,6 +116,7 @@ var mask = require('json-mask'),
         '5': {
             id: 5,
             name: 'zzz-permissive-repo-Test-Repo-2-admin',
+            description: 'zzz-permissive-repo-Test-Repo-2-admin',
             permission: 'admin',
             _repos: [2],
             _users: ['testuser3']
@@ -207,7 +212,7 @@ module.exports = {
         debug('looking up mock teams');
         return new Promise((resolve, reject) => {
 
-            let list = Object.keys(teams).map((key) => mask(teams[key], 'id,name,permission'));
+            let list = Object.keys(teams).map((key) => mask(teams[key], 'id,name,description,permission'));
 
             resolve(list);
         });

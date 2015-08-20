@@ -28,17 +28,8 @@ module.exports = {
      */
     getRepoPermissionForUsers (users, repoId) {
         return new Promise((resolve, reject) => {
-            let perms = [];
-            users.forEach(user => {
-                perms.push(
-                    this.getUserPermissionForRepo(user.username, repoId).then((permission) => {
-                        user.permission = permission;
-                    })
-                );
-            });
-            Bluebird.all(perms).then(() => {
-                resolve(users);
-            });
+            let permUsers = users.map((user) => this.getUserPermissionForRepo(user.username, repoId).then((permission) => user.permission = permission));
+            Bluebird.all(permUsers).then(() => resolve(users));
         });
     },
 
@@ -47,17 +38,8 @@ module.exports = {
      */
     getReposPermissionsForUser (repos, username) {
         return new Promise((resolve, reject) => {
-            let map = {}, perms = [];
-            repos.forEach(repo => {
-                perms.push(
-                    this.getUserPermissionForRepo(username, repo.id).then((permission) => {
-                        map[repo.id] = permission;
-                    })
-                );
-            });
-            Bluebird.all(perms).then(() => {
-                resolve(map);
-            });
+            let map = {}, permUsers = repos.map((repo) => this.getUserPermissionForRepo(username, repo.id).then((permission) => map[repo.id] = permission));
+            Bluebird.all(permUsers).then(() => resolve(map));
         });
     },
 
@@ -66,17 +48,8 @@ module.exports = {
      */
     getUserPermissionForRepos (repos, username) {
         return new Promise((resolve, reject) => {
-            let perms = [];
-            repos.forEach(repo => {
-                perms.push(
-                    this.getUserPermissionForRepo(username, repo.id).then(permission => {
-                        repo.permission = permission;
-                    })
-                );
-            });
-            Bluebird.all(perms).then(() => {
-                resolve(repos);
-            });
+            let permUsers = repos.map((repo) => this.getUserPermissionForRepo(username, repo.id).then((permission) => repo.permission = permission));
+            Bluebird.all(permUsers).then(() => resolve(repos));
         });
     },
 

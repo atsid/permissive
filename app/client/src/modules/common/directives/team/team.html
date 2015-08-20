@@ -3,7 +3,10 @@
 </div>
 <div ng-if="ctrl.toggled" class="list-container">
     <div class="team-users">
-        <div ng-repeat="u in ctrl.users" class="user-avatar"><img src="{{ u.avatar_url }}" title="{{ u.username }}"></div>
+        <div ng-repeat="u in ctrl.users" class="user-avatar">
+            <md-tooltip>{{ u.name || u.username }}</md-tooltip>
+            <img src="{{ u.avatar_url }}">
+        </div>
     </div>
     <div class="typeahead">
         <input type="text" placeholder="Filter by name" ng-model="nameFilter" />

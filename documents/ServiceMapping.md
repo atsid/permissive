@@ -38,39 +38,22 @@ The following details the node-github methods that will be called by permissive.
  1. Get the user data (user.getFrom)
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Create a mapping of Repo -> User
-1. Get a list of teams in the organization (orgs.getTeams)
-1. For each team (which defines permission)
- 1. Get a list of repos managed by the team (orgs.getTeamRepos)
- 1. Get each team member (orgs.getTeamMembers)
- 1. Update mapping to include permission (Repo -> User -> Permission)
+1. For each repo 
+ 1. Get a list of collaborators for the repo (which defines permission)
+ 1. Update mapping to include permission (Repo -> Collaborator? -> User -> Permission)
 1. Return the mapping for the requested repo
 
 
-### 2 Add repo permission for a user
+### 2 Add or update repo permission for a user
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
-1. Get a list of teams in the organization (orgs.getTeams)
-1. Find the appropriate team (permission)
-1. Add the user to the team (orgs.addTeamMember)
+1. Add the user as a collaborator to the repo (repo.addCollaborator)
 
 
-### 2a Update repo permission for a user
+### 2a Remove repo access for a user
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
-1. Get a list of teams in the organization (orgs.getTeams)
-1. Find the users current team
-1. Remove the user from the team (orgs.deleteTeamMember)
-1. Find the users new team (permission)
-1. Add the user to the team (orgs.addTeamMember)
-
-
-### 2b Remove repo access for a user
-1. Get a list of repos in the organization (repos.getFromOrg)
-1. Find the appropriate repo
-1. Get a list of teams in the organization (orgs.getTeams)
-1. For each team associated with the repo
- 1. Get the members (orgs.getTeamMembers)
- 1. If the user is on the team, remove them (orgs.deleteTeamMember)
+1. Remove the user as a collaborator from the repo (repo.removeCollaborator)
 
 
 ### 3 Get list of repos
@@ -83,38 +66,31 @@ The following details the node-github methods that will be called by permissive.
  1. Get the user data (user.getFrom)
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Create a mapping of Repo -> User
-1. Get a list of teams in the organization (orgs.getTeams)
-1. For each team (which defines permission)
- 1. Get a list of repos managed by the team (orgs.getTeamRepos)
- 1. Get each team member (orgs.getTeamMembers)
- 1. Update mapping to include permission (Repo -> User -> Permission)
-1. Return a mapping for the requested user
+1. For each repo 
+ 1. Get a list of collaborators for the repo (which defines permission)
+ 1. Update mapping to include permission (Repo -> Collaborator? -> User -> Permission)
+1. Return the mapping for the requested user
 
 
-### 5 Add user permission for a repo
+### 4 Add or update user permission for a repo
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
-1. Get a list of teams in the organization (orgs.getTeams)
-1. Find the users new team (permission)
-1. Add the user to the team (orgs.addTeamMember)
+1. Add the user as a collaborator to the repo (repo.addCollaborator)
 
 
-### 5a Update user permission for a repo
+### 4a Remove user access to a repo
 1. Get a list of repos in the organization (repos.getFromOrg)
 1. Find the appropriate repo
-1. Get a list of teams in the organization (orgs.getTeams)
-1. Find the users current team
-1. Remove the user from the team (orgs.deleteTeamMember)
-1. Find the users new team (permission)
-1. Add the user to the team (orgs.addTeamMember)
+1. Remove the user as a collaborator from the repo (repo.removeCollaborator)
 
 
-### 5b Remove user access to a repo
-1. Get a list of repos in the organization (repos.getFromOrg)
-1. Find the appropriate repo
-1. Get a list of teams in the organization (orgs.getTeams)
-1. For each team associated with the repo
- 1. Delete the team (orgs.deleteTeam)
+### 5 Get a list of teams with their associated repos and users
+1. Get a list of teams in the organization (teams.getFromOrg)
+ 1. For each team
+ 1. Get a list of users for the team
+ 1. Get a list of repos for the team
+ 1. Create a mapping of Team -> (Repo, User)
+1. Return the mapping for the organization
 
 
 # Mapping node-github to github
@@ -123,7 +99,7 @@ The following details the mapping between the node-github and github APIs.
 
 ##Users
 
-There are two views in the permissive app. One of the views is centered on the Github members of an organization. 
+One of the views in Permissive is centered on the Github members of an organization. 
 
 
 ### List of Users
@@ -146,10 +122,9 @@ This method returns the full set of data on a github user.
 * node-github method - user.getFrom
 
 
-
 ## Repos
 
-There are two views in the permissive app. One of the views is centered on the Github repos that belong to an organization. 
+One of the views in Permissive is centered on the Github repos that belong to an organization. 
 
 
 ### List of Repos
@@ -161,16 +136,50 @@ This method will be used to retrieve a list of all repos that belong to an organ
 * node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.getFromOrg
 * node-github method - repos.getFromOrg
 
+### List of Collaborators
 
+This method will be used to retreive a list of all collaborators for a repo.
 
-## Teams/Members
+* Github API - https://developer.github.com/v3/repos/collaborators/#list
+* Github URL - GET /repos/:owner/:repo/collaborators
+* node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.getCollaborators
+* node-github method - repos.getCollaborators
 
-Permissive will manage repo read/write/admin access via the construction of teams.
+### Add Collaborator
 
+This method will add a user as a collaborator to a repo.
+
+* Github API - https://developer.github.com/v3/repos/collaborators/#add-collaborator
+* Github URL - PUT /repos/:owner/:repo/collaborators/:username
+* node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.addCollaborator
+* node-github method - repos.addCollaborator
+
+### Remove Collaborator
+
+This method will remove a user as a collaborator from a repo.
+
+* Github API - https://developer.github.com/v3/repos/collaborators/#remove-collaborator
+* Github URL - DELETE /repos/:owner/:repo/collaborators/:username
+* node-github API - http://mikedeboer.github.io/node-github/#repos.prototype.removeCollaborator
+* node-github method - repos.removeCollaborator
+
+## Teams
+
+One of the views in Permissive is centered on the Github teams that belong to an organization. 
 
 ### List Teams
 
 This method will retrieve a list of all teams that belong to an organization. Permissive will follow a format when naming teams so that it can filter out any team that it does not manage.
+
+* Github API - https://developer.github.com/v3/orgs/teams/#list-teams
+* Github URL - GET /orgs/:org/teams
+* node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.getTeams
+* node-github method - orgs.getTeams
+
+
+### List Teams
+
+This method will retrieve a list of all teams that belong to an organization.
 
 * Github API - https://developer.github.com/v3/orgs/teams/#list-teams
 * Github URL - GET /orgs/:org/teams
@@ -197,62 +206,3 @@ This method will retrieve a list of all the team repos.
 * node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.getTeamRepos
 * node-github method - orgs.getTeamRepos
 
-
-### Create Team
-
-This method will create a new team. Github requires the authenticated user to be an owner of the org. The current permissive API does not require this functionality, but it will be a needed in the future.
-
-* Github API - https://developer.github.com/v3/orgs/teams/#create-team
-* Github URL - POST /orgs/:org/teams
-* node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.createTeam
-* node-github method - orgs.createTeam
-
-
-### Delete Team
-
-This method will delete an existing team. Github requires the authenticated user to be an owner of the org.
-
-* Github API - https://developer.github.com/v3/orgs/teams/#delete-team
-* Github URL - DELETE /teams/:id
-* node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.deleteTeam
-* node-github method - orgs.deleteTeam
-
-
-### Add Member to Team **(deprecated)**
-
-This method will add a member to the team. The authenticated user must have admin permissions for the team. This method is deprecated, and will not be in the next major release of the Github API.
-
-* Github API - https://developer.github.com/v3/orgs/teams/#add-team-member
-* Github URL - PUT /teams/:id/members/:username
-* node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.addTeamMember
-* node-github method - orgs.addTeamMember
-
-
-### Add Membership to Team
-
-This method will add a new member to the team. If the user is already a part of the team’s organization (meaning they’re on at least one other team in the organization), this endpoint will add the user to the team.
-
-If the user is completely unaffiliated with the team’s organization (meaning they’re on none of the organization’s teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the “pending” state until the user accepts the invitation, at which point the membership will transition to the “active” state and the user will be added as a member of the team.
-
-* Github API - https://developer.github.com/v3/orgs/teams/#add-team-membership
-* Github URL - PUT /teams/:id/memberships/:username
-* node-github - https://github.com/mikedeboer/node-github/issues/221
-
-
-### Remove Member from Team **(deprecated)**
-
-This method will remove a member from the team. The authenticated user must have admin permissions for the team. This method is deprecated, and will not be in the next major release of the Github API.
-
-* Github API - https://developer.github.com/v3/orgs/teams/#remove-team-member
-* Github URL - DELETE /teams/:id/members/:username
-* node-github API - http://mikedeboer.github.io/node-github/#orgs.prototype.deleteTeamMember
-* node-github method - orgs.deleteTeamMember
-
-
-### Remove Membership from Team
-
-This method will remove a member from the team. The authenticated user must have admin permissions for the team. 
-
-* Github API - https://developer.github.com/v3/orgs/teams/#remove-team-membership
-* Github URL - DELETE /teams/:id/memberships/:username
-* node-github - https://github.com/mikedeboer/node-github/issues/221

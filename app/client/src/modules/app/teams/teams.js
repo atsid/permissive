@@ -12,14 +12,7 @@ module.exports =
                 controller: 'teamsController as ctrl'
             });
     })
-    .controller('teamsController', function ($http, linkService, teamsService) {
+    .controller('teamsController', function (teamsService) {
         console.log('getting list of teams');
-        teamsService.query().$promise.then((teams) => {
-            this.teams = teams;
-        });
-
-        this.convertTeam = (team) => {
-            let link = links.findByRel(team.links, 'convert-team');
-            linkService.exec(link);
-        };
+        this.teams = teamsService.query();
     });

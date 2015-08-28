@@ -24,7 +24,7 @@ module.exports = {
             users = req.entity;
 
         if (repoId) {
-            permissionRepository.setRepoPermissionForUsers(users, repoId).then(users => {
+            permissionRepository.getRepoPermissionForUsers(users, repoId).then(users => {
                 req.entity = users;
                 next();
             }).catch(err => next(err));
@@ -42,7 +42,7 @@ module.exports = {
 
         if (repoId) {
             permissionRepository.getUserPermissionForRepo(username, repoId).then(permission => {
-                if (permission.permissive === 'admin' || permission.github === 'admin') {
+                if (permission === 'admin') {
                     users.forEach(user => {
                         let editLink = new Link({
                             rel: 'edit-repo-permission',

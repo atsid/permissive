@@ -4,7 +4,7 @@ var provider = require('./provider'),
     Bluebird = require('bluebird'),
     convertGithubRepo,
     convertGithubCollaborator,
-    getPermissions;
+    getPermission;
 
 convertGithubRepo = (repo) => {
     return {
@@ -20,11 +20,11 @@ convertGithubRepo = (repo) => {
 convertGithubCollaborator = (collaborator) => {
     return {
         username: collaborator.login,
-        permissions: getPermissions(collaborator.permissions)
+        permission: getPermission(collaborator.permissions)
     };
 };
 
-getPermissions = (permissions) => {
+getPermission = (permissions) => {
     let permission = 'pull';
     if (permissions.admin) {
         permission = 'admin';
@@ -41,7 +41,7 @@ module.exports = {
         return provider.github.getRepos(args).then(repos => repos.map(repo => convertGithubRepo(repo)));
     },
 
-    getGithubReposWithCollaborators() {
+    getReposWithCollaborators() {
         let args = provider.getDefaultListArgs();
         return new Promise((resolve, reject) => {
             provider.github.getRepos(args).then((repos) => {
@@ -93,28 +93,34 @@ module.exports = {
         });
     },
 
-    getCollaborator(repo, username) {
-        let args = provider.getDefaultItemArgs();
-        args.user = provider.github.config.org;
-        args.repo = repo;
-        args.collabuser = username;
-        provider.github.getCollaborator(args);
+    isRepoCollaborator(repoId, username) {
+        return this.getRepoById(repoId).then((repo) => {
+            let args = provider.getDefaultItemArgs();
+            args.user = provider.github.config.org;
+            args.repo = repo.name;
+            args.collabuser = username;
+            return provider.github.isCollaborator(args);
+        });
     },
 
-    removeCollaborator(repo, username) {
-        let args = provider.getDefaultItemArgs();
-        args.user = provider.github.config.org;
-        args.repo = repo;
-        args.collabuser = username;
-        provider.github.removeCollaborator(args);
+    addRepoCollaborator(repoId, username, permission) {
+        return this.getRepoById(repoId).then((repo) => {
+            let args = provider.getDefaultItemArgs();
+            args.user = provider.github.config.org;
+            args.repo = repo.name;
+            args.collabuser = username;
+            args.permission = permission;
+            return provider.github.addCollaborator(args);
+        });
     },
 
-    addCollaborator(repo, username, permission) {
-        let args = provider.getDefaultItemArgs();
-        args.user = provider.github.config.org;
-        args.repo = repo;
-        args.collabuser = username;
-        args.permission = permission;
-        provider.github.addCollaborator(args);
+    removeRepoCollaborator(repoId, username) {
+        return this.getRepoById(repoId).then((repo) => {
+            let args = provider.getDefaultItemArgs();
+            args.user = provider.github.config.org;
+            args.repo = repo.name;
+            args.collabuser = username;
+            return provider.github.removeCollaborator(args);
+        });
     }
 };

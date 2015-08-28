@@ -1,35 +1,18 @@
 'use strict';
 
-var teamRepository = require('../components/repositories/teams'),
-    debug = require('debug')('app:middleware:permissions');
+var permissionRepository = require('../components/repositories/permissions'),
+    debug = require('debug')('app:middleware:identity'),
+    Link = require('../links/Link');
 
-/**
- * Middleware to adjust user permission levels on a repo.
- */
 module.exports = {
+    getOrganization (req, res, next) {
+        debug('get organization [' + req.path + ']');
+        debug('query:' + JSON.stringify(req.query, null, 2));
 
-    createTeamForRepoPermission (req, res, next) {
-
-        debug('checking for team existence and creating if necessary');
-        debug('params:' + JSON.stringify(req.params, null, 2));
-
-        let params = req.params,
-            repoId = params.id,
-            permission = params.permission;
-
-        teamRepository.check(repoId, permission).then((exists) => {
-            debug('team exists for repo management?: ' + exists);
-
-            if (!exists) {
-                teamRepository.create(repoId, permission).then(() => {
-                    next();
-                }).catch(err => next(err));
-            } else {
-                next();
-            }
-
-        });
-
+        permissionRepository.getOrganization().then(org => {
+            req.entity = org;
+            next();
+        }).catch(err => next(err));
     },
 
     editRepoPermissionForUser (req, res, next) {
@@ -40,11 +23,8 @@ module.exports = {
             username = params.username,
             repoId = params.id,
             permission = params.permission;
-
-        teamRepository.edit(username, repoId, permission).then(() => {
+        permissionRepository.editUserPermissionForRepo(username, repoId, permission).then(() => {
             next();
         }).catch(err => next(err));
-
     }
-
 };

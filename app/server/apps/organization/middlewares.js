@@ -1,10 +1,10 @@
 'use strict';
-var organization = require('../../middleware/organization'),
+var permissions = require('../../middleware/permissions'),
     send = require('../../middleware/send');
 
 module.exports = {
     getOrganization: [
-        organization.getOrganization,
+        permissions.getOrganization,
         send.json
     ]
 };

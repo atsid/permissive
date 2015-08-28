@@ -1,10 +1,7 @@
 'use strict';
 
-var provider = require('./provider');
-
-let getPrefix = (repo) => {
-    return 'zzz-permissive-repo-' + repo.name + '-';
-};
+var provider = require('./provider'),
+    userUtil = require('./users');
 
 module.exports = {
 
@@ -29,14 +26,6 @@ module.exports = {
         let args = provider.getDefaultListArgs();
         args.id = teamId;
         return provider.github.getTeamRepos(args);
-    },
-
-    createGithubTeamForRepoPermission (repo, permission) {
-        let args = provider.getDefaultListArgs();
-        args.name = getPrefix(repo) + permission;
-        args.repo_names = [repo.full_name];
-        args.permission = permission;
-        return provider.github.createTeam(args);
     },
 
     addToGithubTeam(username, teamId) {

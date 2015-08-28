@@ -1,67 +1,65 @@
 'use strict';
 
-var permUtil = require('./util/permissions');
+var permUtil = require('./util/permissions'),
+    repoUtil = require('./util/repos'),
+    Bluebird = require('bluebird');
 
 module.exports = {
+
+    /**
+     * Gets the Org permissions map
+     */
+    getOrganization () {
+        return permUtil.getPermissionMap();
+    },
 
     /**
      * Gets the Repo Permission for the User
      */
     getUserPermissionForRepo (username, repoId) {
-        return permUtil.getPermissionMap().then(permissions => {
-            let repo = permissions[repoId];
-            return repo[username] || permUtil.getDefaultPermissions();
+        return repoUtil.getRepoCollaborators(repoId).then(collaborators => {
+            let collaborator = collaborators[username];
+            return collaborator ? collaborator.permission : permUtil.getDefaultPermission();
         });
     },
 
     /**
-     * Sets the Permission for a specific Repo on each User in the list
+     * Gets the Permission for a specific Repo on each User in the list
      */
-    setRepoPermissionForUsers (users, repoId) {
-        return permUtil.getPermissionMap().then(permissions => {
-            let repo = permissions[repoId];
-            users.forEach(user => {
-                user.permission = repo[user.username] || permUtil.getDefaultPermissions();
-            });
-            return users;
+    getRepoPermissionForUsers (users, repoId) {
+        return new Promise((resolve, reject) => {
+            let permUsers = users.map((user) => this.getUserPermissionForRepo(user.username, repoId).then((permission) => user.permission = permission));
+            Bluebird.all(permUsers).then(() => resolve(users));
         });
     },
 
     /**
-     * Gets a list of Permissions by Repo for the User,
+     * Gets the repos and associated permissions for a user.
      */
-    getRepoPermissionsForUser (repos, username) {
-        return permUtil.getPermissionMap().then(permissions => {
-            let map = {};
-            repos.forEach(repo => {
-                let defaults = permUtil.getDefaultPermissions();
-                map[repo.id] = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
-            });
-            return map;
+    getReposPermissionsForUser (repos, username) {
+        return new Promise((resolve, reject) => {
+            let map = {}, permUsers = repos.map((repo) => this.getUserPermissionForRepo(username, repo.id).then((permission) => map[repo.id] = permission));
+            Bluebird.all(permUsers).then(() => resolve(map));
         });
     },
 
     /**
-     * Sets the Permission for a specific User on each Repo in the list
+     * Gets the Permission for a specific User on each Repo in the list
      */
-    setUserPermissionForRepos (repos, username) {
-        return permUtil.getPermissionMap().then(permissions => {
-            repos.forEach(repo => {
-                let defaults = permUtil.getDefaultPermissions();
-                repo.permission = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
-            });
-            return repos;
+    getUserPermissionForRepos (repos, username) {
+        return new Promise((resolve, reject) => {
+            let permUsers = repos.map((repo) => this.getUserPermissionForRepo(username, repo.id).then((permission) => repo.permission = permission));
+            Bluebird.all(permUsers).then(() => resolve(repos));
         });
     },
 
-    filterReposByUserPermission (repos, username) {
-        return permUtil.getPermissionMap().then(permissions => {
-            return repos.filter(repo => {
-                let defaults = permUtil.getDefaultPermissions();
-                let permission = permissions[repo.id] ? permissions[repo.id][username] || defaults : defaults;
-                return !(permission.github === 'none' && permission.permissive === 'none');
-            });
-        });
+    /**
+     * Add remove or update a user's permission for a repo
+     */
+    editUserPermissionForRepo(username, repoId, permission) {
+        if (permission === 'none') {
+            return repoUtil.removeRepoCollaborator(repoId, username);
+        }
+        return repoUtil.addRepoCollaborator(repoId, username, permission);
     }
-
 };

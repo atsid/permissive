@@ -27,12 +27,12 @@ module.exports =
             let perm = '';
             if (user.owner) {
                 perm = 'O';
-            } else if (collaborator && collaborator.permissions) {
+            } else if (collaborator && collaborator.permission) {
                 perm = {
                     pull: 'R',
                     push: 'W',
                     admin: 'A'
-                }[collaborator.permissions];
+                }[collaborator.permission];
             }
             return perm;
         };

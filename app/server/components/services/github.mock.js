@@ -83,35 +83,40 @@ var mask = require('json-mask'),
     teams = {
         '1': {
             id: 1,
-            name: 'Contributors',
+            name: 'Test-Team-1',
+            description: 'Test-Team-1',
             permission: 'push',
             _repos: [1, 2],
             _users: ['testuser1']
         },
         '2': {
             id: 2,
-            name: 'zzz-permissive-repo-Test-Repo-1-pull',
+            name: 'Test-Team-2',
+            description: 'Test-Team-2',
             permission: 'pull',
             _repos: [1],
             _users: ['testuser1']
         },
         '3': {
             id: 3,
-            name: 'zzz-permissive-repo-Test-Repo-1-push',
+            name: 'Test-Team-3',
+            description: 'Test-Team-3',
             permission: 'push',
             _repos: [1],
             _users: ['testuser2']
         },
         '4': {
             id: 4,
-            name: 'zzz-permissive-repo-Test-Repo-1-admin',
+            name: 'Test-Team-4',
+            description: 'Test-Team-4',
             permission: 'admin',
             _repos: [1],
             _users: ['testuser3']
         },
         '5': {
             id: 5,
-            name: 'zzz-permissive-repo-Test-Repo-2-admin',
+            name: 'Test-Team-5',
+            description: 'Test-Team-5',
             permission: 'admin',
             _repos: [2],
             _users: ['testuser3']
@@ -180,38 +185,36 @@ module.exports = {
         });
     },
 
+    addCollaborator (msg) {
+        debug('adding mock collaborator');
+        let collabs = collaborators[msg.repo];
+        return new Promise((resolve) => {
+            collabs.push(users[msg.username]);
+            resolve(collabs);
+        });
+    },
+
+    removeCollaborator (msg) {
+        debug('removing mock collaborator');
+        let collabs = collaborators[msg.repo];
+        return new Promise((resolve) => {
+            var idx = collabs.map((c) => {
+                return c.login;
+            }).indexOf(msg.username);
+            if (idx > -1) {
+                collabs.splice(idx, 1);
+            }
+            resolve(collabs);
+        });
+    },
+
     getTeams () {
         debug('looking up mock teams');
         return new Promise((resolve, reject) => {
 
-            let list = Object.keys(teams).map((key) => mask(teams[key], 'id,name,permission'));
+            let list = Object.keys(teams).map((key) => mask(teams[key], 'id,name,description,permission'));
 
             resolve(list);
-        });
-    },
-
-    createTeam (msg) {
-        debug('creating new mock team ' + msg.name);
-        return new Promise((resolve, reject) => {
-            let repo,
-                id = Math.round(Math.random() * 100000),
-                team = {
-                    id: id,
-                    name: msg.name,
-                    permission: msg.permission,
-                    _users: []
-                };
-
-            //createTeam API method gets a list of repo full names - need to map that to a mock id
-            Object.keys(repos).forEach((key) => {
-                let r = repos[key];
-                if (r.full_name === msg.repo_names[0]) {
-                    repo = r;
-                }
-            });
-            team._repos = [repo.id];
-            teams[id] = team;
-            resolve(team);
         });
     },
 
@@ -241,48 +244,6 @@ module.exports = {
             if (team) {
                 let teamRepos = team._repos.map((id) => repos[id]);
                 resolve(teamRepos);
-            } else {
-                reject(new Error('No mock team: ' + id));
-            }
-        });
-    },
-
-    addTeamMember (msg) {
-        let id = msg.id,
-            username = msg.user;
-        debug('adding mock user [' + username + '] to mock team [' + id + ']');
-
-        return new Promise((resolve, reject) => {
-
-            let team = teams[id];
-
-            if (team) {
-                let found = team._users.indexOf(username);
-                if (found === -1) {
-                    team._users.push(username);
-                }
-                resolve();
-            } else {
-                reject(new Error('No mock team: ' + id));
-            }
-        });
-    },
-
-    deleteTeamMember (msg) {
-        let id = msg.id,
-            username = msg.user;
-        debug('removing mock user [' + username + '] from mock team [' + id + ']');
-
-        return new Promise((resolve, reject) => {
-
-            let team = teams[id];
-
-            if (team) {
-                let found = team._users.indexOf(username);
-                if (found > -1) {
-                    team._users = team._users.filter(user => user !== username);
-                }
-                resolve();
             } else {
                 reject(new Error('No mock team: ' + id));
             }

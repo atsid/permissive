@@ -9,32 +9,32 @@ This is a draft of the operations available to meet the initial views of the app
         GET /identity
         returns Identity{}
 
-2. Get list of users. If permission_repo is specified, the "permission" flag on each user will be present, reporting their access to that repo.
+1. Get list of users. If permission_repo is specified, the "permission" flag on each user will be present, reporting their access to that repo.
 
         GET /users[?permission_repo=:id]
         returns User[]
 
-3. Add/update/remove repo permissions for a user
+1. Add/update/remove repo permissions for a user
 
         PUT /users/:username/repos/:id/permissions/:permission
         returns null, 204
 
-4. Get list of repos. If permission_user is specified, the "permission" flag on each repo will be present, reporting the access available for that user.
+1. Get list of repos. If permission_user is specified, the "permission" flag on each repo will be present, reporting the access available for that user.
 
         GET /repos[?permission_user=:username]
         returns Repo[]
 
-5. Add/update/remove user permissions for a repo
+1. Add/update/remove user permissions for a repo
 
         PUT /repos/:id/users/:username/permissions/:permission
         returns null, 204
         
-6. Get list of teams and their associated users and repos
+1. Get list of teams and their associated users and repos
 
         GET /teams
         returns Team[]
         
-7. Get organization structure
+1. Get organization structure
         
         GET /organization
         returns Organization{}

@@ -83,40 +83,40 @@ var mask = require('json-mask'),
     teams = {
         '1': {
             id: 1,
-            name: 'Contributors',
-            description: '',
+            name: 'Test-Team-1',
+            description: 'Test-Team-1',
             permission: 'push',
             _repos: [1, 2],
             _users: ['testuser1']
         },
         '2': {
             id: 2,
-            name: 'zzz-permissive-repo-Test-Repo-1-pull',
-            description: 'zzz-permissive-repo-Test-Repo-1-pull',
+            name: 'Test-Team-2',
+            description: 'Test-Team-2',
             permission: 'pull',
             _repos: [1],
             _users: ['testuser1']
         },
         '3': {
             id: 3,
-            name: 'zzz-permissive-repo-Test-Repo-1-push',
-            description: 'zzz-permissive-repo-Test-Repo-1-push',
+            name: 'Test-Team-3',
+            description: 'Test-Team-3',
             permission: 'push',
             _repos: [1],
             _users: ['testuser2']
         },
         '4': {
             id: 4,
-            name: 'zzz-permissive-repo-Test-Repo-1-admin',
-            description: 'zzz-permissive-repo-Test-Repo-1-admin',
+            name: 'Test-Team-4',
+            description: 'Test-Team-4',
             permission: 'admin',
             _repos: [1],
             _users: ['testuser3']
         },
         '5': {
             id: 5,
-            name: 'zzz-permissive-repo-Test-Repo-2-admin',
-            description: 'zzz-permissive-repo-Test-Repo-2-admin',
+            name: 'Test-Team-5',
+            description: 'Test-Team-5',
             permission: 'admin',
             _repos: [2],
             _users: ['testuser3']

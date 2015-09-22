@@ -1,4 +1,27 @@
 language: node_js
+
 node_js:
-  - "0.12"
+- '0.12'
+
 sudo: false
+
+install:
+- npm install -g gulp
+- npm install -g bower
+- npm install
+- bower update
+
+script: ./build.sh
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-west-2
+  app: permissive
+  env: permissive-prod
+  zip_file: permissive.zip
+  bucket_name: ats-travis
+  bucket_path: permissive
+  on:
+    repo: atsid/permissive
+    branch: master
+    node: '0.12'

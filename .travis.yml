@@ -5,6 +5,12 @@ node_js:
 
 sudo: false
 
+install:
+- npm install -g gulp
+- npm install -g bower
+- npm install
+- bower update
+
 script: ./build.sh
 
 deploy:

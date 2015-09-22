@@ -5,21 +5,14 @@ node_js:
 
 sudo: false
 
-before_script:
-- npm install -g gulp
-- npm install -g bower
-
-script:
-- bower update
-- npm test
-- npm install --production
-- gulp --cwd ./app/client --release
+script: ./build.sh
 
 deploy:
   provider: elasticbeanstalk
   region: us-west-2
   app: permissive
   env: permissive-prod
+  zip_file: permissive.zip
   bucket_name: ats-travis
   bucket_path: permissive
   on:

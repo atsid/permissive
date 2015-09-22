@@ -18,6 +18,7 @@ deploy:
   region: us-west-2
   app: permissive
   env: permissive-prod
+  skip_cleanup: true
   zip_file: permissive.zip
   bucket_name: ats-travis
   bucket_path: permissive
